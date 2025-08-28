@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1DB5A6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #17A085;
+}
+
+/* Loading animation improvements */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Button hover effects */
+.btn-hover-lift {
+  transition: all 0.3s ease;
+}
+
+.btn-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom styles for article content */
+.prose .tl-dr {
+  @apply bg-blue-50 border-l-4 border-blue-400 p-6 my-6 rounded-r-lg;
+}
+
+.prose .tl-dr h3,
+.prose .tl-dr h4 {
+  @apply text-blue-800 font-bold mb-3 text-lg;
+}
+
+.prose .tl-dr p {
+  @apply text-blue-700 mb-2 last:mb-0;
+}
+
+/* Enhanced list styling */
+.prose ul {
+  @apply list-disc list-inside space-y-2 my-4;
+}
+
+.prose ol {
+  @apply list-decimal list-inside space-y-2 my-4;
+}
+
+.prose li {
+  @apply text-gray-700 leading-relaxed;
+}
+
+/* Bold subheadings */
+.prose h2 {
+  @apply font-bold text-2xl text-gray-900 mt-8 mb-4 border-b border-gray-200 pb-2;
+}
+
+.prose h3 {
+  @apply font-bold text-xl text-gray-900 mt-6 mb-3;
+}
+
+.prose h4 {
+  @apply font-semibold text-lg text-gray-900 mt-4 mb-2;
+}
+
+/* Paragraph spacing and readability */
+.prose p {
+  @apply text-gray-700 leading-relaxed mb-4;
+}
+
+/* Horizontal rules */
+.prose hr {
+  @apply border-gray-300 my-8;
+}
+
+/* Enhanced blockquotes */
+.prose blockquote {
+  @apply border-l-4 border-blackmores-teal bg-green-50 p-4 my-6 italic text-gray-700;
+}
+
+/* Code styling */
+.prose code {
+  @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono text-gray-800;
+}
+
+/* Table styling */
+.prose table {
+  @apply w-full border-collapse border border-gray-300 my-6;
+}
+
+.prose th {
+  @apply bg-gray-100 border border-gray-300 px-4 py-2 font-semibold text-left;
+}
+
+.prose td {
+  @apply border border-gray-300 px-4 py-2;
+}
+
+/* References section styling */
+.prose .article-references {
+  @apply bg-gray-50 border border-gray-200 rounded-lg p-6 my-8;
+}
+
+.prose .article-references h3 {
+  @apply text-xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-300;
+}
+
+.prose .article-references ul {
+  @apply list-none space-y-3 mb-0;
+}
+
+.prose .article-references li {
+  @apply text-gray-700 leading-relaxed pl-0;
+}
+
+.prose .article-references a {
+  @apply text-blackmores-teal hover:text-blackmores-teal-dark underline break-all;
+}
+
+.prose .article-references li::before {
+  content: "📚";
+  @apply mr-3;
+}
+/* Card alignment utilities */
+.card-grid {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-title {
+  height: 3rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.card-description {
+  height: 4rem;
+  flex: 1;
+}
+
+.card-meta {
+  height: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* Ensure consistent card heights */
+.equal-height-cards {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.equal-height-cards > * {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
