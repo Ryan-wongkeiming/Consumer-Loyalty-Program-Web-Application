@@ -180,16 +180,12 @@ const FreeSamplePage: React.FC = () => {
     setErrorMessage(null); // Clear previous error messages
 
     try {
-      // Get auth token if user is logged in
-      const { data: { session } } = await supabase.auth.getSession();
-      const authToken = session?.access_token;
-
       // Call the Edge Function
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/request-free-sample`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...(authToken && { 'Authorization': `Bearer ${authToken}` }),
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({
           fullName: formData.fullName,
