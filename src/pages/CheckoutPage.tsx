@@ -684,6 +684,23 @@ export default function CheckoutPage() {
                   của Blackmores
                 </p>
               </div>
+              
+              {/* Free Sample Offer */}
+              <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 rounded-lg text-center">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <span className="text-xl">🎁</span>
+                  <span className="font-bold text-sm">Lần đầu mua hàng?</span>
+                </div>
+                <p className="text-xs text-orange-100 mb-3">
+                  Thử miễn phí 2 gói Blackmores trước!
+                </p>
+                <Link
+                  to="/free-sample"
+                  className="block w-full bg-white text-orange-600 py-2 rounded-lg font-bold text-sm hover:bg-orange-50 transition-colors"
+                >
+                  NHẬN MẪU MIỄN PHÍ
+                </Link>
+              </div>
             </div>
           </div>
         </form>

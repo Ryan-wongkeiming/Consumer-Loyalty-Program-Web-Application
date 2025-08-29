@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { Search, Filter, ChevronDown, X } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { getProducts, categories, genderAgeOptions, ingredientOptions, healthGoalOptions, Product } from '../data/products';
@@ -158,7 +158,37 @@ const HomePage: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blackmores-teal to-blackmores-teal-dark text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          {/* Free Sample Banner */}
+          <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-6 mb-8 shadow-2xl transform hover:scale-[1.02] transition-all duration-300">
+            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+              <div className="text-center md:text-left">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                  🎁 Trải Nghiệm Blackmores Cải Tiến Mới
+                </h2>
+                <p className="text-orange-100 text-lg">
+                  Nhận Ngay 2 Gói Dùng Thử Miễn Phí - Giao Hàng Tận Nơi!
+                </p>
+                <div className="flex items-center justify-center md:justify-start space-x-4 mt-3">
+                  <span className="bg-white text-orange-600 px-3 py-1 rounded-full text-sm font-bold">
+                    ⚡ Số lượng có hạn
+                  </span>
+                  <span className="bg-white text-orange-600 px-3 py-1 rounded-full text-sm font-bold">
+                    🚚 Miễn phí vận chuyển
+                  </span>
+                </div>
+              </div>
+              <div className="flex-shrink-0">
+                <Link
+                  to="/free-sample"
+                  className="bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 animate-bounce"
+                >
+                  ĐĂNG KÝ NGAY! 🚀
+                </Link>
+              </div>
+            </div>
+          </div>
+
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Giải Pháp Sức Khỏe Tự Nhiên

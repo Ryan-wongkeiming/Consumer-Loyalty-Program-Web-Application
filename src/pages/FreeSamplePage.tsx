@@ -25,7 +25,7 @@ const ThankYouScreen: React.FC = () => {
             <strong>Thời gian giao hàng:</strong> 3-5 ngày làm việc
           </p>
           <p className="text-sm text-gray-600">
-            <strong>Sản phẩm:</strong> 2 gói Blackmores Gold Cải Tiến Mới
+            <strong>Sản phẩm:</strong> 2 gói Blackmores Cải Tiến Mới
           </p>
         </div>
         
@@ -192,8 +192,8 @@ const FreeSamplePage: React.FC = () => {
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
                   type="button"
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm transition-colors"
                   onClick={handleConsentConfirm}
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm transition-colors"
                 >
                   Xác nhận
                 </button>
@@ -231,17 +231,69 @@ const FreeSamplePage: React.FC = () => {
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-emerald-600/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full mb-6">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mb-6 animate-bounce">
               <Gift className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Đăng ký dùng thử miễn phí
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded-full inline-block mb-4 font-bold text-lg animate-pulse">
+              🔥 ƯU ĐÃI CÓ HẠN - NHANH TAY! 🔥
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Trải Nghiệm Blackmores Gold
             </h1>
+            <div className="text-2xl md:text-3xl font-bold text-orange-600 mb-4">
+              MIỄN PHÍ 100% - 2 GÓI DÙNG THỬ
+            </div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Cơ hội nhận thêm ngàn quà chăm sóc sức khỏe khi đăng ký dùng thử miễn phí 2 gói Blackmores chất lượng Úc !
+              Khám phá sức mạnh của dinh dưỡng Úc với 2 gói Blackmores Gold hoàn toàn MIỄN PHÍ!
+            </p>
+            
+            {/* Urgency Counter */}
+            <div className="bg-red-600 text-white px-6 py-3 rounded-full inline-block mb-8 font-bold text-lg animate-pulse">
+              ⏰ CHỈ CÒN 48 GIỜ - SỐ LƯỢNG CÓ HẠN!
+            </div>
+            
+            {/* Social Proof */}
+            <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 mb-8 max-w-md mx-auto">
+              <div className="flex items-center justify-center space-x-4 text-gray-700">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-orange-600">15,000+</div>
+                  <div className="text-sm">Đã đăng ký</div>
+                </div>
+                <div className="w-px h-8 bg-gray-300"></div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-orange-600">4.8★</div>
+                  <div className="text-sm">Đánh giá</div>
+                </div>
+                <div className="w-px h-8 bg-gray-300"></div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-orange-600">98%</div>
+                  <div className="text-sm">Hài lòng</div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Testimonial */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 mb-8 max-w-2xl mx-auto">
+              <div className="flex items-center space-x-4">
+                <img
+                  src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100"
+                  alt="Customer"
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div className="flex-1 text-left">
+                  <p className="text-gray-700 italic text-sm">
+                    "Tôi đã thử mẫu miễn phí và thực sự ấn tượng với chất lượng. Giờ tôi là khách hàng thường xuyên!"
+                  </p>
+                  <p className="text-gray-500 text-xs mt-1">- Nguyễn Thị Mai, Hà Nội</p>
+                </div>
+              </div>
+            </div>
+            
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+              ✨ Không mất phí, không ràng buộc - Chỉ cần 2 phút đăng ký!
             </p>
             
             {/* Benefits Grid */}

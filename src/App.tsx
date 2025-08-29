@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
@@ -72,6 +72,18 @@ function App() {
             </main>
             <Footer />
             <CartSidebar />
+            
+            {/* Floating Free Sample Button */}
+            <Link
+              to="/free-sample"
+              className="fixed bottom-6 left-6 z-40 bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 group animate-pulse lg:hidden"
+              title="Nhận mẫu miễn phí"
+            >
+              <div className="flex items-center space-x-2">
+                <span className="text-2xl group-hover:rotate-12 transition-transform">🎁</span>
+                <span className="hidden sm:inline font-bold text-sm">Mẫu miễn phí</span>
+              </div>
+            </Link>
           </div>
         </Router>
       </CartProvider>

@@ -360,6 +360,24 @@ const CartSidebar: React.FC = () => {
                 <p>Miễn phí vận chuyển!</p>
                 <p className="hidden sm:block">Giới hạn {formatPrice(50000)} mỗi đơn hàng. <a href="#" className="text-blackmores-teal underline">Xem chính sách mua hàng tại đây.</a></p>
               </div>
+              
+              {/* Free Sample CTA in Cart */}
+              <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 rounded-lg text-center">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <span className="text-xl">🎁</span>
+                  <span className="font-bold text-sm">Thử miễn phí trước khi mua!</span>
+                </div>
+                <p className="text-xs text-orange-100 mb-3">
+                  Nhận 2 gói Blackmores miễn phí để trải nghiệm
+                </p>
+                <Link
+                  to="/free-sample"
+                  onClick={() => dispatch({ type: 'TOGGLE_CART' })}
+                  className="block w-full bg-white text-orange-600 py-2 rounded-lg font-bold text-sm hover:bg-orange-50 transition-colors"
+                >
+                  ĐĂNG KÝ NGAY!
+                </Link>
+              </div>
             </div>
           )}
         </div>

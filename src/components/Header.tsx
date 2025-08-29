@@ -101,7 +101,7 @@ const Header: React.FC = () => {
             <img
               src="https://www.blackmores.com.au/-/media/project/blackmores-group/au/logo/blackmroes-logo.svg?iar=0&hash=6C4AFC91AD53B13B6ACCFEB452D06F68"
               alt="Blackmores"
-              className="h-8 w-auto"
+              className="w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
             />
           </Link>
 
@@ -210,6 +210,15 @@ const Header: React.FC = () => {
 
           {/* Right side icons */}
           <div className="flex items-center space-x-4">
+            {/* Free Sample CTA Button */}
+            <Link
+              to="/free-sample"
+              className="hidden md:flex items-center space-x-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full font-semibold text-sm hover:from-orange-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl animate-pulse"
+            >
+              <span>🎁</span>
+              <span>Nhận mẫu miễn phí</span>
+            </Link>
+
             {/* User Account */}
             <div className="relative">
               {user ? (
@@ -398,6 +407,18 @@ const Header: React.FC = () => {
               );
             })}
             
+            {/* Free Sample CTA for Mobile */}
+            <div className="border-t border-gray-200 pt-4">
+              <Link
+                to="/free-sample"
+                onClick={() => setIsMenuOpen(false)}
+                className="block w-full bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-4 rounded-lg font-bold text-center text-base min-h-[52px] flex items-center justify-center space-x-2 shadow-lg"
+              >
+                <span>🎁</span>
+                <span>NHẬN MẪU MIỄN PHÍ NGAY!</span>
+              </Link>
+            </div>
+
             {/* Auth buttons for mobile */}
             {!user && (
               <div className="border-t border-gray-200 pt-4 space-y-3">

@@ -229,6 +229,26 @@ const WomensHealthPage: React.FC = () => {
 
       {/* Content Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Free Sample CTA Banner */}
+        <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-6 mb-8 text-white shadow-xl">
+          <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+            <div className="text-center md:text-left">
+              <h2 className="text-xl md:text-2xl font-bold mb-2">
+                🎁 Quan tâm đến sức khỏe phụ nữ?
+              </h2>
+              <p className="text-orange-100">
+                Nhận ngay 2 gói Blackmores miễn phí để trải nghiệm!
+              </p>
+            </div>
+            <Link
+              to="/free-sample"
+              className="bg-white text-orange-600 px-6 py-3 rounded-full font-bold hover:bg-orange-50 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              Đăng ký ngay
+            </Link>
+          </div>
+        </div>
+
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900">
             {selectedFilter === 'All' ? 'Tất cả' : 
