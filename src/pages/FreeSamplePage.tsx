@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Gift, CheckCircle, Users, Truck, Heart, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { supabase } from '../lib/supabaseClient';
 import { getAllProvinces, getWardsByProvince, Province, Ward } from '../utils/locationData';
 import SearchableSelect from '../components/SearchableSelect';
+
+interface FreeSampleType {
+  id: string;
+  name: string;
+  stock: number;
+  is_active: boolean;
+}
 
 const ThankYouScreen: React.FC = () => {
   return (
@@ -48,13 +56,17 @@ const FreeSamplePage: React.FC = () => {
     address: '',
     city: '',
     ward: '',
-    notes: ''
+    notes: '', // Optional notes
+    sampleTypeId: '', // New field for selected sample type
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
   const [showConsentModal, setShowConsentModal] = useState(false);
+  const [sampleTypes, setSampleTypes] = useState<FreeSampleType[]>([]);
+  const [loadingSamples, setLoadingSamples] = useState(true); // New state for loading sample types
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // New state for error messages
 
   // Location data state
   const [provinces, setProvinces] = useState<Province[]>([]);
@@ -63,7 +75,32 @@ const FreeSamplePage: React.FC = () => {
   // Load provinces on component mount
   useEffect(() => {
     setProvinces(getAllProvinces());
+    loadSampleTypes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Load available sample types from Supabase
+  const loadSampleTypes = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('free_samples')
+        .select('*')
+        .eq('is_active', true)
+        .order('name');
+
+      if (error) {
+        console.error('Error loading sample types:', error);
+        setErrorMessage('Không thể tải danh sách mẫu. Vui lòng thử lại.'); // Set error message
+      } else {
+        setSampleTypes(data || []);
+      }
+    } catch (error) {
+      console.error('Error loading sample types:', error);
+      setErrorMessage('Có lỗi xảy ra khi tải danh sách mẫu.');
+    } finally {
+      setLoadingSamples(false);
+    }
+  };
 
   // Load wards when province changes
   useEffect(() => {
@@ -81,6 +118,7 @@ const FreeSamplePage: React.FC = () => {
       ...prev,
       [name]: value
     }));
+
     
     // Clear error when user starts typing
     if (errors[name]) {
@@ -93,6 +131,10 @@ const FreeSamplePage: React.FC = () => {
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
+
+    if (!formData.sampleTypeId.trim()) {
+      newErrors.sampleTypeId = 'Vui lòng chọn loại mẫu';
+    }
 
     if (!formData.fullName.trim()) {
       newErrors.fullName = 'Vui lòng nhập họ và tên';
@@ -135,18 +177,61 @@ const FreeSamplePage: React.FC = () => {
     }
 
     setIsSubmitting(true);
-    
-    // Simulate API call - free sample request processing
-    setTimeout(() => {
-      // Show thank you screen
+    setErrorMessage(null); // Clear previous error messages
+
+    try {
+      // Get auth token if user is logged in
+      const { data: { session } } = await supabase.auth.getSession();
+      const authToken = session?.access_token;
+
+      // Call the Edge Function
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/request-free-sample`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(authToken && { 'Authorization': `Bearer ${authToken}` }),
+        },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          phone: formData.phone,
+          email: formData.email || null,
+          babyName: formData.babyName || null,
+          babyBirthDate: formData.babyBirthDate || null,
+          address: formData.address,
+          city: formData.city,
+          ward: formData.ward,
+          notes: formData.notes || null,
+          sampleTypeId: formData.sampleTypeId,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        if (result.outOfStock) {
+          setErrorMessage(result.error); // Display out of stock message
+          // Refresh sample types to update stock display
+          await loadSampleTypes();
+        } else {
+          setErrorMessage(result.error || 'Có lỗi xảy ra khi gửi yêu cầu.');
+        }
+        return;
+      }
+
+      // Success - show thank you screen
       setShowThankYou(true);
-      setIsSubmitting(false);
       
       // Auto redirect after 4 seconds
       setTimeout(() => {
         window.location.href = '/';
       }, 4000);
-    }, 2000);
+
+    } catch (error) {
+      console.error('Error submitting free sample request:', error);
+      setErrorMessage('Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleConsentCancel = () => {
@@ -342,6 +427,45 @@ const FreeSamplePage: React.FC = () => {
           <div className="p-8">
             <form onSubmit={handleSubmit}>
               <div className="space-y-6">
+                {/* Sample Type Selection */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Chọn loại mẫu</h3>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Loại mẫu *
+                    </label>
+                    {loadingSamples ? (
+                      <div className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                        <span className="text-gray-500">Đang tải...</span>
+                      </div>
+                    ) : (
+                      <select
+                        name="sampleTypeId"
+                        value={formData.sampleTypeId}
+                        onChange={handleInputChange}
+                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                          errors.sampleTypeId ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                      >
+                        <option value="">Chọn loại mẫu</option>
+                        {sampleTypes.map((sampleType) => (
+                          <option 
+                            key={sampleType.id}
+                            value={sampleType.id}
+                            disabled={sampleType.stock <= 0}
+                          >
+                            {sampleType.name} {sampleType.stock <= 0 ? '(Hết hàng)' : `(Còn ${sampleType.stock})`}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                    {errors.sampleTypeId && (
+                      <p className="text-red-500 text-sm mt-1">{errors.sampleTypeId}</p>
+                    )}
+                  </div>
+                </div>
+
                 {/* Personal Information */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Thông tin cá nhân</h3>
@@ -505,11 +629,22 @@ const FreeSamplePage: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Error Message Display */}
+                {errorMessage && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <div className="flex items-center space-x-2">
+                      <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+                      <span className="text-red-700">{errorMessage}</span>
+                    </div>
+                  </div>
+                )}
+
+
                 {/* Submit Button */}
                 <div className="pt-6">
                   <button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || loadingSamples || !formData.sampleTypeId}
                     className="w-full bg-gradient-to-r from-blue-600 to-emerald-600 text-white py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-emerald-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02]"
                   >
                     {isSubmitting ? (
@@ -517,6 +652,10 @@ const FreeSamplePage: React.FC = () => {
                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                         <span>Đang xử lý...</span>
                       </div>
+                    ) : loadingSamples ? (
+                      'Đang tải loại mẫu...'
+                    ) : !formData.sampleTypeId ? (
+                      'Vui lòng chọn loại mẫu'
                     ) : (
                       'Đăng ký dùng thử miễn phí'
                     )}
