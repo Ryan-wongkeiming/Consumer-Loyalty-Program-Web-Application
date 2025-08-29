@@ -308,10 +308,10 @@ export default function CheckoutPage() {
             to="/"
             className="inline-flex items-center text-blackmores-teal hover:text-blackmores-teal-dark transition-colors mb-4"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
+            <ArrowLeft className="w-5 h-5 mr-2" />
             Quay lại mua sắm
           </Link>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Thanh toán</h1>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Thanh toán</h1>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -319,15 +319,15 @@ export default function CheckoutPage() {
             {/* Left Column - Shipping Information */}
             <div className="space-y-6">
               {/* Customer Information */}
-              <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+              <div className="bg-white rounded-lg shadow-sm p-5 sm:p-6">
                 <div className="flex items-center mb-4">
-                  <User className="w-5 h-5 text-blackmores-teal mr-2" />
-                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Thông tin người nhận</h2>
+                  <User className="w-5 h-5 sm:w-6 sm:h-6 text-blackmores-teal mr-2" />
+                  <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900">Thông tin người nhận</h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
                       Họ và tên *
                     </label>
                     <input
@@ -335,18 +335,18 @@ export default function CheckoutPage() {
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent ${
+                      className={`w-full px-3 py-3 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent ${
                         errors.fullName ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Nhập họ và tên"
                     />
                     {errors.fullName && (
-                      <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+                      <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.fullName}</p>
                     )}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
                       Số điện thoại *
                     </label>
                     <input
@@ -354,19 +354,19 @@ export default function CheckoutPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent ${
+                      className={`w-full px-3 py-3 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent ${
                         errors.phone ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="VD: 0XXXXXXXXX"
                     />
                     {errors.phone && (
-                      <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                      <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.phone}</p>
                     )}
                   </div>
                 </div>
 
                 <div className="mt-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
                     Email (tùy chọn)
                   </label>
                   <input
@@ -374,22 +374,22 @@ export default function CheckoutPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent"
+                    className="w-full px-3 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent"
                     placeholder="Nhập địa chỉ email"
                   />
                 </div>
               </div>
 
               {/* Shipping Address */}
-              <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+              <div className="bg-white rounded-lg shadow-sm p-5 sm:p-6">
                 <div className="flex items-center mb-4">
-                  <MapPin className="w-5 h-5 text-blackmores-teal mr-2" />
-                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Địa chỉ giao hàng</h2>
+                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-blackmores-teal mr-2" />
+                  <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900">Địa chỉ giao hàng</h2>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
                       Địa chỉ cụ thể *
                     </label>
                     <input
@@ -397,19 +397,19 @@ export default function CheckoutPage() {
                       name="address"
                       value={formData.address}
                       onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent ${
+                      className={`w-full px-3 py-3 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent ${
                         errors.address ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Số nhà, tên đường"
                     />
                     {errors.address && (
-                      <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+                      <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.address}</p>
                     )}
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
                         Tỉnh/Thành phố *
                       </label>
                       <SearchableSelect
@@ -421,12 +421,12 @@ export default function CheckoutPage() {
                         error={!!errors.city}
                       />
                       {errors.city && (
-                        <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+                        <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.city}</p>
                       )}
                     </div>
 
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <div className="sm:col-span-1 lg:col-span-2">
+                      <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
                         Phường/Xã *
                       </label>
                       <SearchableSelect
@@ -439,13 +439,13 @@ export default function CheckoutPage() {
                         error={!!errors.ward}
                       />
                       {errors.ward && (
-                        <p className="text-red-500 text-sm mt-1">{errors.ward}</p>
+                        <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.ward}</p>
                       )}
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
                       Ghi chú (tùy chọn)
                     </label>
                     <textarea
@@ -453,7 +453,7 @@ export default function CheckoutPage() {
                       value={formData.notes}
                       onChange={handleInputChange}
                       rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent"
+                      className="w-full px-3 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent resize-none"
                       placeholder="Ghi chú cho đơn hàng (tùy chọn)"
                     />
                   </div>
@@ -485,34 +485,34 @@ export default function CheckoutPage() {
             {/* Right Column - Order Summary & Payment */}
             <div className="space-y-6">
               {/* Order Summary */}
-              <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">
+              <div className="bg-white rounded-lg shadow-sm p-5 sm:p-6">
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 mb-4">
                   Đơn hàng ({state.items.length} sản phẩm)
                 </h2>
 
                 <div className="space-y-4 mb-6">
                   {state.items.map((item) => (
-                    <div key={item.product.id} className="flex space-x-3 sm:space-x-4">
+                    <div key={item.product.id} className="flex space-x-3">
                       <img
                         src={item.product.image}
                         alt={item.product.name}
-                        className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded flex-shrink-0"
+                        className="w-14 h-14 sm:w-16 sm:h-16 object-cover rounded flex-shrink-0"
                       />
                       <div className="flex-1">
-                        <h3 className="font-medium text-gray-900 text-xs sm:text-sm line-clamp-2">
+                        <h3 className="font-medium text-gray-900 text-sm sm:text-base line-clamp-2 leading-tight">
                           {item.product.name}
                         </h3>
-                        <p className="text-xs sm:text-sm text-gray-600">
+                        <p className="text-xs sm:text-sm text-gray-600 mt-1">
                           Số lượng: {item.quantity}
                         </p>
                         {item.isSubscription && (
-                          <p className="text-xs sm:text-sm text-green-600 font-medium">
+                          <p className="text-xs sm:text-sm text-green-600 font-medium mt-1">
                             Đăng ký (Giảm 30%)
                           </p>
                         )}
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-blackmores-teal text-sm sm:text-base">
+                        <p className="font-semibold text-blackmores-teal text-sm sm:text-base lg:text-lg">
                           {formatPrice(
                             (item.isSubscription ? item.product.price * 0.7 : item.product.price) * item.quantity
                           )}
@@ -523,23 +523,23 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="border-t pt-4 space-y-2">
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-sm sm:text-base">
                     <span>Tạm tính:</span>
                     <span>{formatPrice(subtotal)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-sm sm:text-base">
                     <span>Phí vận chuyển:</span>
                     <span>Miễn phí</span>
                   </div>
                   {state.promoDiscount > 0 && (
-                    <div className="flex justify-between text-sm text-green-600">
+                    <div className="flex justify-between text-sm sm:text-base text-green-600">
                       <span>Mã giảm giá:</span>
                       <span>-{state.promoDiscount.toLocaleString('vi-VN')}đ</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-lg font-bold text-gray-900 pt-2 border-t">
+                  <div className="flex justify-between text-base sm:text-lg lg:text-xl font-bold text-gray-900 pt-2 border-t">
                     <span>Tổng cộng:</span>
-                    <span className="text-blackmores-teal text-base sm:text-lg">{formatPrice(total)}</span>
+                    <span className="text-blackmores-teal">{formatPrice(total)}</span>
                   </div>
                 </div>
               </div>
@@ -647,24 +647,31 @@ export default function CheckoutPage() {
 
               {/* Place Order Button */}
               {errors.general && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 flex items-center space-x-2" role="alert">
-                  <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-4 rounded-lg mb-4 flex items-start space-x-2" role="alert">
+                  <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
                   <div>
-                  <strong className="font-bold">Lỗi!</strong>
-                  <span className="block sm:inline"> {errors.general}</span>
+                    <strong className="font-bold text-sm sm:text-base">Lỗi!</strong>
+                    <span className="block text-sm sm:text-base"> {errors.general}</span>
                   </div>
                 </div>
               )}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blackmores-teal text-white py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg hover:bg-blackmores-teal-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-blackmores-teal text-white py-4 sm:py-5 rounded-lg font-semibold text-base sm:text-lg hover:bg-blackmores-teal-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px] flex items-center justify-center"
               >
-                {isSubmitting ? 'Đang xử lý...' : 'Đặt hàng'}
+                {isSubmitting ? (
+                  <div className="flex items-center space-x-2">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <span>Đang xử lý...</span>
+                  </div>
+                ) : (
+                  'Đặt hàng'
+                )}
               </button>
 
               {/* Policy Agreement */}
-              <div className="text-center text-xs sm:text-sm text-gray-600">
+              <div className="text-center text-xs sm:text-sm text-gray-600 leading-relaxed">
                 <p>
                   Bằng việc đặt hàng, bạn đồng ý với{' '}
                   <a href="#" className="text-blackmores-teal hover:underline">

@@ -133,7 +133,7 @@ const ProductPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
           {/* Product Image */}
           <div className="space-y-4">
-            <div className="aspect-square bg-white rounded-lg shadow-sm overflow-hidden group w-full max-h-[70vh] lg:max-h-none">
+            <div className="aspect-square bg-white rounded-lg shadow-sm overflow-hidden group w-full max-h-[60vh] sm:max-h-[70vh] lg:max-h-none">
               <img
                 src={productImages[selectedImageIndex]}
                 alt={product.name}
@@ -142,11 +142,11 @@ const ProductPage: React.FC = () => {
             </div>
             
             {/* Thumbnail Gallery */}
-            <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 max-w-sm mx-auto lg:max-w-none">
+            <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 sm:gap-3 max-w-sm mx-auto lg:max-w-none">
               {productImages.map((image, index) => (
                 <div 
                   key={index} 
-                  className={`aspect-square bg-white rounded-md shadow-sm overflow-hidden border-2 cursor-pointer transition-all duration-200 ${
+                  className={`aspect-square bg-white rounded-md shadow-sm overflow-hidden border-2 cursor-pointer transition-all duration-200 min-h-[60px] sm:min-h-[80px] ${
                     selectedImageIndex === index 
                       ? 'border-blackmores-teal ring-2 ring-blackmores-teal ring-opacity-50' 
                       : 'border-transparent hover:border-gray-300'
@@ -168,7 +168,7 @@ const ProductPage: React.FC = () => {
                 <button
                   key={index}
                   onClick={() => setSelectedImageIndex(index)}
-                  className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                  className={`w-2 h-2 sm:w-1.5 sm:h-1.5 rounded-full transition-all duration-200 ${
                     selectedImageIndex === index 
                       ? 'bg-blackmores-teal scale-125' 
                       : 'bg-gray-300 hover:bg-gray-400'
@@ -182,33 +182,33 @@ const ProductPage: React.FC = () => {
           <div className="space-y-4 lg:space-y-6">
             <div>
               <div className="mb-2">
-                <span className="text-sm text-blackmores-teal font-medium bg-green-50 px-3 py-1 rounded-full">
+                <span className="text-sm sm:text-base text-blackmores-teal font-medium bg-green-50 px-3 py-1.5 rounded-full">
                   {product.category}
                 </span>
               </div>
-              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3 lg:mb-4">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 lg:mb-4 leading-tight">
                 {product.name}
               </h1>
-              <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed">
                 {product.description}
               </p>
             </div>
 
             {/* Rating */}
-            <div className="flex items-center space-x-3 lg:space-x-4">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:gap-4">
               <div className="flex items-center space-x-1">
                 {renderStars(product.rating)}
               </div>
-              <span className="text-sm text-gray-500">
+              <span className="text-xs sm:text-sm text-gray-500">
                 {product.rating} ({product.reviews} reviews)
               </span>
             </div>
 
             {/* Subscription Toggle */}
             {product.isSubscription && (
-              <div className="bg-green-50 p-3 lg:p-4 rounded-lg border border-green-200">
+              <div className="bg-green-50 p-4 lg:p-5 rounded-lg border border-green-200">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-sm lg:text-base text-gray-900">Đăng ký & Tiết kiệm</h3>
+                  <h3 className="font-semibold text-sm sm:text-base lg:text-lg text-gray-900">Đăng ký & Tiết kiệm</h3>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -216,10 +216,10 @@ const ProductPage: React.FC = () => {
                       onChange={(e) => setIsSubscription(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blackmores-teal/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blackmores-teal"></div>
+                    <div className="w-12 h-7 sm:w-11 sm:h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blackmores-teal/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 sm:after:h-5 sm:after:w-5 after:transition-all peer-checked:bg-blackmores-teal"></div>
                   </label>
                 </div>
-                <p className="text-xs lg:text-sm text-gray-600">
+                <p className="text-xs sm:text-sm lg:text-base text-gray-600">
                   Tiết kiệm 30% và miễn phí vận chuyển cho các đơn hàng định kỳ
                 </p>
                 {isSubscription && (
@@ -227,7 +227,7 @@ const ProductPage: React.FC = () => {
                     <select
                       value={deliveryFrequency}
                       onChange={(e) => setDeliveryFrequency(e.target.value)}
-                      className="w-full border border-gray-300 rounded px-2 lg:px-3 py-2 text-xs lg:text-sm focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
+                      className="w-full border border-gray-300 rounded px-3 py-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
                     >
                       <option value="Giao hàng mỗi 8 tuần (giảm 20%)">Giao hàng mỗi 8 tuần (giảm 20%)</option>
                       <option value="Giao hàng mỗi 4 tuần (giảm 25%)">Giao hàng mỗi 4 tuần (giảm 25%)</option>
@@ -240,25 +240,25 @@ const ProductPage: React.FC = () => {
 
             {/* Price */}
             <div className="space-y-1 lg:space-y-2">
-              <div className="flex flex-col lg:flex-row lg:items-center space-y-1 lg:space-y-0 lg:space-x-4">
-                <span className="text-2xl lg:text-3xl font-bold text-gray-900">
+              <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">
                   {formatPrice(isSubscription ? subscriptionPrice : product.price)}
                 </span>
                 <div className="flex items-center space-x-2">
                   {product.originalPrice && (
-                    <span className="text-base lg:text-xl text-gray-500 line-through">
+                    <span className="text-sm sm:text-base lg:text-xl text-gray-500 line-through">
                       {formatPrice(product.originalPrice)}
                     </span>
                   )}
                   {isSubscription && (
-                    <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs lg:text-sm font-medium">
+                    <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs sm:text-sm font-medium">
                       Tiết kiệm 30%
                     </span>
                   )}
                 </div>
               </div>
               {isSubscription && (
-                <p className="text-xs lg:text-sm text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600">
                   Giao hàng mỗi 30 ngày (có thể thay đổi bất cứ lúc nào)
                 </p>
               )}
@@ -266,42 +266,42 @@ const ProductPage: React.FC = () => {
 
             {/* Quantity and Add to Cart */}
             <div className="space-y-3 lg:space-y-4">
-              <div className="flex flex-col lg:flex-row lg:items-center space-y-2 lg:space-y-0 lg:space-x-4">
-                <label className="text-sm font-medium text-gray-700">Số lượng:</label>
-                <div className="flex items-center border border-gray-300 rounded-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <label className="text-sm sm:text-base font-medium text-gray-700">Số lượng:</label>
+                <div className="flex items-center border border-gray-300 rounded-lg w-fit">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-2 hover:bg-gray-100 transition-colors"
+                    className="p-3 hover:bg-gray-100 transition-colors min-h-[44px] flex items-center justify-center"
                   >
-                    <Minus className="w-4 h-4" />
+                    <Minus className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
-                  <span className="px-4 py-2 font-medium">{quantity}</span>
+                  <span className="px-4 py-3 font-medium text-base min-w-[60px] text-center">{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="p-2 hover:bg-gray-100 transition-colors"
+                    className="p-3 hover:bg-gray-100 transition-colors min-h-[44px] flex items-center justify-center"
                   >
-                    <Plus className="w-4 h-4" />
+                    <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                 </div>
               </div>
 
-              <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4">
+              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
                 <button 
                   onClick={handleAddToCart}
-                  className="flex-1 bg-blackmores-teal text-white px-4 lg:px-6 py-3 rounded-lg hover:bg-blackmores-teal-dark transition-all duration-300 flex items-center justify-center space-x-2 font-medium text-sm lg:text-base hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="flex-1 bg-blackmores-teal text-white px-4 lg:px-6 py-3.5 rounded-lg hover:bg-blackmores-teal-dark transition-all duration-300 flex items-center justify-center space-x-2 font-medium text-sm sm:text-base hover:scale-105 shadow-lg hover:shadow-xl min-h-[48px]"
                 >
-                  <ShoppingCart className="w-5 h-5" />
+                  <ShoppingCart className="w-5 h-5 flex-shrink-0" />
                   <span>{isSubscription ? 'Đăng ký ngay' : 'Thêm vào giỏ hàng'}</span>
                 </button>
-                <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-300 lg:flex-shrink-0 hover:scale-105 hover:border-red-300 hover:text-red-500">
-                  <Heart className="w-5 h-5 text-gray-600" />
+                <button className="p-3.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-300 sm:flex-shrink-0 hover:scale-105 hover:border-red-300 hover:text-red-500 min-h-[48px] flex items-center justify-center">
+                  <Heart className="w-5 h-5 text-gray-600 hover:text-red-500" />
                 </button>
               </div>
               
               {/* Continue Shopping Button */}
               <button
                 onClick={handleContinueShopping}
-                className="w-full mt-3 bg-white border-2 border-blackmores-teal text-blackmores-teal px-4 lg:px-6 py-3 rounded-lg hover:bg-green-50 transition-all duration-300 font-medium text-sm lg:text-base hover:scale-[1.02]"
+                className="w-full mt-3 bg-white border-2 border-blackmores-teal text-blackmores-teal px-4 lg:px-6 py-3.5 rounded-lg hover:bg-green-50 transition-all duration-300 font-medium text-sm sm:text-base hover:scale-[1.02] min-h-[48px]"
               >
                 Tiếp tục mua sắm
               </button>
@@ -313,7 +313,7 @@ const ProductPage: React.FC = () => {
         {/* Product Information Tabs */}
         <div className="mt-8 lg:mt-16">
           <div className="border-b border-gray-200">
-            <nav className="flex space-x-4 lg:space-x-8 overflow-x-auto">
+            <nav className="flex space-x-2 sm:space-x-4 lg:space-x-8 overflow-x-auto scrollbar-hide">
               {[
                 { key: 'description', label: 'Mô tả' },
                 { key: 'benefits', label: 'Lợi ích' },
@@ -323,7 +323,7 @@ const ProductPage: React.FC = () => {
                 <button
                   key={tab.key}
                   onClick={() => setSelectedTab(tab.key)}
-                  className={`py-3 lg:py-4 px-2 lg:px-1 border-b-2 font-medium text-sm capitalize transition-colors whitespace-nowrap ${
+                  className={`py-3 lg:py-4 px-3 sm:px-4 lg:px-2 border-b-2 font-medium text-sm sm:text-base capitalize transition-colors whitespace-nowrap min-h-[48px] flex items-center ${
                     selectedTab === tab.key
                       ? 'border-blackmores-teal text-blackmores-teal'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -348,11 +348,11 @@ const ProductPage: React.FC = () => {
 
             {selectedTab === 'benefits' && (
               <div>
-                <h3 className="text-lg lg:text-xl font-semibold text-gray-900 mb-6">Lợi ích chính</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Lợi ích chính</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                   {product.benefits.map((benefit, index) => (
                     <div key={index} className="flex items-start space-x-3">
-                      <CheckCircle className="w-5 h-5 text-blackmores-teal mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-blackmores-teal mt-0.5 flex-shrink-0" />
                       <span className="text-sm lg:text-base text-gray-700">{benefit}</span>
                     </div>
                   ))}
@@ -362,11 +362,11 @@ const ProductPage: React.FC = () => {
 
             {selectedTab === 'ingredients' && (
               <div>
-                <h3 className="text-lg lg:text-xl font-semibold text-gray-900 mb-6">Thành phần hoạt tính</h3>
-                <div className="bg-gray-50 rounded-lg p-6">
+                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Thành phần hoạt tính</h3>
+                <div className="bg-gray-50 rounded-lg p-4 sm:p-6">
                   <ul className="space-y-2">
                     {product.ingredients.map((ingredient, index) => (
-                      <li key={index} className="text-sm lg:text-base text-gray-700">
+                      <li key={index} className="text-sm lg:text-base text-gray-700 leading-relaxed">
                         • {ingredient}
                       </li>
                     ))}
@@ -396,27 +396,27 @@ const ProductPage: React.FC = () => {
                 {/* Legacy Review Summary - Keep for display */}
                 <div className="space-y-6">
                   {/* Review Summary */}
-                  <div className="bg-gray-50 rounded-lg p-6 mb-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="bg-gray-50 rounded-lg p-4 sm:p-6 mb-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                       <div className="text-center">
-                        <div className="text-2xl lg:text-3xl font-bold text-gray-900">{product.rating}</div>
+                        <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">{product.rating}</div>
                         <div className="flex items-center justify-center space-x-1 mb-2">
                           {renderStars(product.rating)}
                         </div>
-                        <div className="text-sm text-gray-600">Dựa trên {product.reviews} đánh giá</div>
+                        <div className="text-xs sm:text-sm text-gray-600">Dựa trên {product.reviews} đánh giá</div>
                       </div>
                       <div className="lg:col-span-2">
                         <div className="space-y-2">
                           {[5, 4, 3, 2, 1].map(star => (
                             <div key={star} className="flex items-center space-x-2">
-                              <span className="text-sm w-8">{star}★</span>
+                              <span className="text-xs sm:text-sm w-6 sm:w-8">{star}★</span>
                               <div className="flex-1 bg-gray-200 rounded-full h-2">
                                 <div 
                                   className="bg-yellow-400 h-2 rounded-full" 
                                   style={{ width: `${star === 5 ? 70 : star === 4 ? 20 : star === 3 ? 7 : star === 2 ? 2 : 1}%` }}
                                 ></div>
                               </div>
-                              <span className="text-sm text-gray-600 w-8">
+                              <span className="text-xs sm:text-sm text-gray-600 w-6 sm:w-8">
                                 {star === 5 ? '70%' : star === 4 ? '20%' : star === 3 ? '7%' : star === 2 ? '2%' : '1%'}
                               </span>
                             </div>
@@ -528,7 +528,7 @@ const ProductPage: React.FC = () => {
 
                   {/* Load More Reviews */}
                   <div className="text-center">
-                    <button className="bg-gray-100 text-gray-700 px-4 lg:px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm lg:text-base">
+                    <button className="bg-gray-100 text-gray-700 px-4 lg:px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors text-sm sm:text-base min-h-[44px]">
                       Xem thêm đánh giá
                     </button>
                   </div>

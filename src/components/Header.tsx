@@ -101,7 +101,7 @@ const Header: React.FC = () => {
             <img
               src="https://www.blackmores.com.au/-/media/project/blackmores-group/au/logo/blackmroes-logo.svg?iar=0&hash=6C4AFC91AD53B13B6ACCFEB452D06F68"
               alt="Blackmores"
-              className="h-8 w-auto"
+              className="w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
             />
           </Link>
 
@@ -289,17 +289,17 @@ const Header: React.FC = () => {
             
             <Link 
               to="/wishlist"
-              className="p-2 text-gray-600 hover:text-blackmores-teal transition-colors rounded-lg hover:bg-gray-50 relative"
+              className="p-2.5 text-gray-600 hover:text-blackmores-teal transition-colors rounded-lg hover:bg-gray-50 relative min-h-[44px] flex items-center justify-center"
             >
-              <Heart className="w-6 h-6" />
+              <Heart className="w-5 h-5 sm:w-6 sm:h-6" />
             </Link>
             <button 
               onClick={() => dispatch({ type: 'TOGGLE_CART' })}
-              className="p-2 text-gray-600 hover:text-blackmores-teal transition-colors relative rounded-lg hover:bg-gray-50"
+              className="p-2.5 text-gray-600 hover:text-blackmores-teal transition-colors relative rounded-lg hover:bg-gray-50 min-h-[44px] flex items-center justify-center"
             >
-              <ShoppingCart className="w-6 h-6" />
+              <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
               {state.items.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-blackmores-teal text-white text-xs rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1">
+                <span className="absolute -top-1 -right-1 bg-blackmores-teal text-white text-xs rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1 font-medium">
                   {state.items.reduce((total, item) => total + item.quantity, 0)}
                 </span>
               )}
@@ -307,10 +307,10 @@ const Header: React.FC = () => {
 
             {/* Mobile menu button */}
             <button
-              className="lg:hidden p-2 text-gray-600 hover:text-blackmores-teal"
+              className="lg:hidden p-2.5 text-gray-600 hover:text-blackmores-teal min-h-[44px] flex items-center justify-center"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>
           </div>
         </div>
@@ -318,8 +318,8 @@ const Header: React.FC = () => {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="lg:hidden border-t border-gray-200 bg-white">
-          <div className="px-4 py-2">
+        <div className="lg:hidden border-t border-gray-200 bg-white shadow-lg">
+          <div className="px-4 py-4">
             <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
@@ -327,13 +327,13 @@ const Header: React.FC = () => {
                 onChange={handleSearchInputChange}
                 onKeyDown={handleSearchKeyDown}
                 placeholder="Tìm kiếm sản phẩm..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
+                className="w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
               />
               <button
                 type="submit"
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blackmores-teal transition-colors"
               >
-                <Search className="w-4 h-4" />
+                <Search className="w-5 h-5" />
               </button>
               {searchQuery && (
                 <button
@@ -341,23 +341,23 @@ const Header: React.FC = () => {
                   onClick={() => setSearchQuery('')}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-5 h-5" />
                 </button>
               )}
             </form>
           </div>
-          <nav className="px-4 pb-4 space-y-2">
+          <nav className="px-4 pb-6 space-y-1">
             {navigation.map((item) => {
               if (item.name === 'Sản phẩm') {
                 return (
                   <div key={item.name}>
-                    <div className="px-3 py-2 text-gray-700 font-medium text-sm">
+                    <div className="px-3 py-3 text-gray-700 font-medium text-base">
                       {item.name}
                     </div>
-                    <div className="ml-4 space-y-1">
+                    <div className="ml-4 space-y-0.5">
                       <Link
                         to="/"
-                        className="block px-3 py-2 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm"
+                        className="block px-3 py-3 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Tất cả sản phẩm
@@ -366,7 +366,7 @@ const Header: React.FC = () => {
                         <Link
                           key={category}
                           to={`/?category=${encodeURIComponent(category)}`}
-                          className="block px-3 py-2 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm"
+                          className="block px-3 py-3 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
                           onClick={() => {
                             setIsMenuOpen(false);
                             // Auto-scroll to products section after navigation
@@ -390,7 +390,7 @@ const Header: React.FC = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="block px-3 py-2 text-gray-700 hover:text-blackmores-teal hover:bg-gray-50 rounded-md"
+                  className="block px-3 py-3 text-gray-700 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
@@ -400,62 +400,61 @@ const Header: React.FC = () => {
             
             {/* Auth buttons for mobile */}
             {!user && (
-              <div className="border-t border-gray-200 pt-4 space-y-2">
+              <div className="border-t border-gray-200 pt-4 space-y-3">
                 <button
                   onClick={() => openAuthModal('signin')}
-                  className="block w-full text-left px-3 py-2 text-blackmores-teal hover:bg-gray-50 rounded-md font-medium"
+                  className="block w-full text-left px-3 py-3 text-blackmores-teal hover:bg-gray-50 rounded-md font-medium text-base min-h-[44px] flex items-center"
                 >
                   Đăng nhập
                 </button>
                 <button
                   onClick={() => openAuthModal('signup')}
-                  className="block w-full text-left px-3 py-2 bg-blackmores-teal text-white hover:bg-blackmores-teal-dark rounded-md font-medium"
+                  className="block w-full text-left px-3 py-3 bg-blackmores-teal text-white hover:bg-blackmores-teal-dark rounded-md font-medium text-base min-h-[44px] flex items-center"
                 >
                   Đăng ký
                 </button>
               </div>
             )}
             
-            {/* User menu for mobile */}
             {user && (
-              <div className="border-t border-gray-200 pt-4">
-                <div className="px-3 py-2 text-gray-700 font-medium text-sm">
+              <div>
+                <div className="px-3 py-3 text-gray-700 font-medium text-base">
                   {profile?.full_name || user.email?.split('@')[0] || 'Tài khoản'}
                 </div>
-                <div className="ml-4 space-y-1">
+                <div className="ml-4 space-y-0.5">
                   <Link
                     to="/profile"
                     onClick={() => setIsMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm"
+                    className="block w-full text-left px-3 py-3 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
                   >
                     Thông tin cá nhân
                   </Link>
                   <Link
                     to="/my-orders"
                     onClick={() => setIsMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm"
+                    className="block w-full text-left px-3 py-3 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
                   >
                     Đơn hàng của tôi
                   </Link>
                   <Link
                     to="/wishlist"
                     onClick={() => setIsMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm"
+                    className="block w-full text-left px-3 py-3 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
                   >
                     Danh sách yêu thích
                   </Link>
                   <Link
                     to="/addresses"
                     onClick={() => setIsMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm"
+                    className="block w-full text-left px-3 py-3 text-gray-600 hover:text-blackmores-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
                   >
                     Địa chỉ giao hàng
                   </Link>
                   <button
                     onClick={handleSignOut}
-                    className="flex items-center w-full text-left px-3 py-2 text-red-600 hover:bg-red-50 rounded-md text-sm"
+                    className="flex items-center w-full text-left px-3 py-3 text-red-600 hover:bg-red-50 rounded-md text-sm sm:text-base min-h-[44px]"
                   >
-                    <LogOut className="w-4 h-4 mr-2" />
+                    <LogOut className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     Đăng xuất
                   </button>
                 </div>

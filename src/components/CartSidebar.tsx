@@ -108,28 +108,28 @@ const CartSidebar: React.FC = () => {
       <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl">
         <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="bg-blackmores-teal px-4 sm:px-6 py-4 text-white">
+          <div className="bg-blackmores-teal px-4 sm:px-6 py-4 sm:py-5 text-white">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <ShoppingBag className="w-5 h-5" />
+                <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
                 <span className="font-semibold text-sm sm:text-base">
                   {state.items.length} sản phẩm trong giỏ hàng
                 </span>
               </div>
               <button
                 onClick={() => dispatch({ type: 'TOGGLE_CART' })}
-                className="p-1 hover:bg-blackmores-teal-dark rounded"
+                className="p-2 hover:bg-blackmores-teal-dark rounded min-h-[40px] flex items-center justify-center"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
           </div>
 
           {/* Subscription Banner */}
           {state.items.some(item => item.product.isSubscription) && (
-            <div className="bg-blue-50 px-4 sm:px-6 py-3 border-b">
+            <div className="bg-blue-50 px-4 sm:px-6 py-3 sm:py-4 border-b">
               <div className="flex items-center space-x-2">
-                <Info className="w-4 h-4 text-blackmores-blue" />
+                <Info className="w-4 h-4 sm:w-5 sm:h-5 text-blackmores-blue flex-shrink-0" />
                 <span className="text-xs sm:text-sm text-blackmores-blue font-medium">
                   Tạo đăng ký sản phẩm để nhận giảm giá 30% cộng MIỄN PHÍ VẬN CHUYỂN!
                 </span>
@@ -138,25 +138,25 @@ const CartSidebar: React.FC = () => {
           )}
 
           {/* Cart Items */}
-          <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4">
+          <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-5">
             {state.items.length === 0 ? (
               <div className="text-center py-12">
-                <ShoppingBag className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-               <p className="text-gray-500">Giỏ hàng của bạn đang trống</p>
+                <ShoppingBag className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-500 text-sm sm:text-base">Giỏ hàng của bạn đang trống</p>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {state.items.map((item) => (
-                  <div key={item.product.id} className="bg-white border rounded-lg p-3 sm:p-4">
+                  <div key={item.product.id} className="bg-white border rounded-lg p-3 sm:p-4 shadow-sm">
                     <div className="flex space-x-4">
                       <img
                         src={item.product.image}
                         alt={item.product.name}
-                        className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded flex-shrink-0"
+                        className="w-14 h-14 sm:w-16 sm:h-16 object-cover rounded flex-shrink-0"
                       />
                       <div className="flex-1">
                         <div className="flex items-start justify-between">
-                          <h3 className="font-medium text-blackmores-text-dark text-xs sm:text-sm pr-2 line-clamp-2">
+                          <h3 className="font-medium text-blackmores-text-dark text-sm sm:text-base pr-2 line-clamp-2 leading-tight">
                             {item.product.name}
                           </h3>
                           <button
@@ -164,35 +164,35 @@ const CartSidebar: React.FC = () => {
                               type: 'REMOVE_ITEM',
                               payload: item.product.id
                             })}
-                            className="text-gray-400 hover:text-red-500 transition-colors p-1 rounded hover:bg-red-50"
+                            className="text-gray-400 hover:text-red-500 transition-colors p-1.5 rounded hover:bg-red-50 min-h-[36px] flex items-center justify-center"
                             title="Remove item"
                           >
-                            <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 space-y-2 sm:space-y-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-3 space-y-2 sm:space-y-0">
                           <div className="flex items-center space-x-1 sm:space-x-2">
                             <button
                               onClick={() => dispatch({
                                 type: 'UPDATE_QUANTITY',
                                 payload: { id: item.product.id, quantity: Math.max(1, item.quantity - 1) }
                               })}
-                              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
                             >
-                              <Minus className="w-2 h-2 sm:w-3 sm:h-3" />
+                              <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
                             </button>
-                            <span className="text-xs sm:text-sm font-medium px-1">{item.quantity}</span>
+                            <span className="text-sm sm:text-base font-medium px-2 min-w-[32px] text-center">{item.quantity}</span>
                             <button
                               onClick={() => dispatch({
                                 type: 'UPDATE_QUANTITY',
                                 payload: { id: item.product.id, quantity: item.quantity + 1 }
                               })}
-                              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
                             >
-                              <Plus className="w-2 h-2 sm:w-3 sm:h-3" />
+                              <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                             </button>
                           </div>
-                          <span className="font-semibold text-blackmores-teal text-sm sm:text-base">
+                          <span className="font-semibold text-blackmores-teal text-sm sm:text-base lg:text-lg">
                             {formatPrice((item.isSubscription ? item.product.price * 0.7 : item.product.price) * item.quantity)}
                           </span>
                         </div>
@@ -210,13 +210,13 @@ const CartSidebar: React.FC = () => {
                                     deliveryFrequency: e.target.value 
                                   }
                                 })}
-                                className="w-full border border-gray-300 rounded px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blackmores-teal appearance-none pr-6 sm:pr-8"
+                                className="w-full border border-gray-300 rounded px-3 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blackmores-teal appearance-none pr-8"
                               >
                                 <option value="Giao hàng mỗi 8 tuần (giảm 20%)">Giao hàng mỗi 8 tuần (giảm 20%)</option>
                                 <option value="Giao hàng mỗi 4 tuần (giảm 25%)">Giao hàng mỗi 4 tuần (giảm 25%)</option>
                                 <option value="Giao hàng mỗi 12 tuần (giảm 15%)">Giao hàng mỗi 12 tuần (giảm 15%)</option>
                               </select>
-                              <ChevronDown className="absolute right-1 sm:right-2 top-1/2 transform -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 text-gray-400 pointer-events-none" />
+                              <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                             </div>
                           </div>
                         )}
@@ -230,16 +230,16 @@ const CartSidebar: React.FC = () => {
 
           {/* Cart Summary */}
           {state.items.length > 0 && (
-            <div className="border-t bg-blackmores-gray-light px-4 sm:px-6 py-4 space-y-4">
+            <div className="border-t bg-blackmores-gray-light px-4 sm:px-6 py-4 sm:py-5 space-y-4">
               {/* Discount */}
               {subscriptionDiscount > 0 && ( // Only show this block if there's a subscription discount
                 <div className="space-y-2">
-                 <h3 className="font-medium text-xs sm:text-sm">Giảm giá</h3>
-                  <div className="flex justify-between text-sm">
+                  <h3 className="font-medium text-sm sm:text-base">Giảm giá</h3>
+                  <div className="flex justify-between text-sm sm:text-base">
                    <span>Giảm 30% đăng ký</span>
                     <span>-{formatPrice(subscriptionDiscount)}</span>
                   </div>
-                  <div className="flex justify-between font-semibold">
+                  <div className="flex justify-between font-semibold text-sm sm:text-base">
                    <span>Tổng giảm giá</span>
                     <span>-{formatPrice(subscriptionDiscount)}</span>
                   </div>
@@ -250,7 +250,7 @@ const CartSidebar: React.FC = () => {
               <div className="space-y-2">
                 {!state.appliedPromoCode ? (
                   <>
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-2 sm:space-x-3">
                       <input
                         type="text"
                         value={promoCode}
@@ -260,53 +260,53 @@ const CartSidebar: React.FC = () => {
                           setPromoSuccess('');
                         }}
                         placeholder="Nhập mã giảm giá"
-                        className="flex-1 border border-gray-300 rounded px-2 sm:px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
+                        className="flex-1 border border-gray-300 rounded px-3 py-2.5 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
                       />
                       <button
                         onClick={() => setShowCamera(true)}
-                        className="p-2 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+                        className="p-2.5 border border-gray-300 rounded hover:bg-gray-50 transition-colors min-h-[44px] flex items-center justify-center"
                         title="Chụp mã giảm giá"
                         aria-label="Chụp mã giảm giá bằng camera"
                       >
-                        <Camera className="w-4 h-4 text-gray-600" />
+                        <Camera className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
                       </button>
                       <button 
                         onClick={handleApplyPromoCode}
-                        className="bg-blackmores-teal text-white px-3 sm:px-4 py-2 rounded font-medium text-xs sm:text-sm hover:bg-blackmores-teal-dark transition-colors"
+                        className="bg-blackmores-teal text-white px-4 py-2.5 rounded font-medium text-sm sm:text-base hover:bg-blackmores-teal-dark transition-colors min-h-[44px] flex items-center justify-center"
                       >
                         Áp dụng
                       </button>
                     </div>
                     {promoError && (
-                      <div className="flex items-center space-x-2 text-red-600 text-sm">
-                        <AlertCircle className="w-4 h-4" />
+                      <div className="flex items-start space-x-2 text-red-600 text-xs sm:text-sm">
+                        <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                         <span>{promoError}</span>
                       </div>
                     )}
                     {promoSuccess && (
-                      <div className="flex items-center space-x-2 text-green-600 text-sm">
-                        <Check className="w-4 h-4" />
+                      <div className="flex items-start space-x-2 text-green-600 text-xs sm:text-sm">
+                        <Check className="w-4 h-4 flex-shrink-0 mt-0.5" />
                         <span>{promoSuccess}</span>
                       </div>
                     )}
                   </>
                 ) : (
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-3 sm:p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <Check className="w-4 h-4 text-green-600" />
-                        <span className="text-sm font-medium text-green-800">
+                        <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
+                        <span className="text-sm sm:text-base font-medium text-green-800">
                           Mã: {state.appliedPromoCode}
                         </span>
                       </div>
                       <button
                         onClick={handleRemovePromoCode}
-                        className="text-red-600 hover:text-red-800 text-sm font-medium"
+                        className="text-red-600 hover:text-red-800 text-sm sm:text-base font-medium"
                       >
                         Xóa
                       </button>
                     </div>
-                    <p className="text-sm text-green-600 mt-1">
+                    <p className="text-xs sm:text-sm text-green-600 mt-1">
                       Giảm {state.promoDiscount.toLocaleString('vi-VN')}đ
                     </p>
                   </div>
@@ -315,48 +315,48 @@ const CartSidebar: React.FC = () => {
 
               {/* Savings */}
               {totalSavings > 0 && (
-                <div className="text-center py-2">
+                <div className="text-center py-2 sm:py-3">
                   {subscriptionDiscount > 0 && ( // Show subscription savings only if applicable
-                    <div className="text-blackmores-blue font-semibold">
+                    <div className="text-blackmores-blue font-semibold text-sm sm:text-base">
                       Tiết kiệm đăng ký: {formatPrice(subscriptionDiscount)}
                     </div>
                   )}
                   {promoCodeDiscount > 0 && ( // Show promo discount only if applicable
-                    <div className="text-green-600 font-semibold">
+                    <div className="text-green-600 font-semibold text-sm sm:text-base">
                       Giảm giá khuyến mãi: {formatPrice(promoCodeDiscount)}
                     </div>
                   )}
-                  <div className="text-blackmores-blue font-bold mt-1">
+                  <div className="text-blackmores-blue font-bold mt-1 text-sm sm:text-base">
                     Tổng tiết kiệm: {formatPrice(totalSavings)}
                   </div>
                 </div>
               )}
 
               {/* Total */}
-              <div className="text-center py-2 border-t">
-                <span className="text-base sm:text-lg font-bold">
+              <div className="text-center py-3 border-t">
+                <span className="text-lg sm:text-xl font-bold">
                   Tổng cộng {formatPrice(total)}
                 </span>
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <button
                   onClick={() => dispatch({ type: 'TOGGLE_CART' })}
-                  className="w-full border-2 border-blackmores-teal text-blackmores-teal py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base hover:bg-blackmores-teal hover:text-white transition-colors"
+                  className="w-full border-2 border-blackmores-teal text-blackmores-teal py-3 sm:py-3.5 rounded-full font-semibold text-sm sm:text-base hover:bg-blackmores-teal hover:text-white transition-colors min-h-[48px]"
                 >
                   Tiếp tục mua sắm
                 </button>
                 <button 
                   onClick={handleCheckout}
-                  className="w-full bg-blackmores-teal text-white py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base hover:bg-blackmores-teal-dark transition-colors"
+                  className="w-full bg-blackmores-teal text-white py-3 sm:py-3.5 rounded-full font-semibold text-sm sm:text-base hover:bg-blackmores-teal-dark transition-colors min-h-[48px]"
                 >
                   Thanh toán
                 </button>
               </div>
 
               {/* Free Shipping Notice */}
-              <div className="text-center text-xs text-blackmores-text-medium">
+              <div className="text-center text-xs sm:text-sm text-blackmores-text-medium">
                 <p>Miễn phí vận chuyển!</p>
                 <p className="hidden sm:block">Giới hạn {formatPrice(50000)} mỗi đơn hàng. <a href="#" className="text-blackmores-teal underline">Xem chính sách mua hàng tại đây.</a></p>
               </div>

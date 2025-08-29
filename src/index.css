@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide scrollbar for mobile filter overflow */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Smooth scrolling for the entire page */
 html {
   scroll-behavior: smooth;
@@ -75,65 +85,65 @@ html {
 
 /* Bold subheadings */
 .prose h2 {
-  @apply font-bold text-2xl text-gray-900 mt-8 mb-4 border-b border-gray-200 pb-2;
+  @apply font-bold text-xl sm:text-2xl text-gray-900 mt-6 sm:mt-8 mb-3 sm:mb-4 border-b border-gray-200 pb-2;
 }
 
 .prose h3 {
-  @apply font-bold text-xl text-gray-900 mt-6 mb-3;
+  @apply font-bold text-lg sm:text-xl text-gray-900 mt-4 sm:mt-6 mb-2 sm:mb-3;
 }
 
 .prose h4 {
-  @apply font-semibold text-lg text-gray-900 mt-4 mb-2;
+  @apply font-semibold text-base sm:text-lg text-gray-900 mt-3 sm:mt-4 mb-2;
 }
 
 /* Paragraph spacing and readability */
 .prose p {
-  @apply text-gray-700 leading-relaxed mb-4;
+  @apply text-sm sm:text-base text-gray-700 leading-relaxed mb-3 sm:mb-4;
 }
 
 /* Horizontal rules */
 .prose hr {
-  @apply border-gray-300 my-8;
+  @apply border-gray-300 my-6 sm:my-8;
 }
 
 /* Enhanced blockquotes */
 .prose blockquote {
-  @apply border-l-4 border-blackmores-teal bg-green-50 p-4 my-6 italic text-gray-700;
+  @apply border-l-4 border-blackmores-teal bg-green-50 p-3 sm:p-4 my-4 sm:my-6 italic text-sm sm:text-base text-gray-700;
 }
 
 /* Code styling */
 .prose code {
-  @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono text-gray-800;
+  @apply bg-gray-100 px-2 py-1 rounded text-xs sm:text-sm font-mono text-gray-800;
 }
 
 /* Table styling */
 .prose table {
-  @apply w-full border-collapse border border-gray-300 my-6;
+  @apply w-full border-collapse border border-gray-300 my-4 sm:my-6 text-sm sm:text-base;
 }
 
 .prose th {
-  @apply bg-gray-100 border border-gray-300 px-4 py-2 font-semibold text-left;
+  @apply bg-gray-100 border border-gray-300 px-2 sm:px-4 py-2 font-semibold text-left text-xs sm:text-sm;
 }
 
 .prose td {
-  @apply border border-gray-300 px-4 py-2;
+  @apply border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm;
 }
 
 /* References section styling */
 .prose .article-references {
-  @apply bg-gray-50 border border-gray-200 rounded-lg p-6 my-8;
+  @apply bg-gray-50 border border-gray-200 rounded-lg p-4 sm:p-6 my-6 sm:my-8;
 }
 
 .prose .article-references h3 {
-  @apply text-xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-300;
+  @apply text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 pb-2 border-b border-gray-300;
 }
 
 .prose .article-references ul {
-  @apply list-none space-y-3 mb-0;
+  @apply list-none space-y-2 sm:space-y-3 mb-0;
 }
 
 .prose .article-references li {
-  @apply text-gray-700 leading-relaxed pl-0;
+  @apply text-sm sm:text-base text-gray-700 leading-relaxed pl-0;
 }
 
 .prose .article-references a {
@@ -143,6 +153,30 @@ html {
 .prose .article-references li::before {
   content: "📚";
   @apply mr-3;
+}
+
+/* Improved touch targets for mobile */
+@media (max-width: 640px) {
+  button, a, input, select, textarea {
+    min-height: 44px;
+  }
+  
+  /* Ensure clickable elements have adequate spacing */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Better line height for mobile readability */
+@media (max-width: 640px) {
+  body {
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3;
+  }
 }
 /* Card alignment utilities */
 .card-grid {
