@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer: React.FC = () => {
@@ -44,10 +45,10 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Pháp lý</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="/privacy-policy" className="text-gray-300 hover:text-white transition-colors">Chính sách bảo mật</a></li>
-              <li><a href="/editorial-policy" className="text-gray-300 hover:text-white transition-colors">Chính sách biên tập</a></li>
-              <li><a href="/terms-of-use" className="text-gray-300 hover:text-white transition-colors">Điều khoản sử dụng</a></li>
-              <li><a href="/cookies" className="text-gray-300 hover:text-white transition-colors">Cookies</a></li>
+              <li><Link to="/privacy-policy" className="text-gray-300 hover:text-white transition-colors">Chính sách bảo mật</Link></li>
+              <li><Link to="/editorial-policy" className="text-gray-300 hover:text-white transition-colors">Chính sách biên tập</Link></li>
+              <li><Link to="/terms-of-use" className="text-gray-300 hover:text-white transition-colors">Điều khoản sử dụng</Link></li>
+              <li><Link to="/cookies" className="text-gray-300 hover:text-white transition-colors">Cookies</Link></li>
             </ul>
           </div>
 
