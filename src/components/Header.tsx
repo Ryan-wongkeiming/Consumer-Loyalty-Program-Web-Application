@@ -101,7 +101,7 @@ const Header: React.FC = () => {
             <img
               src="https://www.blackmores.com.au/-/media/project/blackmores-group/au/logo/blackmroes-logo.svg?iar=0&hash=6C4AFC91AD53B13B6ACCFEB452D06F68"
               alt="Blackmores"
-              className="w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
+              className="h-8 w-auto"
             />
           </Link>
 
