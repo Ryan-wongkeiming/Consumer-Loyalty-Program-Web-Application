@@ -163,10 +163,10 @@ const HomePage: React.FC = () => {
           <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-6 mb-8 shadow-2xl transform hover:scale-[1.02] transition-all duration-300">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
               <div className="text-center md:text-left">
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                <h2 className="text-xl md:text-2xl font-bold mb-2">
                   🎁 Trải Nghiệm Blackmores Cải Tiến Mới
                 </h2>
-                <p className="text-orange-100 text-lg">
+                <p className="text-base md:text-lg">
                   Nhận Ngay 2 Gói Dùng Thử Miễn Phí - Giao Hàng Tận Nơi!
                 </p>
                 <div className="flex items-center justify-center md:justify-start space-x-4 mt-3">

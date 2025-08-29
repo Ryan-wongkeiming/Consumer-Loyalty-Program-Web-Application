@@ -241,13 +241,13 @@ const FreeSamplePage: React.FC = () => {
               🔥 ƯU ĐÃI CÓ HẠN - NHANH TAY! 🔥
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Trải Nghiệm Blackmores Gold
+              Trải Nghiệm Blackmores
             </h1>
             <div className="text-2xl md:text-3xl font-bold text-orange-600 mb-4">
               MIỄN PHÍ 100% - 2 GÓI DÙNG THỬ
             </div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Khám phá sức mạnh của dinh dưỡng Úc với 2 gói Blackmores Gold hoàn toàn MIỄN PHÍ!
+              Khám phá sức mạnh của dinh dưỡng Úc với 2 gói Blackmores hoàn toàn MIỄN PHÍ!
             </p>
             
             {/* Urgency Counter */}
@@ -551,7 +551,7 @@ const FreeSamplePage: React.FC = () => {
               Tại sao chọn Blackmores?
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Hơn 90 năm kinh nghiệm trong lĩnh vực chăm sóc sức khỏe tự nhiên
+              <strong>Sản phẩm:</strong> 2 gói Blackmores Cải Tiến Mới
             </p>
           </div>
 

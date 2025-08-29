@@ -320,7 +320,7 @@ const ProductPage: React.FC = () => {
               Chưa chắc chắn về sản phẩm?
             </h2>
             <p className="text-lg lg:text-xl text-orange-100 mb-6 max-w-2xl mx-auto">
-              Hãy thử miễn phí trước khi mua! Nhận ngay 2 gói Blackmores để trải nghiệm chất lượng
+              Nhận ngay 2 gói Blackmores miễn phí để trải nghiệm chất lượng
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-6 mb-6">
               <div className="flex items-center space-x-2 text-orange-100">
