@@ -293,7 +293,7 @@ const FreeSamplePage: React.FC = () => {
             </div>
             
             <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-              ✨ Không mất phí, không ràng buộc - Chỉ cần 2 phút đăng ký!
+              ✨ Không mất phí, thao tác đơn giản - Chỉ cần 2 phút đăng ký!
             </p>
             
             {/* Benefits Grid */}
@@ -303,7 +303,7 @@ const FreeSamplePage: React.FC = () => {
                   <CheckCircle className="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Hoàn toàn miễn phí</h3>
-                <p className="text-gray-600 text-sm">Không mất phí vận chuyển, không ràng buộc</p>
+                <p className="text-gray-600 text-sm">Không mất phí vận chuyển, thao tác đơn giản</p>
               </div>
               
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-white/50">
