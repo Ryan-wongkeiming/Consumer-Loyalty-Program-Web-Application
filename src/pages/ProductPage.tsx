@@ -310,40 +310,42 @@ const ProductPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Free Sample CTA Banner */}
-        <div className="mt-8 lg:mt-12 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-2xl p-6 lg:p-8 text-white shadow-2xl">
-          <div className="text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-4">
-              <span className="text-3xl">🎁</span>
+        {/* Free Sample CTA Banner - Only show for Infant Formula category */}
+        {product.category === 'Infant Formula' && (
+          <div className="mt-8 lg:mt-12 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-2xl p-6 lg:p-8 text-white shadow-2xl">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-4">
+                <span className="text-3xl">🎁</span>
+              </div>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-3">
+                Chưa chắc chắn về sản phẩm?
+              </h2>
+              <p className="text-lg lg:text-xl text-orange-100 mb-6 max-w-2xl mx-auto">
+                Nhận ngay 2 gói Blackmores miễn phí để trải nghiệm chất lượng
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-6 mb-6">
+                <div className="flex items-center space-x-2 text-orange-100">
+                  <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center text-orange-600 font-bold text-sm">✓</span>
+                  <span>100% miễn phí</span>
+                </div>
+                <div className="flex items-center space-x-2 text-orange-100">
+                  <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center text-orange-600 font-bold text-sm">✓</span>
+                  <span>Giao hàng tận nơi</span>
+                </div>
+                <div className="flex items-center space-x-2 text-orange-100">
+                  <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center text-orange-600 font-bold text-sm">✓</span>
+                  <span>đăng kí đơn giản</span>
+                </div>
+              </div>
+              <Link
+                to="/free-sample"
+                className="inline-block bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110"
+              >
+                ĐĂNG KÝ NHẬN MẪU MIỄN PHÍ 🚀
+              </Link>
             </div>
-            <h2 className="text-2xl lg:text-3xl font-bold mb-3">
-              Chưa chắc chắn về sản phẩm?
-            </h2>
-            <p className="text-lg lg:text-xl text-orange-100 mb-6 max-w-2xl mx-auto">
-              Nhận ngay 2 gói Blackmores miễn phí để trải nghiệm chất lượng
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-6 mb-6">
-              <div className="flex items-center space-x-2 text-orange-100">
-                <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center text-orange-600 font-bold text-sm">✓</span>
-                <span>100% miễn phí</span>
-              </div>
-              <div className="flex items-center space-x-2 text-orange-100">
-                <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center text-orange-600 font-bold text-sm">✓</span>
-                <span>Giao hàng tận nơi</span>
-              </div>
-              <div className="flex items-center space-x-2 text-orange-100">
-                <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center text-orange-600 font-bold text-sm">✓</span>
-                <span>Không ràng buộc</span>
-              </div>
-            </div>
-            <Link
-              to="/free-sample"
-              className="inline-block bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110"
-            >
-              ĐĂNG KÝ NHẬN MẪU MIỄN PHÍ 🚀
-            </Link>
           </div>
-        </div>
+        )}
 
         {/* Product Information Tabs */}
         <div className="mt-8 lg:mt-16">
