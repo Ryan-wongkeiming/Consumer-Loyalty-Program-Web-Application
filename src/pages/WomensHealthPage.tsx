@@ -234,7 +234,7 @@ const WomensHealthPage: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <div className="text-center md:text-left">
               <h2 className="text-xl md:text-2xl font-bold mb-2">
-                🎁 Quan tâm đến sức khỏe phụ nữ?
+                🎁 Khám phá sức mạnh của dinh dưỡng Úc cho trẻ?
               </h2>
               <p className="text-orange-100">
                 Nhận ngay 2 gói Blackmores miễn phí để trải nghiệm!

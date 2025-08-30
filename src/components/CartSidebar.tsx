@@ -365,7 +365,7 @@ const CartSidebar: React.FC = () => {
               <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 rounded-lg text-center">
                 <div className="flex items-center justify-center space-x-2 mb-2">
                   <span className="text-xl">🎁</span>
-                  <span className="font-bold text-sm">Thử miễn phí trước khi mua!</span>
+                  <span className="font-bold text-sm">Đăng kí trải nghiệm thanh thử Blackmores cho bé ngay!</span>
                 </div>
                 <p className="text-xs text-orange-100 mb-3">
                   Nhận 2 gói Blackmores miễn phí để trải nghiệm
