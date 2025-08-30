@@ -315,14 +315,12 @@ const ProductPage: React.FC = () => {
           <div className="mt-8 lg:mt-12 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-2xl p-6 lg:p-8 text-white shadow-2xl">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-4">
-                <span className="text-3xl">🎁</span>
+                🎁 Dùng thử miễn phí cho bé?
               </div>
               <h2 className="text-2xl lg:text-3xl font-bold mb-3">
                 Chưa chắc chắn về sản phẩm?
               </h2>
-              <p className="text-lg lg:text-xl text-orange-100 mb-6 max-w-2xl mx-auto">
-                Nhận ngay 2 gói Blackmores miễn phí để trải nghiệm chất lượng
-              </p>
+              <p className="text-orange-100">2 gói miễn phí!</p>
               <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-6 mb-6">
                 <div className="flex items-center space-x-2 text-orange-100">
                   <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center text-orange-600 font-bold text-sm">✓</span>

@@ -328,7 +328,7 @@ const FreeSamplePage: React.FC = () => {
               MIỄN PHÍ 100% - 2 GÓI DÙNG THỬ
             </div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Khám phá sức mạnh của dinh dưỡng Úc với 2 gói Blackmores hoàn toàn MIỄN PHÍ!
+              2 gói Blackmores hoàn toàn MIỄN PHÍ!
             </p>
             
             {/* Urgency Counter */}
@@ -374,7 +374,7 @@ const FreeSamplePage: React.FC = () => {
             </div>
             
             <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-              ✨ Không mất phí, thao tác đơn giản - Chỉ cần 2 phút đăng ký!
+              ✨ Chỉ cần 2 phút đăng ký!
             </p>
             
             {/* Benefits Grid */}
@@ -384,7 +384,7 @@ const FreeSamplePage: React.FC = () => {
                   <CheckCircle className="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Hoàn toàn miễn phí</h3>
-                <p className="text-gray-600 text-sm">Không mất phí vận chuyển, thao tác đơn giản</p>
+                <p className="text-gray-600 text-sm">Không mất phí vận chuyển</p>
               </div>
               
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-white/50">
@@ -392,7 +392,7 @@ const FreeSamplePage: React.FC = () => {
                   <Truck className="w-6 h-6 text-emerald-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Giao hàng tận nơi</h3>
-                <p className="text-gray-600 text-sm">Nhận sản phẩm ngay tại nhà trong 3-5 ngày</p>
+                <p className="text-gray-600 text-sm">3-5 ngày giao hàng</p>
               </div>
               
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-white/50">
@@ -400,7 +400,7 @@ const FreeSamplePage: React.FC = () => {
                   <Heart className="w-6 h-6 text-orange-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Chăm sóc sức khỏe</h3>
-                <p className="text-gray-600 text-sm">Trải nghiệm chất lượng sản phẩm cao cấp</p>
+                <p className="text-gray-600 text-sm">Chất lượng cao cấp</p>
               </div>
             </div>
           </div>

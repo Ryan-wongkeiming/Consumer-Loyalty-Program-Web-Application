@@ -171,11 +171,22 @@ html {
 /* Better line height for mobile readability */
 @media (max-width: 640px) {
   body {
-    line-height: 1.6;
+    line-height: 1.7;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    line-height: 1.3;
+    line-height: 1.4;
+  }
+  
+  /* Add more breathing room for mobile content */
+  .mobile-spacing {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  /* Reduce text density on mobile */
+  p {
+    margin-bottom: 1.25rem;
   }
 }
 /* Card alignment utilities */
