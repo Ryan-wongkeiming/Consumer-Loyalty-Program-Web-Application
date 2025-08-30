@@ -176,32 +176,36 @@ const SearchResultsPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-4">
               <span className="text-sm font-medium text-gray-700">Lọc theo:</span>
-              <select
-                value={selectedFilter}
-                onChange={(e) => setSelectedFilter(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
-              >
-                <option value="All">Tất cả kết quả</option>
-                <option value="Product">Sản phẩm</option>
-                <option value="Article">Bài viết</option>
-                <option value="Topic">Chủ đề sức khỏe</option>
-              </select>
+              <div className="relative">
+                <select
+                  value={selectedFilter}
+                  onChange={(e) => setSelectedFilter(e.target.value)}
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer h-12"
+                >
+                  <option value="All">Tất cả kết quả</option>
+                  <option value="Product">Sản phẩm</option>
+                  <option value="Article">Bài viết</option>
+                  <option value="Topic">Chủ đề sức khỏe</option>
+                </select>
+              </div>
             </div>
             
             <div className="flex items-center space-x-4">
               <span className="text-sm font-medium text-gray-700">Sắp xếp theo:</span>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blackmores-teal"
-              >
-                <option value="relevance">Liên quan</option>
-                <option value="title">Tiêu đề A-Z</option>
-                <option value="date">Mới nhất</option>
-                <option value="rating">Đánh giá cao nhất</option>
-                <option value="price-low">Giá: Thấp đến Cao</option>
-                <option value="price-high">Giá: Cao đến Thấp</option>
-              </select>
+              <div className="relative">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer h-12"
+                >
+                  <option value="relevance">Liên quan</option>
+                  <option value="title">Tiêu đề A-Z</option>
+                  <option value="date">Mới nhất</option>
+                  <option value="rating">Đánh giá cao nhất</option>
+                  <option value="price-low">Giá: Thấp đến Cao</option>
+                  <option value="price-high">Giá: Cao đến Thấp</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>

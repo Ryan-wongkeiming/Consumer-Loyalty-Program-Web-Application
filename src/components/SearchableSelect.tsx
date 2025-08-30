@@ -89,7 +89,7 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
   return (
     <div className="relative" ref={dropdownRef}>
       <div
-        className={`w-full px-3 py-2 border rounded-lg cursor-pointer flex items-center justify-between transition-colors ${
+        className={`w-full px-4 py-3 border rounded-lg cursor-pointer flex items-center justify-between transition-colors h-12 ${
           disabled 
             ? 'bg-gray-100 cursor-not-allowed' 
             : 'bg-white hover:border-gray-400'

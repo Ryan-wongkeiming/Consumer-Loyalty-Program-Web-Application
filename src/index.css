@@ -189,6 +189,31 @@ html {
     margin-bottom: 1.25rem;
   }
 }
+
+/* Consistent select styling across the site */
+select {
+  @apply appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer;
+  height: 3rem; /* 48px - consistent height */
+}
+
+/* Ensure dropdown arrows are properly positioned */
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #9CA3AF;
+  pointer-events: none;
+}
 /* Card alignment utilities */
 .card-grid {
   display: grid;

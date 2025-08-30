@@ -195,7 +195,7 @@ const WomensHealthPage: React.FC = () => {
                 <select
                   value={selectedFilter}
                   onChange={(e) => setSelectedFilter(e.target.value)}
-                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent"
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer h-12"
                 >
                   {filterOptions.map(option => (
                     <option key={option} value={option}>
@@ -214,7 +214,7 @@ const WomensHealthPage: React.FC = () => {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent"
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer h-12"
                 >
                   <option value="latest">Mới nhất</option>
                   <option value="oldest">Cũ nhất</option>

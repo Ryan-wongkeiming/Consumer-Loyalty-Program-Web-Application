@@ -242,7 +242,7 @@ const HomePage: React.FC = () => {
                 <select
                   value={selectedCategory}
                   onChange={(e) => handleCategoryChange(e.target.value)}
-                  className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer"
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer h-12"
                 >
                   {categories.map(category => (
                     <option key={category} value={category}>
@@ -258,7 +258,7 @@ const HomePage: React.FC = () => {
                 <select
                   value={selectedGenderAge}
                   onChange={(e) => handleGenderAgeChange(e.target.value)}
-                  className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer"
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer h-12"
                 >
                   {genderAgeOptions.map(option => (
                     <option key={option} value={option}>
@@ -274,7 +274,7 @@ const HomePage: React.FC = () => {
                 <select
                   value={selectedIngredient}
                   onChange={(e) => handleIngredientChange(e.target.value)}
-                  className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer"
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer h-12"
                 >
                   {ingredientOptions.map(option => (
                     <option key={option} value={option}>
@@ -290,7 +290,7 @@ const HomePage: React.FC = () => {
                 <select
                   value={selectedHealthGoal}
                   onChange={(e) => handleHealthGoalChange(e.target.value)}
-                  className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer"
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer h-12"
                 >
                   {healthGoalOptions.map(option => (
                     <option key={option} value={option}>
@@ -306,7 +306,7 @@ const HomePage: React.FC = () => {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer"
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-blackmores-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer h-12"
                 >
                   <option value="featured">Nổi bật</option>
                   <option value="name">Tên A-Z</option>
