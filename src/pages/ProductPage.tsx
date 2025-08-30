@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Star, Plus, Minus, ShoppingCart, Heart, Truck, Shield, RefreshCw, CheckCircle } from 'lucide-react';
+import { Star, Plus, Minus, ShoppingCart, Heart, Truck, Shield, RefreshCw, CheckCircle, Gift } from 'lucide-react';
 import { getProducts, Product } from '../data/products';
 import { useCart } from '../context/CartContext';
 import MessageForm from '../components/MessageForm';
@@ -314,8 +314,8 @@ const ProductPage: React.FC = () => {
         {product.category === 'Infant Formula' && (
           <div className="mt-8 lg:mt-12 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-2xl p-6 lg:p-8 text-white shadow-2xl">
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-4">
-                🎁 Dùng thử miễn phí cho bé?
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-white bg-opacity-20 rounded-full mb-4">
+                <Gift className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-2xl lg:text-3xl font-bold mb-3">
                 Chưa chắc chắn về sản phẩm?
