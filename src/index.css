@@ -1,0 +1,257 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide scrollbar for mobile filter overflow */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1DB5A6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #17A085;
+}
+
+/* Loading animation improvements */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Button hover effects */
+.btn-hover-lift {
+  transition: all 0.3s ease;
+}
+
+.btn-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom styles for article content */
+.prose .tl-dr {
+  @apply bg-blue-50 border-l-4 border-blue-400 p-6 my-6 rounded-r-lg;
+}
+
+.prose .tl-dr h3,
+.prose .tl-dr h4 {
+  @apply text-blue-800 font-bold mb-3 text-lg;
+}
+
+.prose .tl-dr p {
+  @apply text-blue-700 mb-2 last:mb-0;
+}
+
+/* Enhanced list styling */
+.prose ul {
+  @apply list-disc list-inside space-y-2 my-4;
+}
+
+.prose ol {
+  @apply list-decimal list-inside space-y-2 my-4;
+}
+
+.prose li {
+  @apply text-gray-700 leading-relaxed;
+}
+
+/* Bold subheadings */
+.prose h2 {
+  @apply font-bold text-xl sm:text-2xl text-gray-900 mt-6 sm:mt-8 mb-3 sm:mb-4 border-b border-gray-200 pb-2;
+}
+
+.prose h3 {
+  @apply font-bold text-lg sm:text-xl text-gray-900 mt-4 sm:mt-6 mb-2 sm:mb-3;
+}
+
+.prose h4 {
+  @apply font-semibold text-base sm:text-lg text-gray-900 mt-3 sm:mt-4 mb-2;
+}
+
+/* Paragraph spacing and readability */
+.prose p {
+  @apply text-sm sm:text-base text-gray-700 leading-relaxed mb-3 sm:mb-4;
+}
+
+/* Horizontal rules */
+.prose hr {
+  @apply border-gray-300 my-6 sm:my-8;
+}
+
+/* Enhanced blockquotes */
+.prose blockquote {
+  @apply border-l-4 border-carehub-teal bg-green-50 p-3 sm:p-4 my-4 sm:my-6 italic text-sm sm:text-base text-gray-700;
+}
+
+/* Code styling */
+.prose code {
+  @apply bg-gray-100 px-2 py-1 rounded text-xs sm:text-sm font-mono text-gray-800;
+}
+
+/* Table styling */
+.prose table {
+  @apply w-full border-collapse border border-gray-300 my-4 sm:my-6 text-sm sm:text-base;
+}
+
+.prose th {
+  @apply bg-gray-100 border border-gray-300 px-2 sm:px-4 py-2 font-semibold text-left text-xs sm:text-sm;
+}
+
+.prose td {
+  @apply border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm;
+}
+
+/* References section styling */
+.prose .article-references {
+  @apply bg-gray-50 border border-gray-200 rounded-lg p-4 sm:p-6 my-6 sm:my-8;
+}
+
+.prose .article-references h3 {
+  @apply text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 pb-2 border-b border-gray-300;
+}
+
+.prose .article-references ul {
+  @apply list-none space-y-2 sm:space-y-3 mb-0;
+}
+
+.prose .article-references li {
+  @apply text-sm sm:text-base text-gray-700 leading-relaxed pl-0;
+}
+
+.prose .article-references a {
+  @apply text-carehub-teal hover:text-carehub-teal-dark underline break-all;
+}
+
+.prose .article-references li::before {
+  content: "📚";
+  @apply mr-3;
+}
+
+/* Improved touch targets for mobile */
+@media (max-width: 640px) {
+  button, a, input, select, textarea {
+    min-height: 44px;
+  }
+  
+  /* Ensure clickable elements have adequate spacing */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Better line height for mobile readability */
+@media (max-width: 640px) {
+  body {
+    line-height: 1.7;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.4;
+  }
+  
+  /* Add more breathing room for mobile content */
+  .mobile-spacing {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  /* Reduce text density on mobile */
+  p {
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* Consistent select styling across the site */
+select {
+  @apply appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-sm sm:text-base w-full focus:outline-none focus:ring-2 focus:ring-carehub-teal focus:border-transparent hover:border-gray-400 transition-colors cursor-pointer;
+  height: 3rem; /* 48px - consistent height */
+}
+
+/* Ensure dropdown arrows are properly positioned */
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #9CA3AF;
+  pointer-events: none;
+}
+/* Card alignment utilities */
+.card-grid {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-title {
+  height: 3rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.card-description {
+  height: 4rem;
+  flex: 1;
+}
+
+.card-meta {
+  height: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* Ensure consistent card heights */
+.equal-height-cards {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.equal-height-cards > * {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
