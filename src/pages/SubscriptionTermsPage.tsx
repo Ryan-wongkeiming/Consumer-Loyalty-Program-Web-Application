@@ -39,7 +39,7 @@ const SubscriptionTermsPage: React.FC = () => {
                 <h2 className="text-2xl font-bold text-gray-900">1. Đăng ký hoạt động như thế nào</h2>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                Đăng ký &amp; Tiết kiệm là dịch vụ nhận giao hàng định kỳ một sản phẩm với giá ưu đãi. Bạn cần có tài khoản CareHub. Bạn chọn sản phẩm và tần suất (4/8/12 tuần); bạn được giảm 30% (sữa công thức giảm 20%) và miễn phí vận chuyển cho mỗi đơn hàng đăng ký.
+                Đăng ký &amp; Tiết kiệm là dịch vụ nhận giao hàng định kỳ một sản phẩm với giá ưu đãi. Bạn cần có tài khoản CareHub. Bạn chọn sản phẩm và tần suất (4/8/12 tuần); bạn được giảm 15% (sữa công thức giảm 10%) và miễn phí vận chuyển cho mỗi đơn hàng đăng ký.
               </p>
             </section>
 
@@ -50,7 +50,7 @@ const SubscriptionTermsPage: React.FC = () => {
               </div>
               <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
                 <li>Bạn thanh toán khi nhận hàng (COD) hoặc chuyển khoản thủ công — chúng tôi không lưu trữ thông tin thẻ và không tự động trừ tiền.</li>
-                <li>Trước mỗi lần giao hàng, chúng tôi liên hệ với bạn (WhatsApp/SMS/email) để xác nhận.</li>
+                <li>Trước mỗi lần giao hàng, chúng tôi liên hệ với bạn (Zalo/WhatsApp/SMS/email) để xác nhận.</li>
                 <li>Không có xác nhận, lần giao hàng sẽ được bỏ qua — không tự động giao hàng, không tự động trừ tiền.</li>
                 <li>Nếu không xác nhận thanh toán sau 3 ngày (2 lần nhắc + 1 SMS), đăng ký sẽ tự động tạm dừng.</li>
               </ul>
@@ -76,7 +76,7 @@ const SubscriptionTermsPage: React.FC = () => {
               <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
                 <li><strong>Hết hàng:</strong> nếu sản phẩm trong đăng ký không có sẵn, việc giao hàng sẽ tạm dừng và bạn được thông báo — chúng tôi không tự động trừ tiền và không thay sản phẩm khi chưa có sự đồng ý của bạn.</li>
                 <li><strong>Thay đổi giá:</strong> nếu giá sản phẩm trong đăng ký thay đổi, bạn nhận thông báo trước ít nhất 14 ngày; bạn có thể hủy mà không bị phạt trước ngày đó.</li>
-                <li><strong>Mã khuyến mãi:</strong> không áp dụng cho đơn hàng đăng ký. Thay vào đó, bạn được giảm 30% (sữa công thức 20%) + miễn phí vận chuyển.</li>
+                <li><strong>Mã khuyến mãi:</strong> không áp dụng cho đơn hàng đăng ký. Thay vào đó, bạn được giảm 15% (sữa công thức 10%) + miễn phí vận chuyển.</li>
                 <li><strong>Hủy từ phía CareHub:</strong> chúng tôi có quyền hủy đăng ký khi hành động hợp lý (sản phẩm ngừng kinh doanh, vi phạm điều khoản, thanh toán thất bại nhiều lần).</li>
               </ul>
             </section>
@@ -99,7 +99,7 @@ const SubscriptionTermsPage: React.FC = () => {
                 <h2 className="text-2xl font-bold text-gray-900">6. Liên hệ và thay đổi</h2>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                CareHub có thể thay đổi các Điều khoản này bất cứ lúc nào, với thông báo hợp lý trước đó. Việc tiếp tục đăng ký sau khi nhận thông báo đồng nghĩa với việc bạn chấp nhận các thay đổi. Nếu có thắc mắc, hãy liên hệ bộ phận chăm sóc khách hàng CareHub (WhatsApp / email / điện thoại).
+                CareHub có thể thay đổi các Điều khoản này bất cứ lúc nào, với thông báo hợp lý trước đó. Việc tiếp tục đăng ký sau khi nhận thông báo đồng nghĩa với việc bạn chấp nhận các thay đổi. Nếu có thắc mắc, hãy liên hệ bộ phận chăm sóc khách hàng CareHub (Zalo / WhatsApp / email / điện thoại).
               </p>
             </section>
           </div>

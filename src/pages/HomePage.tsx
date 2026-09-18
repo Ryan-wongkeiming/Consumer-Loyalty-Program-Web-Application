@@ -231,7 +231,7 @@ const HomePage: React.FC = () => {
                   💚 Chương trình tiết kiệm CareHub
                 </h2>
                 <p className="text-sm sm:text-base text-green-100">
-                  Mua nhiều – tiết kiệm nhiều (3 hộp −20%, 5 hộp −35%) · Đăng ký &amp; Tiết kiệm −30% + miễn phí vận chuyển · Áp dụng chồng lên nhau
+                  Mua nhiều – tiết kiệm nhiều (3 hộp −20%, 5 hộp −35%) · Đăng ký &amp; Tiết kiệm −15% + miễn phí vận chuyển · Áp dụng chồng lên nhau
                 </p>
               </div>
               <div className="flex-shrink-0 flex flex-col sm:flex-row gap-2">

@@ -6,17 +6,17 @@ import { Product } from './products';
 // Layers (all stackable, in order):
 //   1. Bundle tier (Buy More Save More): 3 units -20%, 5 units -35%
 //      -> only for products that carry bundle_pricing in the DB
-//   2. Subscribe & Save: -30% (Infant Formula: -20%)
+//   2. Subscribe & Save: -15% (Infant Formula: -10%)
 //   3. Frequency bonus: 12 weeks +2% extra, 4 weeks -2%
 //   4. Free shipping for subscribers
 //
 // unitPrice = basePrice x bundleTier x subscriptionMultiplier
-//   e.g. Adult Immune+ (900,000) x 5-pack (0.65) x 4-week sub (0.72)
-//        = 421,200/unit vs 900,000 standard — real stacking.
+//   e.g. Adult Immune+ (900,000) x 5-pack (0.65) x 4-week sub (0.85)
+//        = 497,250/unit vs 900,000 standard — real stacking.
 // ============================================================
 
-export const SUBSCRIPTION_DISCOUNT = 0.3; // 30% off
-export const INFANT_FORMULA_SUBSCRIPTION_DISCOUNT = 0.2; // 20% off (Blackmores AU pattern)
+export const SUBSCRIPTION_DISCOUNT = 0.15; // 15% off
+export const INFANT_FORMULA_SUBSCRIPTION_DISCOUNT = 0.1; // 10% off (Blackmores AU pattern)
 export const FREE_SHIPPING_THRESHOLD = 0; // subscribers always ship free
 export const STANDARD_SHIPPING_FEE = 50000; // VND, non-subscribers
 

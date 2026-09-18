@@ -118,7 +118,7 @@ const CartSidebar: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <Info className="w-4 h-4 sm:w-5 sm:h-5 text-carehub-blue flex-shrink-0" />
                 <span className="text-xs sm:text-sm text-carehub-blue font-medium">
-                  Tạo đăng ký sản phẩm để nhận giảm giá 30% cộng MIỄN PHÍ VẬN CHUYỂN!
+                  Tạo đăng ký sản phẩm để nhận giảm giá 15% cộng MIỄN PHÍ VẬN CHUYỂN!
                 </span>
               </div>
             </div>

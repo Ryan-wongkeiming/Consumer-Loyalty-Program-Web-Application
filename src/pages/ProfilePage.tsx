@@ -780,7 +780,7 @@ const ProfilePage: React.FC = () => {
                       <RefreshCw className="w-5 h-5 text-carehub-teal" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-gray-900">Tiết kiệm 30% + miễn phí vận chuyển</h3>
+                      <h3 className="font-medium text-gray-900">Tiết kiệm 15% + miễn phí vận chuyển</h3>
                       <p className="text-sm text-gray-700 mt-1">
                         Các đăng ký của bạn — quản lý, tạm dừng, bỏ qua hoặc hủy. Mỗi lần giao hàng được xác nhận trước khi giao.
                       </p>

@@ -547,7 +547,7 @@ export default function CheckoutPage() {
                         </p>
                         {item.isSubscription && (
                           <p className="text-xs sm:text-sm text-green-600 font-medium mt-1">
-                            Đăng ký (Giảm 30%)
+                            Đăng ký (Giảm 15%)
                           </p>
                         )}
                         {item.bundleTier && (

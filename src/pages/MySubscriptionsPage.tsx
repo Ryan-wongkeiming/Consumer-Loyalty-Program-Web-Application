@@ -140,7 +140,7 @@ const MySubscriptionsPage: React.FC = () => {
             </div>
             <h2 className="text-xl font-bold text-gray-900 mb-2">Chưa có đăng ký nào</h2>
             <p className="text-gray-600 mb-6">
-              Đăng ký để nhận ưu đãi 30% và miễn phí vận chuyển cho mỗi lần giao hàng định kỳ.
+              Đăng ký để nhận ưu đãi 15% và miễn phí vận chuyển cho mỗi lần giao hàng định kỳ.
             </p>
             <Link to="/" className="bg-carehub-teal text-white px-6 py-3 rounded-lg hover:bg-carehub-teal-dark transition-colors">
               Khám phá ngay
@@ -184,7 +184,7 @@ const MySubscriptionsPage: React.FC = () => {
                         </div>
                       </div>
                       <span className="font-semibold text-carehub-teal">
-                        {formatPrice((item.products?.price || 0) * item.quantity * (item.is_subscription ? 0.7 : 1))}
+                        {formatPrice((item.products?.price || 0) * item.quantity * (item.is_subscription ? 0.85 : 1))}
                       </span>
                     </div>
                   ))}
@@ -235,7 +235,7 @@ const MySubscriptionsPage: React.FC = () => {
                 <div className="text-sm text-gray-700">
                   <p className="font-medium text-gray-900">Xác nhận hoạt động như thế nào</p>
                   <p>
-                    Trước mỗi lần giao hàng, CareHub sẽ liên hệ với bạn (WhatsApp/SMS/email) để xác nhận.
+                    Trước mỗi lần giao hàng, CareHub sẽ liên hệ với bạn (Zalo/WhatsApp/SMS/email) để xác nhận.
                     Nếu không có xác nhận, lần giao hàng sẽ được bỏ qua — chúng tôi không bao giờ tự động trừ tiền.
                     Bạn có thể thay đổi hoặc hủy bất cứ lúc nào, không bị phạt.
                   </p>

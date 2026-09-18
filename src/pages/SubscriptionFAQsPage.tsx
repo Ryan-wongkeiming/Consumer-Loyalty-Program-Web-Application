@@ -7,17 +7,17 @@ const SubscriptionFAQsPage: React.FC = () => {
     {
       icon: RefreshCw,
       q: 'Đăng ký & Tiết kiệm hoạt động như thế nào?',
-      a: 'Khi bạn chọn một sản phẩm và bật "Đăng ký & Tiết kiệm", bạn được giảm 30% (sữa công thức giảm 20%) và miễn phí vận chuyển. Trước mỗi lần giao hàng, chúng tôi sẽ liên hệ với bạn (qua WhatsApp/SMS/email) để xác nhận đơn hàng tiếp theo. Việc xác nhận được thực hiện theo từng chu kỳ — không có tự động trừ tiền, không có cam kết ẩn.',
+      a: 'Khi bạn chọn một sản phẩm và bật "Đăng ký & Tiết kiệm", bạn được giảm 15% (sữa công thức giảm 10%) và miễn phí vận chuyển. Trước mỗi lần giao hàng, chúng tôi sẽ liên hệ với bạn (qua Zalo/WhatsApp/SMS/email) để xác nhận đơn hàng tiếp theo. Việc xác nhận được thực hiện theo từng chu kỳ — không có tự động trừ tiền, không có cam kết ẩn.',
     },
     {
       icon: CreditCard,
       q: 'Tôi thanh toán như thế nào?',
-      a: 'Bạn thanh toán khi nhận hàng (COD) hoặc chuyển khoản thủ công. Đơn đầu tiên được thanh toán như bình thường. Mỗi chu kỳ được xác nhận, bạn nhận hóa đơn với mức giảm 30% như nhau và thanh toán khi nhận hàng. Chúng tôi không lưu trữ thông tin thẻ tín dụng và không có tự động trừ tiền.',
+      a: 'Bạn thanh toán khi nhận hàng (COD) hoặc chuyển khoản thủ công. Đơn đầu tiên được thanh toán như bình thường. Mỗi chu kỳ được xác nhận, bạn nhận hóa đơn với mức giảm 15% như nhau và thanh toán khi nhận hàng. Chúng tôi không lưu trữ thông tin thẻ tín dụng và không có tự động trừ tiền.',
     },
     {
       icon: CalendarDays,
       q: 'Tôi có thể chọn tần suất nào?',
-      a: 'Bạn có thể chọn giao hàng mỗi 4, 8 hoặc 12 tuần. Giá là như nhau (-30% hoặc -20% cho sữa công thức) ở mọi tần suất — tần suất chỉ là lựa chọn về thời gian, không phải lựa chọn về giá. Tần suất 4 tuần là phổ biến nhất và được chọn mặc định.',
+      a: 'Bạn có thể chọn giao hàng mỗi 4, 8 hoặc 12 tuần. Giá là như nhau (-15% hoặc -10% cho sữa công thức) ở mọi tần suất — tần suất chỉ là lựa chọn về thời gian, không phải lựa chọn về giá. Tần suất 4 tuần là phổ biến nhất và được chọn mặc định.',
     },
     {
       icon: Pause,
@@ -27,7 +27,7 @@ const SubscriptionFAQsPage: React.FC = () => {
     {
       icon: AlertCircle,
       q: 'Điều gì xảy ra nếu tôi không xác nhận đơn giao hàng?',
-      a: 'Nếu bạn không xác nhận trong 3 ngày (2 lần nhắc qua WhatsApp + 1 SMS), chu kỳ đó sẽ được bỏ qua và bạn nhận được thông báo. Chúng tôi không tự động trừ tiền hoặc tự động giao hàng khi chưa có xác nhận. Trong trường hợp hết hàng, việc giao hàng sẽ tạm dừng và bạn được thông báo.',
+      a: 'Nếu bạn không xác nhận trong 3 ngày (2 lần nhắc qua Zalo/WhatsApp + 1 SMS), chu kỳ đó sẽ được bỏ qua và bạn nhận được thông báo. Chúng tôi không tự động trừ tiền hoặc tự động giao hàng khi chưa có xác nhận. Trong trường hợp hết hàng, việc giao hàng sẽ tạm dừng và bạn được thông báo.',
     },
     {
       icon: RefreshCw,
@@ -37,7 +37,7 @@ const SubscriptionFAQsPage: React.FC = () => {
     {
       icon: CreditCard,
       q: 'Tôi có thể dùng mã khuyến mãi cho đăng ký không?',
-      a: 'Không. Mã khuyến mãi không áp dụng cho đơn hàng đăng ký — thay vào đó, bạn được giảm 30% (sữa công thức 20%) + miễn phí vận chuyển cho mỗi đơn hàng đăng ký, đây là ưu đãi tốt hơn.',
+      a: 'Không. Mã khuyến mãi không áp dụng cho đơn hàng đăng ký — thay vào đó, bạn được giảm 15% (sữa công thức 10%) + miễn phí vận chuyển cho mỗi đơn hàng đăng ký, đây là ưu đãi tốt hơn.',
     },
     {
       icon: HelpCircle,
@@ -93,7 +93,7 @@ const SubscriptionFAQsPage: React.FC = () => {
         <div className="mt-10 bg-green-50 rounded-xl p-6">
           <p className="font-medium text-gray-900 mb-2">Bạn còn câu hỏi khác?</p>
           <p className="text-sm text-gray-700">
-            Liên hệ với chúng tôi: WhatsApp / email / điện thoại. Chúng tôi sẽ trả lời trong 1–2 ngày làm việc.
+            Liên hệ với chúng tôi: Zalo / WhatsApp / email / điện thoại. Chúng tôi sẽ trả lời trong 1–2 ngày làm việc.
           </p>
         </div>
       </div>
