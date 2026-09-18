@@ -35,12 +35,30 @@ import AddressesPage from './pages/AddressesPage';
 import LoyaltyPage from './pages/LoyaltyPage';
 import RedeemConfirmationPage from './pages/RedeemConfirmationPage';
 
-// Component to handle scroll to top on route changes
+// Component to handle scroll to top on route changes.
+// Fixes mobile bug: tapping a product after scrolling the homepage would open
+// the product page already scrolled down (browser restores scroll position).
+// - history.scrollRestoration = 'manual' stops the browser auto-restoring.
+// - Scrolls immediately on navigation, then again after React commits
+//   (rAF) and after images/content settle (setTimeout), so late-arriving
+//   images cannot push the viewport back down.
 const ScrollToTop: React.FC = () => {
   const location = useLocation();
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    const scrollTop = () => window.scrollTo(0, 0);
+    scrollTop();
+    const raf = requestAnimationFrame(scrollTop);
+    const t = window.setTimeout(scrollTop, 100);
+    const t2 = window.setTimeout(scrollTop, 400);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(t);
+      window.clearTimeout(t2);
+    };
   }, [location.pathname]);
 
   return null;
