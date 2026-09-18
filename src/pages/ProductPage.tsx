@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Star, Plus, Minus, ShoppingCart, Heart, CheckCircle, Gift } from 'lucide-react';
+import { Star, Plus, Minus, ShoppingCart, Heart, CheckCircle, Gift, Truck } from 'lucide-react';
 import { getProducts, Product } from '../data/products';
 import { useCart } from '../context/CartContext';
+import {
+  getBundleTiers, getSubscriptionMultiplier, getUnitPrice, getLineSavings,
+  getEffectiveDiscountPercent, formatPrice, FREQUENCIES,
+} from '../data/pricing';
+import BundleSelector from '../components/BundleSelector';
 import MessageForm from '../components/MessageForm';
 import MessageList from '../components/MessageList';
 
@@ -12,8 +17,8 @@ const ProductPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [selectedTab, setSelectedTab] = useState('description');
-  const [isSubscription, setIsSubscription] = useState(product?.isSubscription || false);
-  const [deliveryFrequency, setDeliveryFrequency] = useState('Giao hàng mỗi 8 tuần');
+  const [isSubscription, setIsSubscription] = useState(false);
+  const [deliveryFrequency, setDeliveryFrequency] = useState(FREQUENCIES[0].label);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { dispatch } = useCart();
   const [messageRefreshTrigger, setMessageRefreshTrigger] = useState(0);
@@ -68,21 +73,30 @@ const ProductPage: React.FC = () => {
     ));
   };
 
-  const subscriptionPrice = product.price * 0.7; // 30% discount for subscription
-
   // Use product images array from database, fallback to single image if not available
   const productImages = product.images && product.images.length > 0 
     ? product.images 
     : [product.image]; // Fallback to single image if images array is empty
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
+  // ---- Savings Master Plan pricing (single source of truth: ../data/pricing) ----
+  const bundleTiers = getBundleTiers(product);
+  const subscriptionMultiplier = getSubscriptionMultiplier(product, deliveryFrequency);
+  const unitPrice = getUnitPrice(product, {
+    quantity,
+    isSubscription,
+    deliveryFrequency,
+  });
+  const lineSavings = getLineSavings(product, {
+    quantity,
+    isSubscription,
+    deliveryFrequency,
+  });
+  const effectiveDiscount = getEffectiveDiscountPercent(product, {
+    quantity,
+    isSubscription,
+    deliveryFrequency,
+  });
+  const bundleTier = bundleTiers.find(t => t.quantity === quantity);
 
   const handleAddToCart = () => {
     dispatch({
@@ -92,6 +106,7 @@ const ProductPage: React.FC = () => {
         quantity,
         isSubscription,
         deliveryFrequency,
+        bundleTier,
       },
     });
     dispatch({ type: 'TOGGLE_CART' });
@@ -213,7 +228,7 @@ const ProductPage: React.FC = () => {
             {product.isSubscription && (
               <div className="bg-green-50 p-4 lg:p-5 rounded-lg border border-green-200">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-sm sm:text-base lg:text-lg text-gray-900">Đăng ký & Tiết kiệm</h3>
+                  <h3 className="font-semibold text-sm sm:text-base lg:text-lg text-gray-900">Đăng ký &amp; Tiết kiệm</h3>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -225,7 +240,7 @@ const ProductPage: React.FC = () => {
                   </label>
                 </div>
                 <p className="text-xs sm:text-sm lg:text-base text-gray-600">
-                  Tiết kiệm 30% và miễn phí vận chuyển cho các đơn hàng định kỳ
+                  Tiết kiệm 30% và miễn phí vận chuyển pentru comenză recurente. Fiecare giao hàng este confirmată înaintea de livrare (WhatsApp/SMS/email).
                 </p>
                 {isSubscription && (
                   <div className="mt-3">
@@ -234,37 +249,64 @@ const ProductPage: React.FC = () => {
                       onChange={(e) => setDeliveryFrequency(e.target.value)}
                       className="w-full border border-gray-300 rounded px-3 py-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-carehub-teal"
                     >
-                      <option value="Giao hàng mỗi 8 tuần">Giao hàng mỗi 8 tuần</option>
-                      <option value="Giao hàng mỗi 4 tuần">Giao hàng mỗi 4 tuần</option>
-                      <option value="Giao hàng mỗi 12 tuần">Giao hàng mỗi 12 tuần</option>
+                      {FREQUENCIES.map(freq => (
+                        <option key={freq.label} value={freq.label}>
+                          {freq.label}{freq.badge ? ` (${freq.badge})` : ''}
+                        </option>
+                      ))}
                     </select>
+                    <p className="text-[10px] sm:text-xs text-gray-500 mt-1.5">
+                      Cùng mức giá −30% pentru mọi chu kỳ. Confirmare per ciclă înaintea de livrare.
+                    </p>
+                    <div className="mt-1.5 flex items-center space-x-1 text-[10px] sm:text-xs text-carehub-teal">
+                      <Link to="/subscription-faqs" className="hover:underline">FAQ</Link>
+                      <span>·</span>
+                      <Link to="/subscription-terms" className="hover:underline">Điе Khoản</Link>
+                    </div>
                   </div>
                 )}
               </div>
+            )}
+
+            {/* Buy More Save More (bundle tiers) — only for products with bundle_pricing */}
+            {bundleTiers.length > 0 && (
+              <BundleSelector
+                product={product}
+                tiers={bundleTiers}
+                selectedQuantity={quantity}
+                onSelect={setQuantity}
+                isSubscription={isSubscription}
+                subscriptionMultiplier={subscriptionMultiplier}
+              />
             )}
 
             {/* Price */}
             <div className="space-y-1 lg:space-y-2">
               <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">
-                  {formatPrice(isSubscription ? subscriptionPrice : product.price)}
+                  {formatPrice(unitPrice)}
                 </span>
                 <div className="flex items-center space-x-2">
-                  {product.originalPrice && (
+                  {lineSavings > 0 && (
                     <span className="text-sm sm:text-base lg:text-xl text-gray-500 line-through">
-                      {formatPrice(product.originalPrice)}
+                      {formatPrice(product.price * quantity)}
                     </span>
                   )}
-                  {isSubscription && (
+                  {effectiveDiscount > 0 && (
                     <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs sm:text-sm font-medium">
-                      Tiết kiệm 30%
+                      Tiết kiệm {effectiveDiscount}%
                     </span>
                   )}
                 </div>
               </div>
               {isSubscription && (
                 <p className="text-xs sm:text-sm text-gray-600">
-                  Giao hàng mỗi 30 ngày (có thể thay đổi bất cứ lúc nào)
+                  Giao hàng mỗi {FREQUENCIES.find(f => f.label === deliveryFrequency)?.weeks ?? 8} tuần · miễn phí vận chuyển · hủy bất cứ lúc nào
+                </p>
+              )}
+              {lineSavings > 0 && (
+                <p className="text-xs sm:text-sm text-green-700 font-medium">
+                  Bạn tiết kiệm {formatPrice(lineSavings)} cho đơn này
                 </p>
               )}
             </div>
@@ -302,6 +344,14 @@ const ProductPage: React.FC = () => {
                   <Heart className="w-5 h-5 text-gray-600 hover:text-red-500" />
                 </button>
               </div>
+              
+              {/* Free shipping note for subscribers */}
+              {isSubscription && (
+                <div className="flex items-center space-x-2 text-xs sm:text-sm text-green-700">
+                  <Truck className="w-4 h-4 flex-shrink-0" />
+                  <span>Miễn phí vận chuyển cho đơn hàng định kỳ này</span>
+                </div>
+              )}
               
               {/* Continue Shopping Button */}
               <button

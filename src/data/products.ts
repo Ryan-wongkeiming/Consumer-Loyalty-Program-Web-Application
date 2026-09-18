@@ -21,6 +21,7 @@ export interface Product {
   genderAgeCategories?: string[];
   productIngredients?: string[];
   healthGoals?: string[];
+  bundlePricing?: unknown; // JSONB: [{quantity, discountPercent, label}]
 }
 
 // Fetch products from Supabase
@@ -55,7 +56,8 @@ const fetchProducts = async (): Promise<Product[]> => {
       isSubscription: product.is_subscription,
       genderAgeCategories: product.gender_age_categories || [],
       productIngredients: product.product_ingredients || [],
-      healthGoals: product.health_goals || []
+      healthGoals: product.health_goals || [],
+      bundlePricing: product.bundle_pricing || undefined
     }));
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -94,6 +96,8 @@ export const categories = [
   'Brain Health',
   'Heart Health',
   'Infant Formula',
+  'Kids Supplements',
+  'Baby Supplements',
   'Women\'s Health',
   'Baby Bath Time',
   'Baby Skin Care',
@@ -106,6 +110,7 @@ export const genderAgeOptions = [
   'All',
   'Women\'s',
   'Men\'s',
+  'Adult',
   'Kids',
   'Babies',
   'Infant Formula'
@@ -120,12 +125,14 @@ export const ingredientOptions = [
   'Goat Milk',
   'Oatmeal',
   'Iron',
+  'Lactoferrin',
   'Magnesium',
   'Calcium',
   'Zinc',
   'Vitamin C',
   'Vitamin D',
   'Vitamin B Complex',
+  'Folate',
   'CoQ10',
   'Fish Oil & Omega 3',
   'Ginkgo Biloba',

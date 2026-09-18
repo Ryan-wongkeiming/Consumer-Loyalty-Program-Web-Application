@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabaseClient';
 import { validatePromoCode } from '../data/promoCodes';
+import { getCartSubtotal, getCartSavings, getUnitPrice, formatPrice } from '../data/pricing';
 import { getAllProvinces, getWardsByProvince, Province, Ward } from '../utils/locationData';
 import SearchableSelect from '../components/SearchableSelect';
 import CameraCapture from '../components/CameraCapture';
@@ -107,13 +108,11 @@ export default function CheckoutPage() {
   };
 
   const calculateSubtotal = () => {
-    return state.items.reduce((total, item) => {
-      const price = item.isSubscription ? item.product.price * 0.7 : item.product.price;
-      return total + (price * item.quantity);
-    }, 0);
+    return getCartSubtotal(state.items);
   };
 
   const subtotal = calculateSubtotal();
+  const totalSavings = getCartSavings(state.items);
   const shippingCost = 0; // Set to 0 VND, can be adjusted later if needed
   const promoDiscountVND = state.promoDiscount;
   const total = Math.max(0, subtotal + shippingCost - promoDiscountVND);
@@ -243,7 +242,11 @@ export default function CheckoutPage() {
         product_id: item.product.id,
         product_name: item.product.name,
         quantity: item.quantity,
-        price_at_purchase: item.isSubscription ? item.product.price * 0.7 : item.product.price,
+        price_at_purchase: getUnitPrice(item.product, {
+          quantity: item.quantity,
+          isSubscription: item.isSubscription,
+          deliveryFrequency: item.deliveryFrequency,
+        }),
         is_subscription: item.isSubscription,
         delivery_frequency: item.deliveryFrequency,
       }));
@@ -258,6 +261,45 @@ export default function CheckoutPage() {
         // Potentially, you might want to delete the order if order items fail to insert
         setIsSubmitting(false);
         return;
+      }
+
+      // 3. If any item is a subscription and user is logged in,
+      //    create the subscription + items (Blackmores rule: account required)
+      const subscriptionItems = state.items.filter(item => item.isSubscription);
+      if (subscriptionItems.length > 0 && user) {
+        const freq = subscriptionItems[0].deliveryFrequency;
+        const frequencyWeeks = freq.includes('4') ? 4 : freq.includes('12') ? 12 : 8;
+        const nextDate = new Date();
+        nextDate.setDate(nextDate.getDate() + frequencyWeeks * 7);
+
+        const { data: subData, error: subError } = await supabase
+          .from('subscriptions')
+          .insert({
+            user_id: user.id,
+            frequency_weeks: frequencyWeeks,
+            next_delivery_date: nextDate.toISOString().split('T')[0],
+            status: 'active',
+          })
+          .select()
+          .single();
+
+        if (!subError && subData) {
+          const subItems = subscriptionItems.map(item => ({
+            subscription_id: subData.id,
+            product_id: item.product.id,
+            quantity: item.quantity,
+            is_subscription: true,
+            delivery_frequency: item.deliveryFrequency,
+            bundle_tier: item.bundleTier || null,
+          }));
+          await supabase.from('subscription_items').insert(subItems);
+
+          // Link the order to the subscription
+          await supabase
+            .from('orders')
+            .update({ subscription_id: subData.id })
+            .eq('id', orderId);
+        }
       }
 
       // If everything is successful
@@ -508,11 +550,20 @@ export default function CheckoutPage() {
                             Đăng ký (Giảm 30%)
                           </p>
                         )}
+                        {item.bundleTier && (
+                          <p className="text-xs sm:text-sm text-carehub-teal font-medium mt-1">
+                            Mua {item.bundleTier.quantity} hộp {item.bundleTier.label}
+                          </p>
+                        )}
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-carehub-teal text-sm sm:text-base lg:text-lg">
                           {formatPrice(
-                            (item.isSubscription ? item.product.price * 0.7 : item.product.price) * item.quantity
+                            getUnitPrice(item.product, {
+                              quantity: item.quantity,
+                              isSubscription: item.isSubscription,
+                              deliveryFrequency: item.deliveryFrequency,
+                            }) * item.quantity
                           )}
                         </p>
                       </div>
@@ -521,6 +572,12 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="border-t pt-4 space-y-2">
+                  {totalSavings > 0 && (
+                    <div className="flex justify-between text-sm sm:text-base text-green-600">
+                      <span>Tiết kiệm (mua nhiều + đăng ký):</span>
+                      <span>-{formatPrice(totalSavings)}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between text-sm sm:text-base">
                     <span>Tạm tính:</span>
                     <span>{formatPrice(subtotal)}</span>

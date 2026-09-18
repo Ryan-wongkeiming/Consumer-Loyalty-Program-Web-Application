@@ -222,6 +222,31 @@ const HomePage: React.FC = () => {
             </div>
           </div>
 
+          {/* Savings Master Plan Banner */}
+          <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-5 sm:p-6 mb-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="text-center md:text-left">
+                <h2 className="text-lg sm:text-xl font-bold mb-1.5">
+                  💚 Chương trình tiết kiệm CareHub
+                </h2>
+                <p className="text-sm sm:text-base text-green-100">
+                  Mua nhiều – tiết kiệm nhiều (3 hộp −20%, 5 hộp −35%) · Đăng ký &amp; Tiết kiệm −30% + miễn phí vận chuyển · Áp dụng chồng lên nhau
+                </p>
+              </div>
+              <div className="flex-shrink-0 flex flex-col sm:flex-row gap-2">
+                <button
+                  onClick={() => {
+                    const productsSection = document.getElementById('products-section');
+                    if (productsSection) productsSection.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-white text-carehub-teal px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-green-50 transition-colors"
+                >
+                  Khám phá ngay
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Giải Pháp Sức Khỏe Tự Nhiên

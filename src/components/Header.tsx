@@ -447,6 +447,20 @@ const Header: React.FC = () => {
                     Đơn hàng của tôi
                   </Link>
                   <Link
+                    to="/my-subscriptions"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-left px-3 py-3 text-gray-600 hover:text-carehub-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
+                  >
+                    Đăng ký của mine
+                  </Link>
+                  <Link
+                    to="/subscription-faqs"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-left px-3 py-3 text-gray-600 hover:text-carehub-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
+                  >
+                    Đăng ký — FAQ
+                  </Link>
+                  <Link
                     to="/wishlist"
                     onClick={() => setIsMenuOpen(false)}
                     className="block w-full text-left px-3 py-3 text-gray-600 hover:text-carehub-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"

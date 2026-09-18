@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, User, MapPin, Settings, Save, Edit, Plus, Trash2, CheckCircle, AlertCircle, MessageSquare, Star } from 'lucide-react';
+import { ArrowLeft, User, MapPin, Settings, Save, Edit, Plus, Trash2, CheckCircle, AlertCircle, MessageSquare, Star, RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { updateUserProfile, saveUserAddress, getUserAddresses, updatePassword, getUserMessages, deleteUserMessage } from '../lib/auth';
 import { getUserLoyaltyPoints } from '../lib/auth';
@@ -321,6 +321,7 @@ const ProfilePage: React.FC = () => {
   const tabs = [
     { id: 'personal', label: 'Thông tin cá nhân', icon: User },
     { id: 'addresses', label: 'Địa chỉ giao hàng', icon: MapPin },
+    { id: 'subscriptions', label: 'Đăng ký của mine', icon: Settings },
     { id: 'loyalty', label: 'Điểm thưởng', icon: Settings },
     { id: 'preferences', label: 'Tùy chọn', icon: Settings },
     { id: 'messages', label: 'Tin nhắn của tôi', icon: MessageSquare }
@@ -758,6 +759,40 @@ const ProfilePage: React.FC = () => {
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Subscriptions Tab */}
+            {activeTab === 'subscriptions' && (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-semibold text-gray-900">Đăng ký &amp; Tiết kiệm</h2>
+                  <Link
+                    to="/my-subscriptions"
+                    className="bg-carehub-teal text-white px-4 py-2 rounded-lg hover:bg-carehub-teal-dark transition-colors"
+                  >
+                    Quản đăng ký
+                  </Link>
+                </div>
+                <div className="bg-green-50 rounded-xl p-5">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-10 h-10 bg-carehub-teal/10 rounded-full flex items-center justify-center">
+                      <RefreshCw className="w-5 h-5 text-carehub-teal" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Tiết kiệm 30% + miễn phí vận chuyển</h3>
+                      <p className="text-sm text-gray-700 mt-1">
+                        Abonamentele tale — gestioneză, pauză, skipă sauă anulați. Fiecare giao hàng este confirmată înaintea de livrare.
+                      </p>
+                      <Link
+                        to="/subscription-faqs"
+                        className="text-carehub-teal hover:underline text-sm mt-2 inline-block"
+                      >
+                        Citesti FAQ &amp; Điе Khoản →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 

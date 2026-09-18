@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { X, Plus, Minus, ShoppingBag, Info, ChevronDown, Check, AlertCircle, Trash2, Camera } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { validatePromoCode } from '../data/promoCodes';
+import { getCartSubtotal, getCartSavings, getUnitPrice, formatPrice, FREQUENCIES } from '../data/pricing';
 import CameraCapture from './CameraCapture';
 
 const CartSidebar: React.FC = () => {
@@ -23,28 +24,16 @@ const CartSidebar: React.FC = () => {
   };
 
   const calculateSubtotal = () => {
-    return state.items.reduce((total, item) => {
-      const price = item.isSubscription ? item.product.price * 0.7 : item.product.price;
-      return total + (price * item.quantity);
-    }, 0);
+    return getCartSubtotal(state.items);
   };
 
-  const calculateSubscriptionDiscount = () => { // Renamed for clarity
-    return state.items.reduce((total, item) => {
-      if (item.isSubscription) {
-        const discount = item.product.price * 0.3 * item.quantity;
-        return total + discount;
-      }
-      return total;
-    }, 0);
-  };
-
+  const subscriptionDiscount = 0; // Subtotal already reflects subscription pricing
   const subtotal = calculateSubtotal();
-  const subscriptionDiscount = calculateSubscriptionDiscount(); // Renamed for clarity
+  const cartSavings = getCartSavings(state.items);
   const shippingCost = 0; // Set to 0 VND, can be adjusted later if needed
   const promoCodeDiscount = state.promoDiscount; // Renamed for clarity
   const total = Math.max(0, subtotal + shippingCost - promoCodeDiscount);
-  const totalSavings = subscriptionDiscount + promoCodeDiscount; // Renamed for clarity
+  const totalSavings = cartSavings + promoCodeDiscount; // Renamed for clarity
 
   const handleApplyPromoCode = async () => {
     if (state.appliedPromoCode) {
@@ -191,7 +180,13 @@ const CartSidebar: React.FC = () => {
                             </button>
                           </div>
                           <span className="font-semibold text-carehub-teal text-sm sm:text-base lg:text-lg">
-                            {formatPrice((item.isSubscription ? item.product.price * 0.7 : item.product.price) * item.quantity)}
+                            {formatPrice(
+                              getUnitPrice(item.product, {
+                                quantity: item.quantity,
+                                isSubscription: item.isSubscription,
+                                deliveryFrequency: item.deliveryFrequency,
+                              }) * item.quantity
+                            )}
                           </span>
                         </div>
                         
@@ -210,9 +205,11 @@ const CartSidebar: React.FC = () => {
                                 })}
                                 className="w-full border border-gray-300 rounded px-3 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-carehub-teal appearance-none pr-8"
                               >
-                                <option value="Giao hàng mỗi 8 tuần">Giao hàng mỗi 8 tuần</option>
-                                <option value="Giao hàng mỗi 4 tuần">Giao hàng mỗi 4 tuần</option>
-                                <option value="Giao hàng mỗi 12 tuần">Giao hàng mỗi 12 tuần</option>
+                                {FREQUENCIES.map(freq => (
+                                  <option key={freq.label} value={freq.label}>
+                                    {freq.label}{freq.badge ? ` (${freq.badge})` : ''}
+                                  </option>
+                                ))}
                               </select>
                               <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                             </div>
@@ -229,17 +226,17 @@ const CartSidebar: React.FC = () => {
           {/* Cart Summary */}
           {state.items.length > 0 && (
             <div className="border-t bg-carehub-gray-light px-4 sm:px-6 py-4 sm:py-5 space-y-4">
-              {/* Discount */}
-              {subscriptionDiscount > 0 && ( // Only show this block if there's a subscription discount
+              {/* Savings (bundle + subscription) vs standard prices */}
+              {cartSavings > 0 && (
                 <div className="space-y-2">
                   <h3 className="font-medium text-sm sm:text-base">Giảm giá</h3>
-                  <div className="flex justify-between text-sm sm:text-base">
-                   <span>Giảm 30% đăng ký</span>
-                    <span>-{formatPrice(subscriptionDiscount)}</span>
+                  <div className="flex justify-between text-sm sm:text-base text-green-600">
+                    <span>Mua nhiều + Đăng ký</span>
+                    <span>-{formatPrice(cartSavings)}</span>
                   </div>
                   <div className="flex justify-between font-semibold text-sm sm:text-base">
-                   <span>Tổng giảm giá</span>
-                    <span>-{formatPrice(subscriptionDiscount)}</span>
+                    <span>Tổng giảm giá</span>
+                    <span>-{formatPrice(cartSavings)}</span>
                   </div>
                 </div>
               )}
@@ -314,9 +311,9 @@ const CartSidebar: React.FC = () => {
               {/* Savings */}
               {totalSavings > 0 && (
                 <div className="text-center py-2 sm:py-3">
-                  {subscriptionDiscount > 0 && ( // Show subscription savings only if applicable
+                  {cartSavings > 0 && ( // Show bundle+subscription savings only if applicable
                     <div className="text-carehub-blue font-semibold text-sm sm:text-base">
-                      Tiết kiệm đăng ký: {formatPrice(subscriptionDiscount)}
+                      Tiết kiệm (mua nhiều + đăng ký): {formatPrice(cartSavings)}
                     </div>
                   )}
                   {promoCodeDiscount > 0 && ( // Show promo discount only if applicable

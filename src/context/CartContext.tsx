@@ -6,6 +6,7 @@ interface CartItem {
   quantity: number;
   isSubscription: boolean;
   deliveryFrequency: string;
+  bundleTier?: { quantity: number; discountPercent: number; label: string };
 }
 
 interface CartState {
@@ -16,7 +17,7 @@ interface CartState {
 }
 
 type CartAction =
-  | { type: 'ADD_ITEM'; payload: { product: Product; quantity: number; isSubscription: boolean; deliveryFrequency: string } }
+  | { type: 'ADD_ITEM'; payload: { product: Product; quantity: number; isSubscription: boolean; deliveryFrequency: string; bundleTier?: { quantity: number; discountPercent: number; label: string } } }
   | { type: 'REMOVE_ITEM'; payload: string }
   | { type: 'UPDATE_QUANTITY'; payload: { id: string; quantity: number } }
   | { type: 'UPDATE_SUBSCRIPTION'; payload: { id: string; isSubscription: boolean; deliveryFrequency: string } }
@@ -46,6 +47,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
           quantity: updatedItems[existingItemIndex].quantity + action.payload.quantity,
           isSubscription: action.payload.isSubscription,
           deliveryFrequency: action.payload.deliveryFrequency,
+          bundleTier: action.payload.bundleTier,
         };
         return { ...state, items: updatedItems };
       }
@@ -57,6 +59,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
           quantity: action.payload.quantity,
           isSubscription: action.payload.isSubscription,
           deliveryFrequency: action.payload.deliveryFrequency,
+          bundleTier: action.payload.bundleTier,
         }],
       };
     }

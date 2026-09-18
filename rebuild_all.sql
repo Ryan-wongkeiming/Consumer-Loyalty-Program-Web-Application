@@ -1,21 +1,11 @@
--- ============================================================================
--- CareHub — CONSOLIDATED FULL DATABASE SCRIPT
--- ============================================================================
--- This single file recreates the ENTIRE live database state:
---   Part 1: original project schema (archived migrations, 2025-08)
---   Part 2: CareHub rebrand + multi-brand changes (2026-09-16)
---
--- Usage: paste this entire file into the Supabase SQL Editor and Run.
--- Target: a FRESH database (do NOT run on a database that already has data).
---
--- Product catalog after this script:
---   18 Blackmores + 19 GAIA Skin Naturals + 18 LittleOak (3 cans, 3 sachets, 12 combos) = 55 products
--- ============================================================================
-
-
 -- ============================================================
--- ORIGINAL MIGRATION: 20250810142215_dusty_bridge.sql
+-- CareHub — full database rebuild (all migrations in order)
+-- Generated 2026-09-18T04:04:54.751Z
 -- ============================================================
+
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250810142215_dusty_bridge.sql
+-- ############################################################
 -- Fix RLS policy for orders table to allow anonymous users to create orders
 -- This addresses the "new row violates row-level security policy" error
 
@@ -37,9 +27,9 @@ FOR INSERT
 TO anon, authenticated  
 WITH CHECK (true);
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250810142413_floating_brook.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250810142413_floating_brook.sql
+-- ############################################################
 -- Fix RLS policies for orders and order_items tables to allow anonymous checkout
 
 -- Drop existing problematic policies
@@ -58,14 +48,14 @@ FOR INSERT
 TO anon, authenticated  
 WITH CHECK (true);
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250810143558_bright_violet.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250810143558_bright_violet.sql
+-- ############################################################
 
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250810144000_aged_snowflake.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250810144000_aged_snowflake.sql
+-- ############################################################
 /*
 # Complete Blackmores E-commerce Database Schema
 
@@ -327,9 +317,9 @@ FOR ALL USING (auth.role() = 'service_role');
 CREATE POLICY "Enable service role full access on promo_code_usages" ON public.promo_code_usages
 FOR ALL USING (auth.role() = 'service_role');
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250810144931_azure_recipe.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250810144931_azure_recipe.sql
+-- ############################################################
 -- Fix RLS policies for orders and order_items tables to allow anonymous checkout
 
 -- Drop existing problematic policies
@@ -347,9 +337,9 @@ FOR INSERT
 TO anon, authenticated
 WITH CHECK (true);
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250810145109_empty_frog.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250810145109_empty_frog.sql
+-- ############################################################
 -- Fix RLS policies for orders and order_items to allow anonymous checkout
 -- This addresses the "new row violates row-level security policy" error
 
@@ -372,9 +362,9 @@ WITH CHECK (true);
 -- Ensure the policies are properly applied
 NOTIFY pgrst, 'reload schema';
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250810145242_holy_paper.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250810145242_holy_paper.sql
+-- ############################################################
 -- Fix RLS policies for orders and order_items tables to allow anonymous checkout
 -- This addresses the "new row violates row-level security policy" error
 
@@ -450,9 +440,9 @@ GRANT INSERT ON public.order_items TO anon;
 -- Refresh the schema cache
 NOTIFY pgrst, 'reload schema';
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250810145527_orange_dune.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250810145527_orange_dune.sql
+-- ############################################################
 -- Disable RLS on orders and order_items tables to allow anonymous checkout
 -- This is a temporary fix to resolve the checkout issue
 
@@ -478,9 +468,9 @@ DROP POLICY IF EXISTS "Allow INSERT for anon and authenticated users" ON public.
 -- This resolves the immediate checkout issue but reduces security
 -- Consider re-enabling RLS with proper policies once the issue is resolved
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250811133632_holy_villa.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250811133632_holy_villa.sql
+-- ############################################################
 /*
 # Add multiple images support to products table
 
@@ -544,9 +534,9 @@ UPDATE public.products SET images = ARRAY[
   'https://images.pexels.com/photos/3683056/pexels-photo-3683056.jpeg?auto=compress&cs=tinysrgb&w=800'
 ] WHERE images IS NULL AND image IS NULL;
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250813145646_crystal_star.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250813145646_crystal_star.sql
+-- ############################################################
 /*
   # Create OCR Rate Limits Table
 
@@ -595,9 +585,9 @@ CREATE INDEX IF NOT EXISTS idx_ocr_rate_limits_user_id ON public.ocr_rate_limits
 CREATE INDEX IF NOT EXISTS idx_ocr_rate_limits_created_at ON public.ocr_rate_limits(created_at);
 CREATE INDEX IF NOT EXISTS idx_ocr_rate_limits_user_time ON public.ocr_rate_limits(user_id, created_at);
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250817050645_tiny_lagoon.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250817050645_tiny_lagoon.sql
+-- ############################################################
 /*
 # Complete Authentication and User Profiles Setup
 
@@ -950,9 +940,9 @@ GRANT EXECUTE ON FUNCTION public.handle_updated_at() TO service_role;
 -- Refresh the schema cache
 NOTIFY pgrst, 'reload schema';
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250817082339_yellow_cave.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250817082339_yellow_cave.sql
+-- ############################################################
 /*
   # Create messages table for user reviews and messages
 
@@ -1072,9 +1062,9 @@ CREATE POLICY "Users can delete own media"
   TO authenticated
   USING (auth.uid()::text = (storage.foldername(name))[1]);
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250821144914_emerald_dune.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250821144914_emerald_dune.sql
+-- ############################################################
 /*
   # Create Loyalty System Tables
 
@@ -1183,9 +1173,9 @@ INSERT INTO loyalty_codes (code, points) VALUES
   ('PROBIOTIC45', 45)
 ON CONFLICT (code) DO NOTHING;
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250821150031_flat_math.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250821150031_flat_math.sql
+-- ############################################################
 /*
   # Add foreign key relationship between messages and user_profiles
 
@@ -1212,9 +1202,9 @@ BEGIN
   END IF;
 END $$;
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250821155228_little_mountain.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250821155228_little_mountain.sql
+-- ############################################################
 /*
   # Create loyalty gifts and redemptions system
 
@@ -1334,9 +1324,9 @@ VALUES
   ('Luxury Natural Skincare Set', 'A set of premium, natural skincare products aligning with natural health.', 5000, 'https://images.pexels.com/photos/3987131/pexels-photo-3987131.jpeg?auto=compress&cs=tinysrgb&w=800', 15, true)
 ON CONFLICT (id) DO NOTHING;
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250821155259_misty_dust.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250821155259_misty_dust.sql
+-- ############################################################
 /*
   # Comprehensive RLS Policy Audit and Fixes
 
@@ -1556,9 +1546,9 @@ VALUES
   ('Luxury Natural Skincare Set', 'A set of premium, natural skincare products aligning with natural health.', 5000, 'https://images.pexels.com/photos/3987131/pexels-photo-3987131.jpeg?auto=compress&cs=tinysrgb&w=800', 15, true)
 ON CONFLICT (id) DO NOTHING;
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250821163046_graceful_wind.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250821163046_graceful_wind.sql
+-- ############################################################
 /*
   # Add shipping columns to loyalty_redemptions table
 
@@ -1628,9 +1618,9 @@ BEGIN
   END IF;
 END $$;
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250829164833_cool_bar.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250829164833_cool_bar.sql
+-- ############################################################
 /*
   # Create free_samples table
 
@@ -1707,9 +1697,9 @@ BEGIN
   END IF;
 END $$;
 
--- ============================================================
--- ORIGINAL MIGRATION: 20250829164844_old_bridge.sql
--- ============================================================
+-- ############################################################
+-- ### ARCHIVED ORIGINAL: 20250829164844_old_bridge.sql
+-- ############################################################
 /*
   # Add sample_type_id to free_sample_requests table
 
@@ -1745,14 +1735,9 @@ BEGIN
   END IF;
 END $$;
 
-
--- ============================================================================
--- PART 2 — CareHub changes
--- ============================================================================
-
--- ============================================================
--- CARHUB MIGRATION: 20260916000000_carehub_rebrand.sql
--- ============================================================
+-- ############################################################
+-- ### 20260916000000_carehub_rebrand.sql
+-- ############################################################
 -- CareHub rebrand migration
 -- Strips the "Blackmores" brand prefix from product display names and
 -- descriptions, and rebrands loyalty gift names. The site is now CareHub,
@@ -1800,9 +1785,9 @@ UPDATE public.loyalty_codes
 SET code = 'CAREHUB2025'
 WHERE code = 'BLACKMORES2025';
 
--- ============================================================
--- CARHUB MIGRATION: 20260916000001_carehub_multibrand.sql
--- ============================================================
+-- ############################################################
+-- ### 20260916000001_carehub_multibrand.sql
+-- ############################################################
 -- CareHub multi-brand migration
 -- Adds brand columns to products and seeds the first non-CareHub brands:
 --   - GAIA Skin Naturals (Australian baby skincare)
@@ -2137,9 +2122,10 @@ INSERT INTO public.products (
   ARRAY['https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=500'], 'The Little Oak Company', 'littleoak'
 );
 
--- ============================================================
--- CARHUB MIGRATION: 20260916000002_carehub_product_images.sql
--- ============================================================
+
+-- ############################################################
+-- ### 20260916000002_carehub_product_images.sql
+-- ############################################################
 -- CareHub: swap placeholder images for real GAIA / LittleOak product photos
 -- Hotlinks directly to the brands' public Shopify CDNs (verified HTTP 200, no auth).
 -- image = card image (width=500); images = gallery (card image + 2 extra angles where available).
@@ -2320,9 +2306,9 @@ SET image = 'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage-3-Fron
     ]
 WHERE id = 'littleoak-toddler-milk';
 
--- ============================================================
--- CARHUB MIGRATION: 20260916000003_carehub_normalize_categories.sql
--- ============================================================
+-- ############################################################
+-- ### 20260916000003_carehub_normalize_categories.sql
+-- ############################################################
 -- CareHub: normalize product category values so filters match exactly.
 -- The DB has both "Women's Health" and "Women's health" for the same logical category.
 -- Canonical value: "Women's Health" (matches the frontend category list).
@@ -2334,9 +2320,9 @@ WHERE category = 'Women''s health';
 -- Show the resulting distinct categories for confirmation
 SELECT DISTINCT category FROM public.products ORDER BY category;
 
--- ============================================================
--- CARHUB MIGRATION: 20260916000004_carehub_blackmores_brand.sql
--- ============================================================
+-- ############################################################
+-- ### 20260916000004_carehub_blackmores_brand.sql
+-- ############################################################
 -- CareHub: correctly brand the original products as Blackmores
 --
 -- CareHub is the STORE. Blackmores / GAIA Skin Naturals / The Little Oak Company
@@ -2362,9 +2348,9 @@ FROM public.products
 WHERE brand_slug = 'blackmores'
 ORDER BY id;
 
--- ============================================================
--- CARHUB MIGRATION: 20260916000005_carehub_gaia_health_goals.sql
--- ============================================================
+-- ############################################################
+-- ### 20260916000005_carehub_gaia_health_goals.sql
+-- ############################################################
 -- CareHub: assign meaningful health-goal tags to GAIA products.
 -- (Previously all GAIA products were tagged only 'General Health'.)
 --
@@ -2400,9 +2386,9 @@ FROM public.products
 WHERE id LIKE 'gaia-%'
 ORDER BY id;
 
--- ============================================================
--- CARHUB MIGRATION: 20260916000006_carehub_ship_readiness.sql
--- ============================================================
+-- ############################################################
+-- ### 20260916000006_carehub_ship_readiness.sql
+-- ############################################################
 -- CareHub: ship-readiness fixes found by the full smoke test
 --
 -- Fixes 5 data issues:
@@ -2470,9 +2456,9 @@ FROM public.products
 WHERE id LIKE 'gaia-%'
 ORDER BY id;
 
--- ============================================================
--- CARHUB MIGRATION: 20260916000007_carehub_littleoak_prices.sql
--- ============================================================
+-- ############################################################
+-- ### 20260916000007_carehub_littleoak_prices.sql
+-- ############################################################
 -- CareHub: update LittleOak product prices
 --
 --   Natural Goat Milk Infant Formula  934,000 -> 1,200,000
@@ -2506,9 +2492,9 @@ FROM public.products
 WHERE id IN ('littleoak-infant-formula', 'littleoak-follow-on-formula', 'littleoak-toddler-milk')
 ORDER BY id;
 
--- ============================================================
--- CARHUB MIGRATION: 20260916000008_carehub_littleoak_full_catalog.sql
--- ============================================================
+-- ############################################################
+-- ### 20260916000008_carehub_littleoak_full_catalog.sql
+-- ############################################################
 -- CareHub: add the 9 missing LittleOak SG products
 --
 -- LittleOak SG catalog (12 total): 3 formula cans (already in store),
@@ -2702,9 +2688,9 @@ FROM public.products
 WHERE brand_slug = 'littleoak'
 ORDER BY id;
 
--- ============================================================
--- CARHUB MIGRATION: 20260916000009_carehub_littleoak_combos.sql
--- ============================================================
+-- ############################################################
+-- ### 20260916000009_carehub_littleoak_combos.sql
+-- ############################################################
 -- CareHub: LittleOak catalog correction — remove accessories, add combo bundles
 --
 -- Per the business decision: sell only infant formula products.
@@ -2975,3 +2961,407 @@ SELECT id, name, price, category
 FROM public.products
 WHERE brand_slug = 'littleoak'
 ORDER BY id;
+
+-- ############################################################
+-- ### 20260918000000_carehub_happi_products.sql
+-- ############################################################
+-- CareHub: add HAPPI Health products (10 SKUs)
+--
+-- Happi Health (https://happihealth.com.au) — Australian brand. 6x600g formula
+-- packs (Day/Night x Stage 1/2/3) + 4 lactoferrin supplements.
+--
+-- Pricing: A$1 = 17,000 VND (user-confirmed conversion)
+--   A$59.99 formula pack  -> 1,019,830  -> round 1,020,000
+--   A$52.99 Adult Immune+ -> 900,830    -> round 900,000
+--   A$44.99 Women's Iron+ / Baby Lactoferrin -> 764,830 -> round 765,000
+--   A$29.99 Kids Immune+  -> 509,830    -> round 510,000
+--
+-- Images hotlink to Happi's public Shopify CDN (all 10 verified HTTP 200).
+-- Category follows Happi's own taxonomy: Infant Formula / Adult Vitamins /
+-- Kids Vitamins / Baby Vitamins.
+
+INSERT INTO public.products (
+  id, name, description, price, original_price, image, category,
+  benefits, ingredients, dosage, rating, reviews, in_stock, is_subscription,
+  warnings, skus, gender_age_categories, product_ingredients, health_goals, images,
+  brand, brand_slug
+) VALUES
+-- ============================================================
+-- Infant formulas (6 x 600g packs)
+-- ============================================================
+(
+  'happi-day-infant-formula-stage-1',
+  'Stage 1 Day Infant Formula 6 x 600g',
+  'HAPPi Stage 1 Day is a nutritionally complete infant formula scientifically developed for day-time use between 5am–5pm. Day-specific nutrient blend to support daily energy needs.',
+  1020000, NULL,
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_D.png?v=1739337805&width=500',
+  'Infant Formula',
+  ARRAY['Scientifically developed for day-time (5am-5pm)', 'Day-specific nucleotides and iron', 'Nutritionally complete infant formula', 'Australian made'],
+  ARRAY['Skim milk', 'Lactoferrin', 'Nucleotides', 'Iron', '16 essential vitamins & minerals'],
+  'Prepare per feeding instructions. Use boiled cooled water, add powder, shake well.',
+  4.8, 45, TRUE, TRUE,
+  ARRAY['Not suitable as sole source for babies under 6 months without medical advice', 'Follow preparation instructions exactly'],
+  '[{"id": "happi-day-infant-formula-stage-1-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
+  ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_D.png?v=1739337805&width=500'],
+  'HAPPI Health', 'happi'
+),
+(
+  'happi-night-infant-formula-stage-1',
+  'Stage 1 Night Infant Formula 6 x 600g',
+  'HAPPi Stage 1 Night is a nutritionally complete infant formula scientifically developed for night-time use between 5pm–5am. Richer in night-related nutrients to support brain and body development during sleep.',
+  1020000, NULL,
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_N.png?v=1739337772&width=500',
+  'Infant Formula',
+  ARRAY['Scientifically developed for night-time (5pm-5am)', 'Richer in night-related nutrients', 'Supports brain & body development during sleep', 'Australian made'],
+  ARRAY['Skim milk', 'Lactoferrin', 'Night-specific nucleotides', '16 essential vitamins & minerals'],
+  'Prepare per feeding instructions. Use boiled cooled water, add powder, shake well.',
+  4.8, 38, TRUE, TRUE,
+  ARRAY['Not suitable as sole source for babies under 6 months without medical advice', 'Follow preparation instructions exactly'],
+  '[{"id": "happi-night-infant-formula-stage-1-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
+  ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_N.png?v=1739337772&width=500'],
+  'HAPPI Health', 'happi'
+),
+(
+  'happi-day-follow-on-formula-stage-2',
+  'Stage 2 Day Follow On Formula 6 x 600g',
+  'HAPPi Stage 2 Day is a nutritionally complete follow-on formula scientifically developed for day-time use between 5am–5pm for babies 6-12 months. Day-specific nutrient blend to support daily energy needs.',
+  1020000, NULL,
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_D.png?v=1739337859&width=500',
+  'Infant Formula',
+  ARRAY['Scientifically developed for day-time (5am-5pm)', 'Day-specific nucleotides and iron', 'Nutritionally complete follow-on formula', 'Australian made'],
+  ARRAY['Skim milk', 'Lactoferrin', 'Nucleotides', 'Iron', '16 essential vitamins & minerals'],
+  'Prepare per feeding instructions. Use boiled cooled water, add powder, shake well.',
+  4.7, 32, TRUE, TRUE,
+  ARRAY['Follow preparation instructions exactly'],
+  '[{"id": "happi-day-follow-on-formula-stage-2-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
+  ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_D.png?v=1739337859&width=500'],
+  'HAPPI Health', 'happi'
+),
+(
+  'happi-night-follow-on-formula-stage-2',
+  'Stage 2 Night Follow On Formula 6 x 600g',
+  'HAPPi Stage 2 Night is a nutritionally complete follow-on formula scientifically developed for night-time use between 5pm–5am for babies 6-12 months. Richer in night-related nutrients to support brain and body development during sleep.',
+  1020000, NULL,
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_N.png?v=1739337827&width=500',
+  'Infant Formula',
+  ARRAY['Scientifically developed for night-time (5pm-5am)', 'Richer in night-related nutrients', 'Supports brain & body development during sleep', 'Australian made'],
+  ARRAY['Skim milk', 'Lactoferrin', 'Night-specific nucleotides', '16 essential vitamins & minerals'],
+  'Prepare per feeding instructions. Use boiled cooled water, add powder, shake well.',
+  4.7, 28, TRUE, TRUE,
+  ARRAY['Follow preparation instructions exactly'],
+  '[{"id": "happi-night-follow-on-formula-stage-2-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
+  ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_N.png?v=1739337827&width=500'],
+  'HAPPI Health', 'happi'
+),
+(
+  'happi-day-toddler-milk-stage-3',
+  'Stage 3 Day Toddler Milk Drink 6 x 600g',
+  'HAPPi Stage 3 Day is a nutritionally complete growing-up milk drink scientifically developed for day-time use between 5am–5pm for toddlers 12m+. Day-specific nutrient blend to support daily energy needs.',
+  1020000, NULL,
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D.png?v=1739336605&width=500',
+  'Infant Formula',
+  ARRAY['Scientifically developed for day-time (5am-5pm)', 'Supports daily energy needs', 'Nutritionally complete growing-up milk', 'Australian made'],
+  ARRAY['Skim milk', 'Lactoferrin', 'Nucleotides', 'Iron', '16 essential vitamins & minerals'],
+  'Prepare per feeding instructions. Use boiled cooled water, add powder, shake well.',
+  4.8, 30, TRUE, TRUE,
+  ARRAY['Follow preparation instructions exactly'],
+  '[{"id": "happi-day-toddler-milk-stage-3-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
+  ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D.png?v=1739336605&width=500'],
+  'HAPPI Health', 'happi'
+),
+(
+  'happi-night-toddler-milk-stage-3',
+  'Stage 3 Night Toddler Milk Drink 6 x 600g',
+  'HAPPi Stage 3 Night is a nutritionally complete growing-up milk drink scientifically developed for night-time use between 5pm–5am for toddlers 12m+. Richer in night-related nutrients to support brain and body development during sleep.',
+  1020000, NULL,
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D_6PK_2.png?v=1739337741&width=500',
+  'Infant Formula',
+  ARRAY['Scientifically developed for night-time (5pm-5am)', 'Richer in night-related nutrients', 'Supports brain & body development during sleep', 'Australian made'],
+  ARRAY['Skim milk', 'Lactoferrin', 'Night-specific nucleotides', '16 essential vitamins & minerals'],
+  'Prepare per feeding instructions. Use boiled cooled water, add powder, shake well.',
+  4.8, 26, TRUE, TRUE,
+  ARRAY['Follow preparation instructions exactly'],
+  '[{"id": "happi-night-toddler-milk-stage-3-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
+  ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D_6PK_2.png?v=1739337741&width=500'],
+  'HAPPI Health', 'happi'
+),
+-- ============================================================
+-- Lactoferrin supplements
+-- ============================================================
+(
+  'happi-adult-daily-immune',
+  'HAPPI Adult Daily Immune+ Lactoferrin',
+  'Daily immune support with lactoferrin — an iron-binding protein found in milk and a natural component of the immune system. Supports the body''s natural defence against infection.',
+  900000, NULL,
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Adult_rgb_resized.png?v=1697252091&width=500',
+  'Vitamins',
+  ARRAY['Supports immune system function', 'Lactoferrin - natural immune component', 'Daily defence against infection', 'Australian made'],
+  ARRAY['Lactoferrin', 'Zinc', 'Vitamin C', 'Vitamin D'],
+  'Take as directed on the label.', 4.6, 210, TRUE, FALSE,
+  ARRAY['Always read the label', 'Follow directions for use'],
+  '[{"id": "happi-adult-daily-immune", "unit": "hộp", "price": 900000, "title": "1 box", "quantity": 1, "pricePerUnit": "₫900,000 mỗi hộp"}]'::jsonb,
+  ARRAY['Adult'], ARRAY['Lactoferrin'], ARRAY['General Health', 'Cold, Flu & Immunity'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Adult_rgb_resized.png?v=1697252091&width=500'],
+  'HAPPI Health', 'happi'
+),
+(
+  'happi-womens-daily-iron',
+  'HAPPI Women''s Daily Iron+ Lactoferrin',
+  'Targeted relief from tiredness with less risk of gut irritation. Specially formulated for women across all stages of life to help prevent dietary iron deficiency and associated tiredness.',
+  765000, NULL,
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Womens_rgb_resized.png?v=1697252244&width=500',
+  'Vitamins',
+  ARRAY['Targeted relief from tiredness', 'Less risk of gut irritation', 'Iron + lactoferrin advanced formula', 'For women at all life stages'],
+  ARRAY['Iron', 'Lactoferrin', 'Vitamin C', 'Folate'],
+  'Take as directed on the label.', 4.7, 180, TRUE, FALSE,
+  ARRAY['Always read the label', 'Keep out of reach of children'],
+  '[{"id": "happi-womens-daily-iron", "unit": "hộp", "price": 765000, "title": "1 box", "quantity": 1, "pricePerUnit": "₫765,000 mỗi hộp"}]'::jsonb,
+  ARRAY['Women''s'], ARRAY['Iron', 'Lactoferrin'], ARRAY['Energy', 'General Health'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Womens_rgb_resized.png?v=1697252244&width=500'],
+  'HAPPI Health', 'happi'
+),
+(
+  'happi-kids-daily-immune',
+  'HAPPI Kids Daily Immune+ Lactoferrin',
+  'Specifically formulated for growing kids 3+ with the nutrients zinc and lactoferrin to support the health and function of the immune system.',
+  510000, NULL,
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Kids_hr.png?v=1697251938&width=500',
+  'Kids Supplements',
+  ARRAY['Formulated for kids 3+', 'Zinc + lactoferrin', 'Supports immune system health', 'Australian made'],
+  ARRAY['Lactoferrin', 'Zinc', 'Vitamin C', 'Vitamin D'],
+  'Take as directed on the label.', 4.6, 140, TRUE, FALSE,
+  ARRAY['Always read the label', 'Not for children under 3'],
+  '[{"id": "happi-kids-daily-immune", "unit": "hộp", "price": 510000, "title": "1 box", "quantity": 1, "pricePerUnit": "₫510,000 mỗi hộp"}]'::jsonb,
+  ARRAY['Kids'], ARRAY['Lactoferrin', 'Zinc'], ARRAY['Cold, Flu & Immunity', 'General Health'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Kids_hr.png?v=1697251938&width=500'],
+  'HAPPI Health', 'happi'
+),
+(
+  'happi-baby-lactoferrin-powder',
+  'HAPPI Baby Lactoferrin Powder',
+  'Lactoferrin is a dietary protein found in cow''s milk and every drop of breast milk. Baby Lactoferrin Powder supports immune health for babies and young children.',
+  765000, NULL,
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/HAPPi_Baby_FOP800x800-768x768.png?v=1718877895&width=500',
+  'Baby Supplements',
+  ARRAY['Lactoferrin for baby immune support', 'Dietary protein found in breast milk', '28 x 1g sachets', 'Australian made'],
+  ARRAY['Lactoferrin', 'Vitamin C', 'Zinc'],
+  'Mix sachet contents with milk or food as directed on the label.', 4.7, 95, TRUE, FALSE,
+  ARRAY['Always read the label', 'Not a replacement for breast milk'],
+  '[{"id": "happi-baby-lactoferrin-powder-28x1g", "unit": "hộp", "price": 765000, "title": "28 x 1g sachets", "quantity": 28, "pricePerUnit": "₫765,000 mỗi hộp"}]'::jsonb,
+  ARRAY['Babies'], ARRAY['Lactoferrin'], ARRAY['General Health', 'Cold, Flu & Immunity'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/HAPPi_Baby_FOP800x800-768x768.png?v=1718877895&width=500'],
+  'HAPPI Health', 'happi'
+);
+
+-- ============================================================
+-- Verify: all 10 Happi products
+-- ============================================================
+SELECT id, name, price, category, brand
+FROM public.products
+WHERE brand_slug = 'happi'
+ORDER BY id;
+
+-- ############################################################
+-- ### 20260918000001_carehub_bundle_subscription.sql
+-- ############################################################
+-- CareHub: Buy More Save More (bundle tiers) + subscription master plan
+--
+-- Part 1: bundle_pricing JSONB column — buy more, save more
+--   Format: [{"quantity": 3, "discountPercent": 20, "label": "-20%"}, ...]
+--   discountPercent is OFF the base price. Applied on top of subscription.
+--
+-- Part 2: Category synchronization with the existing filter taxonomy
+--   - 'Adult Vitamins' (Happi)  -> merged into 'Vitamins' (existing)
+--   - 'Kids Vitamins'  (Happi)  -> 'Kids Supplements'  (new, significant)
+--   - 'Baby Vitamins'  (Happi)  -> 'Baby Supplements'  (new, significant)
+--
+-- Part 3: Seed bundle tiers for the 4 Happi supplement products (from
+--   https://happihealth.com.au — their live Buy More Save More tiers).
+--   Infant formula packs (6 x 600g) are already multi-packs: no bundle tiers.
+
+-- ============================================================
+-- 1. Add bundle_pricing column
+-- ============================================================
+ALTER TABLE public.products
+  ADD COLUMN IF NOT EXISTS bundle_pricing JSONB;
+
+-- ============================================================
+-- 2. Category synchronization
+-- ============================================================
+UPDATE public.products
+SET category = 'Vitamins'
+WHERE category IN ('Adult Vitamins', 'Kids Vitamins', 'Baby Vitamins');
+
+-- ============================================================
+-- 3. Seed bundle tiers for the 4 Happi supplements
+--    Base prices (VND, A$1 = 17,000):
+--      Adult Daily Immune+   A$52.99 -> 900,000
+--      Women's Daily Iron+   A$44.99 -> 765,000
+--      Kids Daily Immune+    A$29.99 -> 510,000
+--      Baby Lactoferrin Pwdr A$44.99 -> 765,000
+--    Tiers: 1 = 0% (implicit), 3 = -20%, 5 = -35% (Happi's live labels)
+-- ============================================================
+UPDATE public.products SET bundle_pricing = '[
+  {"quantity": 3, "discountPercent": 20, "label": "-20%"},
+  {"quantity": 5, "discountPercent": 35, "label": "-35%"}
+]'::jsonb
+WHERE id IN (
+  'happi-adult-daily-immune',
+  'happi-womens-daily-iron',
+  'happi-kids-daily-immune',
+  'happi-baby-lactoferrin-powder'
+);
+
+-- ============================================================
+-- Verify
+-- ============================================================
+SELECT id, name, category, price, bundle_pricing
+FROM public.products
+WHERE brand_slug = 'happi'
+ORDER BY id;
+
+-- ############################################################
+-- ### 20260918000002_carehub_subscriptions.sql
+-- ############################################################
+-- CareHub: Subscription engine (Option A — confirmed-repeat, COD-friendly)
+--
+-- Mirrors the Blackmores Subscribe mechanism, adapted for a COD-first market:
+--   - Subscription requires an account (user_id)
+--   - Frequency sets the repeat cadence (4/8/12 weeks) — the price is flat
+--   - Each cycle is CONFIRMED with the customer before shipping (opt-in per
+--     cycle, unlike Blackmores' opt-out-by-deadline card auto-charge)
+--   - Customer can skip / pause / cancel / change frequency anytime
+--   - Out-of-stock or non-confirmation -> cycle skipped/paused, never auto-billed
+--
+-- Key Blackmores rules reused verbatim:
+--   - Voucher codes cannot be used on subscription orders
+--   - Price changes need >= 14 days notice; customer can cancel penalty-free
+--   - Failed payment/confirmation -> retry, then pause (never silent-charge)
+
+-- ============================================================
+-- 1. subscriptions table (one row per active subscription)
+-- ============================================================
+CREATE TABLE IF NOT EXISTS public.subscriptions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  status TEXT NOT NULL DEFAULT 'active'
+    CHECK (status IN ('active', 'paused', 'cancelled')),
+  frequency_weeks INTEGER NOT NULL DEFAULT 4
+    CHECK (frequency_weeks IN (4, 8, 12)),
+  next_delivery_date DATE,
+  last_confirmed_at TIMESTAMP WITH TIME ZONE,
+  last_order_id UUID REFERENCES public.orders(id),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ============================================================
+-- 2. Subscription items (products + quantity in the subscription)
+-- ============================================================
+CREATE TABLE IF NOT EXISTS public.subscription_items (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  subscription_id UUID NOT NULL REFERENCES public.subscriptions(id) ON DELETE CASCADE,
+  product_id TEXT NOT NULL REFERENCES public.products(id),
+  quantity INTEGER NOT NULL DEFAULT 1,
+  is_subscription BOOLEAN DEFAULT TRUE,
+  delivery_frequency TEXT,
+  bundle_tier JSONB
+);
+
+-- ============================================================
+-- 3. orders.subscription_id — link an order to its subscription
+-- ============================================================
+ALTER TABLE public.orders
+  ADD COLUMN IF NOT EXISTS subscription_id UUID REFERENCES public.subscriptions(id);
+
+-- ============================================================
+-- 4. RLS: users manage only their own subscriptions
+-- ============================================================
+ALTER TABLE public.subscriptions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.subscription_items ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users view own subscriptions" ON public.subscriptions;
+CREATE POLICY "Users view own subscriptions"
+  ON public.subscriptions FOR SELECT
+  USING (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users insert own subscriptions" ON public.subscriptions;
+CREATE POLICY "Users insert own subscriptions"
+  ON public.subscriptions FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users update own subscriptions" ON public.subscriptions;
+CREATE POLICY "Users update own subscriptions"
+  ON public.subscriptions FOR UPDATE
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users view own subscription items" ON public.subscription_items;
+CREATE POLICY "Users view own subscription items"
+  ON public.subscription_items FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.subscriptions s
+      WHERE s.id = subscription_items.subscription_id
+        AND s.user_id = auth.uid()
+    )
+  );
+
+DROP POLICY IF EXISTS "Users insert own subscription items" ON public.subscription_items;
+CREATE POLICY "Users insert own subscription items"
+  ON public.subscription_items FOR INSERT
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM public.subscriptions s
+      WHERE s.id = subscription_items.subscription_id
+        AND s.user_id = auth.uid()
+    )
+  );
+
+DROP POLICY IF EXISTS "Users update own subscription items" ON public.subscription_items;
+CREATE POLICY "Users update own subscription items"
+  ON public.subscription_items FOR UPDATE
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.subscriptions s
+      WHERE s.id = subscription_items.subscription_id
+        AND s.user_id = auth.uid()
+    )
+  )
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM public.subscriptions s
+      WHERE s.id = subscription_items.subscription_id
+        AND s.user_id = auth.uid()
+    )
+  );
+
+-- ============================================================
+-- 5. Trigger: keep updated_at fresh
+-- ============================================================
+CREATE OR REPLACE FUNCTION public.set_subscription_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS "subscriptions_set_updated_at" ON public.subscriptions;
+CREATE TRIGGER "subscriptions_set_updated_at"
+  BEFORE UPDATE ON public.subscriptions
+  FOR EACH ROW EXECUTE FUNCTION public.set_subscription_updated_at();
+
+-- ============================================================
+-- Verify
+-- ============================================================
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name IN ('subscriptions', 'subscription_items', 'orders')
+ORDER BY table_name, ordinal_position;

@@ -1,5 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
+
+// Basename for GitHub Pages subpath hosting.
+// - Local dev (localhost:5173)  -> basename "/" (pathname is "/")
+// - GitHub Pages subpath        -> basename "/Consumer-Loyalty-Program-Web-Application"
+// Vite injects import.meta.env.BASE_URL from the `base` config; strip trailing "/".
+const BASENAME = (import.meta.env.BASE_URL || '/').replace(/\/$/, '') || '/';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
@@ -21,6 +27,9 @@ import TermsOfUsePage from './pages/TermsOfUsePage';
 import CookiesPage from './pages/CookiesPage';
 import ProfilePage from './pages/ProfilePage';
 import MyOrdersPage from './pages/MyOrdersPage';
+import MySubscriptionsPage from './pages/MySubscriptionsPage';
+import SubscriptionFAQsPage from './pages/SubscriptionFAQsPage';
+import SubscriptionTermsPage from './pages/SubscriptionTermsPage';
 import WishlistPage from './pages/WishlistPage';
 import AddressesPage from './pages/AddressesPage';
 import LoyaltyPage from './pages/LoyaltyPage';
@@ -41,7 +50,7 @@ function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <Router>
+        <Router basename={BASENAME}>
           <ScrollToTop />
           <div className="flex flex-col min-h-screen">
             <Header />
@@ -64,6 +73,9 @@ function App() {
                 <Route path="/cookies" element={<CookiesPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/my-orders" element={<MyOrdersPage />} />
+                <Route path="/my-subscriptions" element={<MySubscriptionsPage />} />
+                <Route path="/subscription-faqs" element={<SubscriptionFAQsPage />} />
+                <Route path="/subscription-terms" element={<SubscriptionTermsPage />} />
                 <Route path="/wishlist" element={<WishlistPage />} />
                 <Route path="/addresses" element={<AddressesPage />} />
                 <Route path="/loyalty" element={<LoyaltyPage />} />
