@@ -1,4 +1,4 @@
-# CareHub — Deployment Guide (Vercel / Netlify)
+# CareHub — Deployment Guide (GitHub Pages via GitHub Actions)
 
 This guide takes the CareHub frontend from local to a **public, permanent URL**
 that clients can open on any device.
@@ -15,6 +15,23 @@ that clients can open on any device.
 
 ---
 
+## How deployment works (important)
+
+- The site is hosted on **GitHub Pages** and built by the **GitHub Actions
+  workflow** (`.github/workflows/deploy.yml`).
+- Every push to `main` triggers the workflow: it runs `npm ci` → `npm run build`
+  → deploys `dist/` to Pages.
+- The workflow gets Supabase config from **one of two sources**, in priority order:
+  1. **Repo secrets** `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`
+     (GitHub → repo → Settings → Secrets and variables → Actions), OR
+  2. **`.env.production`** (committed public config — used automatically when
+     the secrets are empty).
+- The Supabase **anon key is public by design** (it ships inside every client
+  bundle); your data is protected by Row Level Security (RLS), never by this
+  key. The `service_role` key must never be committed or exposed.
+
+---
+
 ## Step 1 — Push the code to GitHub
 
 ```bash
@@ -27,48 +44,41 @@ git remote add origin https://github.com/YOUR_USERNAME/carehub.git
 git push -u origin main
 ```
 
-> ⚠️ **Never commit `.env`.** The `.gitignore` already excludes it. Only
-> `.env.example` (placeholders) is committed.
+> ⚠️ **Never commit the real `.env`** (it is git-ignored). `.env.example`
+> (placeholders) and `.env.production` (public anon config) are committed.
 
 ---
 
-## Step 2 — Deploy on Vercel (recommended)
+## Step 2 — One-time GitHub setup
 
-1. Go to [vercel.com](https://vercel.com) → **Sign up** (free, GitHub login)
-2. **Add New… → Project** → Import your `carehub` GitHub repo
-3. Framework preset: **Vite** (auto-detected)
-4. **Build Command:** `npm run build`
-5. **Output Directory:** `dist`
-6. **Environment Variables** — add these two:
-   | Name | Value |
-   |---|---|
-   | `VITE_SUPABASE_URL` | `https://xxxx.supabase.co` |
-   | `VITE_SUPABASE_ANON_KEY` | `eyJ...` (your anon key) |
-7. Click **Deploy**
-8. Done — you get a URL like `https://carehub-xxxx.vercel.app`
-
-**Every future push to `main` auto-redeploys.**
+1. Go to your repo → **Settings → Pages** → under "Build and deployment":
+   **Source: GitHub Actions** (already configured via the workflow file).
+2. **Optional but recommended** — set repo secrets so builds use secrets
+   instead of the committed fallback:
+   - `VITE_SUPABASE_URL` → your URL
+   - `VITE_SUPABASE_ANON_KEY` → your anon key
+3. Wait ~2 minutes for the first build to deploy. The live URL is:
+   `https://<your-user>.github.io/<repo-name>/`
 
 ---
 
-## Step 3 — Deploy on Netlify (alternative)
+## Step 3 — Re-deploy / force a rebuild
 
-1. Go to [netlify.com](https://netlify.com) → **Sign up** (free, GitHub login)
-2. **Add new site → Import an existing project** → pick the repo
-3. **Build command:** `npm run build`
-4. **Publish directory:** `dist`
-5. **Environment variables** — same two as above
-6. Click **Deploy site**
-7. Done — URL like `https://carehub-xxxx.netlify.app`
+If the live site looks stale (CDN caching an old bundle), push an empty commit:
+
+```bash
+git commit --allow-empty -m "chore: force Pages redeploy"
+git push origin main
+```
 
 ---
 
 ## Step 4 — Custom domain (optional)
 
-- **Vercel:** Project → Settings → Domains → add your domain → follow DNS
-  instructions (usually an `A` record or `CNAME` at your domain registrar).
-- **Netlify:** Domain settings → Add custom domain → follow the DNS steps.
-- HTTPS is automatic on both.
+1. Repo → **Settings → Pages → Custom domain** → add your domain.
+2. Add the DNS record GitHub shows you (usually an `A` record or `CNAME` at
+   your domain registrar).
+3. HTTPS is automatic.
 
 ---
 
@@ -76,32 +86,27 @@ git push -u origin main
 
 After deploying, open the live URL and verify:
 
-- [ ] Homepage loads with all 55 products (Blackmores, GAIA, LittleOak)
+- [ ] Homepage loads with all products (Blackmores, GAIA, LittleOak, HAPPI Health)
 - [ ] Product images load (they hotlink to brand CDNs)
-- [ ] Brand filter works (LittleOak / GAIA / Blackmores)
-- [ ] Category filter works (incl. the 5 baby categories)
+- [ ] Brand filter works (LittleOak / HAPPI / GAIA / Blackmores)
+- [ ] Category filter works (incl. the baby categories)
 - [ ] Search returns results
 - [ ] Product detail pages show price + SKU
 - [ ] Cart add/remove works
 - [ ] Checkout form submits an order (recorded in Supabase)
 - [ ] Sign up / sign in works (Supabase Auth)
-- [ ] Loyalty page loads
-
----
-
-## Rollback / re-deploy
-
-- **Vercel:** Deployments tab → pick a previous deployment → **Promote to
-  Production**.
-- **Netlify:** Deploys tab → **Publish deploy** for any previous one.
+- [ ] Subscription pages work (Đăng ký &amp; Tiết kiệm, FAQ, Điều Khoản)
+- [ ] Sold-out products show "Hết hàng"
 
 ---
 
 ## Troubleshooting
 
 | Symptom | Likely cause | Fix |
-|---|---|---|
-| No products on homepage | Supabase env vars missing/wrong | Verify `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` in the hosting env; confirm the DB has data |
+|---|---|---|----|
+| **Blank/white screen after deploy** | CI built with empty Supabase config | Workflow falls back to `.env.production` automatically; verify `.env.production exists; if the bundle still lacks `supabase.co`, re-push an empty commit to force redeploy |
+| No products on homepage | Supabase env vars missing/wrong | Confirm `.env.production` (or repo secrets) has `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY`; confirm the DB has data |
 | Product photos broken | Brand CDN changed URL | Re-host images in Supabase Storage and update product rows |
-| Build fails | Node version mismatch | Set Node 20+ in the hosting provider's build settings |
+| Build fails | Node version mismatch | Workflow uses Node 20 (set in `.github/workflows/deploy.yml`) |
 | Auth not working | Supabase Auth not enabled | Enable Email provider in Supabase → Authentication → Providers |
+| Page references old bundle that 404s | CDN cache | Force redeploy with empty commit (Step 3) |
