@@ -240,7 +240,7 @@ const ProductPage: React.FC = () => {
                   </label>
                 </div>
                 <p className="text-xs sm:text-sm lg:text-base text-gray-600">
-                  Tiết kiệm 30% và miễn phí vận chuyển pentru comenză recurente. Fiecare giao hàng este confirmată înaintea de livrare (WhatsApp/SMS/email).
+                  Tiết kiệm 30% và miễn phí vận chuyển cho đơn hàng định kỳ. Mỗi lần giao hàng sẽ được xác nhận trước khi giao (qua WhatsApp/SMS/email).
                 </p>
                 {isSubscription && (
                   <div className="mt-3">
@@ -256,12 +256,12 @@ const ProductPage: React.FC = () => {
                       ))}
                     </select>
                     <p className="text-[10px] sm:text-xs text-gray-500 mt-1.5">
-                      Cùng mức giá −30% pentru mọi chu kỳ. Confirmare per ciclă înaintea de livrare.
+                      Cùng mức giá −30% cho mọi chu kỳ. Xác nhận mỗi chu kỳ trước khi giao hàng.
                     </p>
                     <div className="mt-1.5 flex items-center space-x-1 text-[10px] sm:text-xs text-carehub-teal">
                       <Link to="/subscription-faqs" className="hover:underline">FAQ</Link>
                       <span>·</span>
-                      <Link to="/subscription-terms" className="hover:underline">Điе Khoản</Link>
+                      <Link to="/subscription-terms" className="hover:underline">Điều Khoản</Link>
                     </div>
                   </div>
                 )}

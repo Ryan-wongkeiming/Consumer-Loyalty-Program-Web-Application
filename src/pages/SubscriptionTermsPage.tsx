@@ -24,7 +24,7 @@ const SubscriptionTermsPage: React.FC = () => {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Đăng ký &amp; Tiết kiệm — Điều Khoản</h1>
           <p className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto">
-            Terminii și condițiile serviciului de abonament CareHub
+            Điều khoản và điều kiện của dịch vụ đăng ký CareHub
           </p>
         </div>
       </div>
@@ -36,77 +36,77 @@ const SubscriptionTermsPage: React.FC = () => {
             <section>
               <div className="flex items-center space-x-3 mb-4">
                 <RefreshCw className="w-6 h-6 text-carehub-teal" />
-                <h2 className="text-2xl font-bold text-gray-900">1. Cum funcționează Đăng ký</h2>
+                <h2 className="text-2xl font-bold text-gray-900">1. Đăng ký hoạt động như thế nào</h2>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                Đăng ký &amp; Tiết kiệm este un serviciu prin care ați primi giao hàng periodică a unui produs la un preț redus. Necesitați un cont CareHub. Alegeți produsele și freqvența (4/8/12 tuần); primiți -30% (formulă infantă -20%) și miễn phí vận chuyển la fiecare comandă de abonament.
+                Đăng ký &amp; Tiết kiệm là dịch vụ nhận giao hàng định kỳ một sản phẩm với giá ưu đãi. Bạn cần có tài khoản CareHub. Bạn chọn sản phẩm và tần suất (4/8/12 tuần); bạn được giảm 30% (sữa công thức giảm 20%) và miễn phí vận chuyển cho mỗi đơn hàng đăng ký.
               </p>
             </section>
 
             <section>
               <div className="flex items-center space-x-3 mb-4">
                 <CreditCard className="w-6 h-6 text-carehub-teal" />
-                <h2 className="text-2xl font-bold text-gray-900">2. Plata și confirmarea per ciclă</h2>
+                <h2 className="text-2xl font-bold text-gray-900">2. Thanh toán và xác nhận theo từng chu kỳ</h2>
               </div>
               <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                <li>Plătiți la giao hàng (COD) sau prin transfer manuală — nu stocăm date carduri și nu auto-încasăm.</li>
-                <li>Înaintea fiecarei giao hàng, vă contactăm (WhatsApp/SMS/email) pentru confirmare.</li>
-                <li>Fără confirmare, giao hàng este skipă — nică auto-livrare, nică auto-încasare.</li>
-                <li>Dacă plata nu este confirmată după 3 zilă (2 reminder-uri + 1 SMS), abonamentul este pauză automat.</li>
+                <li>Bạn thanh toán khi nhận hàng (COD) hoặc chuyển khoản thủ công — chúng tôi không lưu trữ thông tin thẻ và không tự động trừ tiền.</li>
+                <li>Trước mỗi lần giao hàng, chúng tôi liên hệ với bạn (WhatsApp/SMS/email) để xác nhận.</li>
+                <li>Không có xác nhận, lần giao hàng sẽ được bỏ qua — không tự động giao hàng, không tự động trừ tiền.</li>
+                <li>Nếu không xác nhận thanh toán sau 3 ngày (2 lần nhắc + 1 SMS), đăng ký sẽ tự động tạm dừng.</li>
               </ul>
             </section>
 
             <section>
               <div className="flex items-center space-x-3 mb-4">
                 <CalendarDays className="w-6 h-6 text-carehub-teal" />
-                <h2 className="text-2xl font-bold text-gray-900">3. Freqvența și skipă/pauză</h2>
+                <h2 className="text-2xl font-bold text-gray-900">3. Tần suất, bỏ qua và tạm dừng</h2>
               </div>
               <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                <li>Prețul abonamentului este același la orice freqvență — freqvența aleșa doar cadentia de giao hàng, nu prețul.</li>
-                <li>Poteți skipă (omite) o giao hàng, pauză sau schimba freqvența oricând din secțiuma „Đăng ký” a contului.</li>
-                <li>Nu există perioadă minimă de abonament și nu există penaliză la anulare.</li>
+                <li>Giá đăng ký là như nhau ở mọi tần suất — tần suất chỉ quyết định nhịp giao hàng, không phải giá.</li>
+                <li>Bạn có thể bỏ qua một lần giao hàng, tạm dừng hoặc thay đổi tần suất bất cứ lúc nào trong mục "Đăng ký" của tài khoản.</li>
+                <li>Không có thời hạn tối thiểu và không bị phạt khi hủy đăng ký.</li>
               </ul>
             </section>
 
             <section>
               <div className="flex items-center space-x-3 mb-4">
                 <AlertCircle className="w-6 h-6 text-carehub-teal" />
-                <h2 className="text-2xl font-bold text-gray-900">4. Situații speciale</h2>
+                <h2 className="text-2xl font-bold text-gray-900">4. Các trường hợp đặc biệt</h2>
               </div>
               <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                <li><strong>Stock epuisé:</strong> dacă un produs abonament nu este disponibil, giao hàng este pauză și sunteți notificat — nu vă auto-încasăm și nu înlocuim produsul fără acord.</li>
-                <li><strong>Schimbări de preț:</strong> dacă prețul unui produs abonament este schimbat, primiți notificare cu min. 14 zilă înaintea efectuării; poteți anula fără penaliză înaintea de acea dată.</li>
-                <li><strong>Code promoționale:</strong> nu se aplică la comenzile de abonament. Beneficiați în schimba de -30% (formulă -20%) + miễn phí vận chuyển.</li>
-                <li><strong>Anulare din partea CareHub:</strong> ne rezervăm dreptul de a anula un abonament acționând rezonabil (produs întrerupt, nerespectarea termeniilor, plăți esuate repetat).</li>
+                <li><strong>Hết hàng:</strong> nếu sản phẩm trong đăng ký không có sẵn, việc giao hàng sẽ tạm dừng và bạn được thông báo — chúng tôi không tự động trừ tiền và không thay sản phẩm khi chưa có sự đồng ý của bạn.</li>
+                <li><strong>Thay đổi giá:</strong> nếu giá sản phẩm trong đăng ký thay đổi, bạn nhận thông báo trước ít nhất 14 ngày; bạn có thể hủy mà không bị phạt trước ngày đó.</li>
+                <li><strong>Mã khuyến mãi:</strong> không áp dụng cho đơn hàng đăng ký. Thay vào đó, bạn được giảm 30% (sữa công thức 20%) + miễn phí vận chuyển.</li>
+                <li><strong>Hủy từ phía CareHub:</strong> chúng tôi có quyền hủy đăng ký khi hành động hợp lý (sản phẩm ngừng kinh doanh, vi phạm điều khoản, thanh toán thất bại nhiều lần).</li>
               </ul>
             </section>
 
             <section>
               <div className="flex items-center space-x-3 mb-4">
                 <Users className="w-6 h-6 text-carehub-teal" />
-                <h2 className="text-2xl font-bold text-gray-900">5. Responsabilitățile dumneavostră</h2>
+                <h2 className="text-2xl font-bold text-gray-900">5. Trách nhiệm của bạn</h2>
               </div>
               <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                <li>Mentineți date de contact (email/telefon) actuale pentru confirmare.</li>
-                <li>Păstreț ĭ data de giao hàng și adresa actuală.</li>
-                <li>Anulați sau modificați înaintea următoarea ciclă confirmată pentru a nu primi giao hàng.</li>
+                <li>Giữ thông tin liên hệ (email/điện thoại) luôn cập nhật để nhận xác nhận.</li>
+                <li>Theo dõi ngày giao hàng và giữ địa chỉ hiện tại.</li>
+                <li>Hủy hoặc thay đổi trước chu kỳ tiếp theo đã được xác nhận để không nhận giao hàng.</li>
               </ul>
             </section>
 
             <section>
               <div className="flex items-center space-x-3 mb-4">
                 <Shield className="w-6 h-6 text-carehub-teal" />
-                <h2 className="text-2xl font-bold text-gray-900">6. Contact și schimbări</h2>
+                <h2 className="text-2xl font-bold text-gray-900">6. Liên hệ và thay đổi</h2>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                CareHub poate schimba acest Termini în orice moment, cu notificare rezonabilă înainte. Continuarea abonamentului după notificare implică acordul dumneavostră. Pentru întrăbări, contactați serviciul clienț CareHub (WhatsApp / email / telefon).
+                CareHub có thể thay đổi các Điều khoản này bất cứ lúc nào, với thông báo hợp lý trước đó. Việc tiếp tục đăng ký sau khi nhận thông báo đồng nghĩa với việc bạn chấp nhận các thay đổi. Nếu có thắc mắc, hãy liên hệ bộ phận chăm sóc khách hàng CareHub (WhatsApp / email / điện thoại).
               </p>
             </section>
           </div>
         </div>
 
         <p className="text-xs text-gray-500 text-center">
-          Ultima actualizare: septembrie 2026 · Model de confirmare per ciclă (COD-first)
+          Cập nhật lần cuối: tháng 9 năm 2026 · Mô hình xác nhận theo từng chu kỳ (COD-first)
         </p>
       </div>
     </div>

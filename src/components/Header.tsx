@@ -451,7 +451,7 @@ const Header: React.FC = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className="block w-full text-left px-3 py-3 text-gray-600 hover:text-carehub-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
                   >
-                    Đăng ký của mine
+                    Đăng ký của tôi
                   </Link>
                   <Link
                     to="/subscription-faqs"

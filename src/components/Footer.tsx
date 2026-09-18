@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
               <li><Link to="/privacy-policy" className="text-gray-300 hover:text-white transition-colors">Chính sách bảo mật</Link></li>
               <li><Link to="/editorial-policy" className="text-gray-300 hover:text-white transition-colors">Chính sách biên tập</Link></li>
               <li><Link to="/terms-of-use" className="text-gray-300 hover:text-white transition-colors">Điều khoản sử dụng</Link></li>
-              <li><Link to="/subscription-terms" className="text-gray-300 hover:text-white transition-colors">Đăng ký — Điе Khoản</Link></li>
+              <li><Link to="/subscription-terms" className="text-gray-300 hover:text-white transition-colors">Đăng ký — Điều Khoản</Link></li>
               <li><Link to="/subscription-faqs" className="text-gray-300 hover:text-white transition-colors">Đăng ký — FAQ</Link></li>
               <li><Link to="/cookies" className="text-gray-300 hover:text-white transition-colors">Cookies</Link></li>
             </ul>

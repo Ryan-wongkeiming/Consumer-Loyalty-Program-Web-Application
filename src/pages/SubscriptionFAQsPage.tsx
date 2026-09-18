@@ -6,43 +6,43 @@ const SubscriptionFAQsPage: React.FC = () => {
   const faqs = [
     {
       icon: RefreshCw,
-      q: 'Cum funcționează Đăng ký & Tiết kiệm?',
-      a: 'Când ați ales un produs și ați bilați „Đăng ký & Tiết kiệm”, beneficiați de -30% (formulă infantă -20%) și miễn phí vận chuyển. Înaintea fiecarei giao hàng, vă contactăm (WhatsApp/SMS/email) pentru a confirma următoarea giao hàng. Confirmarea este făcută per ciclă — nu există nică automată, nică angajă ascunsă.',
+      q: 'Đăng ký & Tiết kiệm hoạt động như thế nào?',
+      a: 'Khi bạn chọn một sản phẩm và bật "Đăng ký & Tiết kiệm", bạn được giảm 30% (sữa công thức giảm 20%) và miễn phí vận chuyển. Trước mỗi lần giao hàng, chúng tôi sẽ liên hệ với bạn (qua WhatsApp/SMS/email) để xác nhận đơn hàng tiếp theo. Việc xác nhận được thực hiện theo từng chu kỳ — không có tự động trừ tiền, không có cam kết ẩn.',
     },
     {
       icon: CreditCard,
-      q: 'Cum platesc?',
-      a: 'Plătiți la livrare (COD) sau prin transfer manuală. Prima comandă este plătită cum ați obișnuit. La fiecare ciclă confirmată, primiți una factură cu același -30% și plătiți la giao hàng. Nu stocăm date carduri de credit și nu există auto-încasări.',
+      q: 'Tôi thanh toán như thế nào?',
+      a: 'Bạn thanh toán khi nhận hàng (COD) hoặc chuyển khoản thủ công. Đơn đầu tiên được thanh toán như bình thường. Mỗi chu kỳ được xác nhận, bạn nhận hóa đơn với mức giảm 30% như nhau và thanh toán khi nhận hàng. Chúng tôi không lưu trữ thông tin thẻ tín dụng và không có tự động trừ tiền.',
     },
     {
       icon: CalendarDays,
-      q: 'Ce freqvență poteu alețe?',
-      a: 'Poteți alețe giao hàng la 4, 8 sau 12 tuần. Prețul este aceleași (-30% sau -20% pentru formulă) la orice freqvență — freqvența este doar o alețe de timp, nu o alețe de preț. Freqvența 4 tuần este cea mai populară și este presețată implicită.',
+      q: 'Tôi có thể chọn tần suất nào?',
+      a: 'Bạn có thể chọn giao hàng mỗi 4, 8 hoặc 12 tuần. Giá là như nhau (-30% hoặc -20% cho sữa công thức) ở mọi tần suất — tần suất chỉ là lựa chọn về thời gian, không phải lựa chọn về giá. Tần suất 4 tuần là phổ biến nhất và được chọn mặc định.',
     },
     {
       icon: Pause,
-      q: 'Pot să pauză sau să omit o giao hàng?',
-      a: 'Da. În secțiuma „Đăng ký” din contul dumneavostră poteți pauză, skipă (omite următoarea giao hàng) sau schimba freqvența oricând, fără penaliză. Poteți anula complet oricând — nu există perioadă minimă.',
+      q: 'Tôi có thể tạm dừng hoặc bỏ qua một lần giao hàng không?',
+      a: 'Có. Trong mục "Đăng ký" của tài khoản, bạn có thể tạm dừng, bỏ qua (bỏ lần giao hàng tiếp theo) hoặc thay đổi tần suất bất cứ lúc nào, không bị phạt. Bạn cũng có thể hủy hoàn toàn bất cứ lúc nào — không có thời hạn tối thiểu.',
     },
     {
       icon: AlertCircle,
-      q: 'Ce se întâmplă dacă nu confirmă giao hàng?',
-      a: 'Dacă nu confirmă în 3 zilă (2 reminder-uri WhatsApp + 1 SMS), ciclă este skipă și primiți notificațiumă. Nu vă auto-încasăm nică auto-livramă fără confirmare. În caz de stock epuisé, giao hàng este pauză și sunteți notificat.',
+      q: 'Điều gì xảy ra nếu tôi không xác nhận đơn giao hàng?',
+      a: 'Nếu bạn không xác nhận trong 3 ngày (2 lần nhắc qua WhatsApp + 1 SMS), chu kỳ đó sẽ được bỏ qua và bạn nhận được thông báo. Chúng tôi không tự động trừ tiền hoặc tự động giao hàng khi chưa có xác nhận. Trong trường hợp hết hàng, việc giao hàng sẽ tạm dừng và bạn được thông báo.',
     },
     {
       icon: RefreshCw,
-      q: 'Pot să anulă oricând?',
-      a: 'Da, fără penaliză și fără perioadă minimă. Anulați din „Đăng ký” și contul dumneavostră. Dacă prețul unui produs din abonament este schimbat, primiți notificare cu min. 14 zilă înainte, și poteți anula fără penaliză înaintea de efectuarea schimbării.',
+      q: 'Tôi có thể hủy bất cứ lúc nào không?',
+      a: 'Có, không bị phạt và không có thời hạn tối thiểu. Bạn hủy trong mục "Đăng ký" của tài khoản. Nếu giá sản phẩm trong đăng ký thay đổi, bạn sẽ nhận thông báo trước ít nhất 14 ngày và có thể hủy mà không bị phạt trước khi thay đổi có hiệu lực.',
     },
     {
       icon: CreditCard,
-      q: 'Pot să utiliză cod promoțional pentru abonamente?',
-      a: 'Nu. Code promoționale nu se aplică la comenzile de abonament — în loc de aceasta, beneficiați de -30% (formulă -20%) + miễn phí vận chuyển la fiecare comandă de abonament, care este o ofertă și mai bună.',
+      q: 'Tôi có thể dùng mã khuyến mãi cho đăng ký không?',
+      a: 'Không. Mã khuyến mãi không áp dụng cho đơn hàng đăng ký — thay vào đó, bạn được giảm 30% (sữa công thức 20%) + miễn phí vận chuyển cho mỗi đơn hàng đăng ký, đây là ưu đãi tốt hơn.',
     },
     {
       icon: HelpCircle,
-      q: 'Cum îmi gestioneză abonamentele?',
-      a: 'Logați-vă în cont, mergeți la „Đăng ký” și poteți: schimba freqvența, schimba adresa, skipă, pauză sau anula. Fiecare abonament afișăază următoarea dată de giao hàng și statusul actual.',
+      q: 'Tôi quản lý các đăng ký của mình như thế nào?',
+      a: 'Đăng nhập vào tài khoản, vào mục "Đăng ký" và bạn có thể: thay đổi tần suất, thay đổi địa chỉ, bỏ qua, tạm dừng hoặc hủy. Mỗi đăng ký hiển thị ngày giao hàng tiếp theo và trạng thái hiện tại.',
     },
   ];
 
@@ -67,7 +67,7 @@ const SubscriptionFAQsPage: React.FC = () => {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Đăng ký — FAQ</h1>
           <p className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto">
-            Tote întrăbările despre Đăng ký &amp; Tiết kiệm
+            Tất cả các câu hỏi về Đăng ký &amp; Tiết kiệm
           </p>
         </div>
       </div>
@@ -91,9 +91,9 @@ const SubscriptionFAQsPage: React.FC = () => {
         </div>
 
         <div className="mt-10 bg-green-50 rounded-xl p-6">
-          <p className="font-medium text-gray-900 mb-2">Întrăbări suplementăre?</p>
+          <p className="font-medium text-gray-900 mb-2">Bạn còn câu hỏi khác?</p>
           <p className="text-sm text-gray-700">
-            Contactați-ne: WhatsApp / email / telefon. Vă răspundem în 1–2 zilă lucrătoare.
+            Liên hệ với chúng tôi: WhatsApp / email / điện thoại. Chúng tôi sẽ trả lời trong 1–2 ngày làm việc.
           </p>
         </div>
       </div>

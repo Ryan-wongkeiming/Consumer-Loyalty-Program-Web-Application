@@ -321,7 +321,7 @@ const ProfilePage: React.FC = () => {
   const tabs = [
     { id: 'personal', label: 'Thông tin cá nhân', icon: User },
     { id: 'addresses', label: 'Địa chỉ giao hàng', icon: MapPin },
-    { id: 'subscriptions', label: 'Đăng ký của mine', icon: Settings },
+    { id: 'subscriptions', label: 'Đăng ký của tôi', icon: Settings },
     { id: 'loyalty', label: 'Điểm thưởng', icon: Settings },
     { id: 'preferences', label: 'Tùy chọn', icon: Settings },
     { id: 'messages', label: 'Tin nhắn của tôi', icon: MessageSquare }
@@ -782,13 +782,13 @@ const ProfilePage: React.FC = () => {
                     <div>
                       <h3 className="font-medium text-gray-900">Tiết kiệm 30% + miễn phí vận chuyển</h3>
                       <p className="text-sm text-gray-700 mt-1">
-                        Abonamentele tale — gestioneză, pauză, skipă sauă anulați. Fiecare giao hàng este confirmată înaintea de livrare.
+                        Các đăng ký của bạn — quản lý, tạm dừng, bỏ qua hoặc hủy. Mỗi lần giao hàng được xác nhận trước khi giao.
                       </p>
                       <Link
                         to="/subscription-faqs"
                         className="text-carehub-teal hover:underline text-sm mt-2 inline-block"
                       >
-                        Citesti FAQ &amp; Điе Khoản →
+                        Xem FAQ &amp; Điều Khoản →
                       </Link>
                     </div>
                   </div>

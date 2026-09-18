@@ -15,9 +15,9 @@ const FREQUENCY_LABELS: Record<number, string> = {
 };
 
 const STATUS_LABELS: Record<string, string> = {
-  active: 'Aktiv',
-  paused: 'Pauză',
-  cancelled: 'Hủy',
+  active: 'Hoạt động',
+  paused: 'Tạm dừng',
+  cancelled: 'Đã hủy',
 };
 
 const MySubscriptionsPage: React.FC = () => {
@@ -45,18 +45,18 @@ const MySubscriptionsPage: React.FC = () => {
 
   const handlePause = async (id: string) => {
     const ok = await updateSubscriptionStatus(id, 'paused');
-    showMessage(ok ? 'Đăng ký pauză' : 'Lỗi, thử lại');
+    showMessage(ok ? 'Đã tạm dừng đăng ký' : 'Lỗi, thử lại');
     if (ok) loadSubscriptions();
   };
 
   const handleResume = async (id: string) => {
     const ok = await updateSubscriptionStatus(id, 'active');
-    showMessage(ok ? 'Đăng ký aktiv lại' : 'Lỗi, thử lại');
+    showMessage(ok ? 'Đã kích hoạt lại đăng ký' : 'Lỗi, thử lại');
     if (ok) loadSubscriptions();
   };
 
   const handleCancel = async (id: string) => {
-    if (!window.confirm('Hủy đăng ký này? Điểm thưởng và giảm giá đăng ký sẽ được thủş.')) return;
+    if (!window.confirm('Hủy đăng ký này? Bạn sẽ mất ưu đãi giảm giá và miễn phí vận chuyển của đăng ký.')) return;
     const ok = await updateSubscriptionStatus(id, 'cancelled');
     showMessage(ok ? 'Đăng ký hủy' : 'Lỗi, thử lại');
     if (ok) loadSubscriptions();
@@ -64,13 +64,13 @@ const MySubscriptionsPage: React.FC = () => {
 
   const handleSkip = async (id: string) => {
     const ok = await skipNextDelivery(id);
-    showMessage(ok ? 'Giao hàng sauă tưă skipă' : 'Lỗi, thử lại');
+    showMessage(ok ? 'Đã bỏ qua lần giao hàng này' : 'Lỗi, thử lại');
     if (ok) loadSubscriptions();
   };
 
   const handleFrequencyChange = async (id: string, weeks: number) => {
     const ok = await changeSubscriptionFrequency(id, weeks);
-    showMessage(ok ? 'Chỉ cập updatedă' : 'Lỗi, thử lại');
+    showMessage(ok ? 'Đã cập nhật tần suất' : 'Lỗi, thử lại');
     if (ok) loadSubscriptions();
   };
 
@@ -114,7 +114,7 @@ const MySubscriptionsPage: React.FC = () => {
           </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-3">Đăng ký &amp; Tiết kiệm</h1>
           <p className="text-lg md:text-xl text-green-100 max-w-3xl mx-auto">
-            Quản đăng ký của bạn — thay đổi chu kỳ, pauză, skipă sauă hủy bất cứ lúc nào
+            Quản lý đăng ký của bạn — thay đổi chu kỳ, tạm dừng, bỏ qua hoặc hủy bất cứ lúc nào
           </p>
         </div>
       </div>
@@ -138,12 +138,12 @@ const MySubscriptionsPage: React.FC = () => {
             <div className="w-20 h-20 bg-carehub-teal/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Package className="w-10 h-10 text-carehub-teal" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900 mb-2">Nici đăng ký nuă</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Chưa có đăng ký nào</h2>
             <p className="text-gray-600 mb-6">
-              Đăng ký pentru a primi -30% și miễn phí vận chuyển la fiecare giao hàng.
+              Đăng ký để nhận ưu đãi 30% và miễn phí vận chuyển cho mỗi lần giao hàng định kỳ.
             </p>
             <Link to="/" className="bg-carehub-teal text-white px-6 py-3 rounded-lg hover:bg-carehub-teal-dark transition-colors">
-              Khám plá îndată
+              Khám phá ngay
             </Link>
           </div>
         ) : (
@@ -163,7 +163,7 @@ const MySubscriptionsPage: React.FC = () => {
                       {STATUS_LABELS[sub.status] || sub.status}
                     </span>
                     <span className="text-xs sm:text-sm text-gray-500">
-                      Următoarea giao hàng: {formatDate(sub.next_delivery_date)}
+                      Lần giao hàng tiếp theo: {formatDate(sub.next_delivery_date)}
                     </span>
                   </div>
                 </div>
@@ -208,15 +208,15 @@ const MySubscriptionsPage: React.FC = () => {
                   {sub.status === 'active' ? (
                     <>
                       <button onClick={() => handleSkip(sub.id)} className="text-xs sm:text-sm text-carehub-teal hover:underline">
-                        <CalendarDays className="w-4 h-4 inline-block mr-1" /> Skipă
+                        <CalendarDays className="w-4 h-4 inline-block mr-1" /> Bỏ qua lần này
                       </button>
                       <button onClick={() => handlePause(sub.id)} className="text-xs sm:text-sm text-yellow-600 hover:underline">
-                        <Pause className="w-4 h-4 inline-block mr-1" /> Pauză
+                        <Pause className="w-4 h-4 inline-block mr-1" /> Tạm dừng
                       </button>
                     </>
                   ) : sub.status === 'paused' ? (
                     <button onClick={() => handleResume(sub.id)} className="text-xs sm:text-sm text-green-600 hover:underline">
-                      <Play className="w-4 h-4 inline-block mr-1" /> Activă din nou
+                      <Play className="w-4 h-4 inline-block mr-1" /> Kích hoạt lại
                     </button>
                   ) : null}
 
@@ -233,11 +233,11 @@ const MySubscriptionsPage: React.FC = () => {
               <div className="flex items-start space-x-3">
                 <Info className="w-5 h-5 text-carehub-teal flex-shrink-0" />
                 <div className="text-sm text-gray-700">
-                  <p className="font-medium text-gray-900">Cum funcționează confirmarea</p>
+                  <p className="font-medium text-gray-900">Xác nhận hoạt động như thế nào</p>
                   <p>
-                    Înaintea fiecarei giao hàng, CareHub vă va contactă (WhatsApp/SMS/email) pentru confirmare.
-                    Fără confirmare, giao hàng este skipă — niciodată nu vă auto-facturăm.
-                    Puteți modifica sau anula oricând, fără penaliză.
+                    Trước mỗi lần giao hàng, CareHub sẽ liên hệ với bạn (WhatsApp/SMS/email) để xác nhận.
+                    Nếu không có xác nhận, lần giao hàng sẽ được bỏ qua — chúng tôi không bao giờ tự động trừ tiền.
+                    Bạn có thể thay đổi hoặc hủy bất cứ lúc nào, không bị phạt.
                   </p>
                 </div>
               </div>
