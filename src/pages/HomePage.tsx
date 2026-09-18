@@ -175,11 +175,12 @@ const HomePage: React.FC = () => {
         return a.name.localeCompare(b.name);
       case 'featured':
       default: {
-        // Default order: The Little Oak Company -> GAIA Skin Naturals -> the rest
+        // Default order: The Little Oak Company -> HAPPI Health -> GAIA Skin Naturals -> the rest
         const priority = (brand: string | undefined) => {
           if (brand === 'The Little Oak Company') return 0;
-          if (brand === 'GAIA Skin Naturals') return 1;
-          return 2;
+          if (brand === 'HAPPI Health') return 1;
+          if (brand === 'GAIA Skin Naturals') return 2;
+          return 3;
         };
         const diff = priority(a.brand) - priority(b.brand);
         if (diff !== 0) return diff;
