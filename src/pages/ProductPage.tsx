@@ -5,7 +5,7 @@ import { getProducts, Product } from '../data/products';
 import { useCart } from '../context/CartContext';
 import {
   getBundleTiers, getSubscriptionMultiplier, getUnitPrice, getLineSavings,
-  getEffectiveDiscountPercent, formatPrice, FREQUENCIES,
+  getEffectiveDiscountPercent, getSubscriptionRate, formatPrice, FREQUENCIES,
 } from '../data/pricing';
 import BundleSelector from '../components/BundleSelector';
 import MessageForm from '../components/MessageForm';
@@ -246,7 +246,7 @@ const ProductPage: React.FC = () => {
                   </label>
                 </div>
                 <p className="text-xs sm:text-sm lg:text-base text-gray-600">
-                  Tiết kiệm 15% và miễn phí vận chuyển cho đơn hàng định kỳ. Mỗi lần giao hàng sẽ được xác nhận trước khi giao (qua Zalo/WhatsApp/SMS/email).
+                  Tiết kiệm {Math.round(getSubscriptionRate(product) * 100)}% và miễn phí vận chuyển cho đơn hàng định kỳ. Mỗi lần giao hàng sẽ được xác nhận trước khi giao (qua Zalo/WhatsApp/SMS/email).
                 </p>
                 {isSubscription && (
                   <div className="mt-3">
@@ -262,7 +262,7 @@ const ProductPage: React.FC = () => {
                       ))}
                     </select>
                     <p className="text-[10px] sm:text-xs text-gray-500 mt-1.5">
-                      Cùng mức giá −15% cho mọi chu kỳ. Xác nhận mỗi chu kỳ trước khi giao hàng.
+                      Cùng mức giá −{Math.round(getSubscriptionRate(product) * 100)}% cho mọi chu kỳ. Xác nhận mỗi chu kỳ trước khi giao hàng.
                     </p>
                     <div className="mt-1.5 flex items-center space-x-1 text-[10px] sm:text-xs text-carehub-teal">
                       <Link to="/subscription-faqs" className="hover:underline">FAQ</Link>

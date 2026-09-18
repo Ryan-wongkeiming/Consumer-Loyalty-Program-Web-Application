@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabaseClient';
 import { validatePromoCode } from '../data/promoCodes';
-import { getCartSubtotal, getCartSavings, getUnitPrice, formatPrice } from '../data/pricing';
+import { getCartSubtotal, getCartSavings, getUnitPrice, getSubscriptionRate, formatPrice } from '../data/pricing';
 import { getAllProvinces, getWardsByProvince, Province, Ward } from '../utils/locationData';
 import SearchableSelect from '../components/SearchableSelect';
 import CameraCapture from '../components/CameraCapture';
@@ -547,7 +547,7 @@ export default function CheckoutPage() {
                         </p>
                         {item.isSubscription && (
                           <p className="text-xs sm:text-sm text-green-600 font-medium mt-1">
-                            Đăng ký (Giảm 15%)
+                            Đăng ký (Giảm {Math.round(getSubscriptionRate(item.product) * 100)}%)
                           </p>
                         )}
                         {item.bundleTier && (

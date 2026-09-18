@@ -6,7 +6,7 @@ import {
   getMySubscriptions, updateSubscriptionStatus, skipNextDelivery,
   changeSubscriptionFrequency, Subscription,
 } from '../lib/subscriptions';
-import { formatPrice } from '../data/pricing';
+import { formatPrice, getSubscriptionRate } from '../data/pricing';
 
 const FREQUENCY_LABELS: Record<number, string> = {
   4: 'Giao hàng mỗi 4 tuần',
@@ -184,7 +184,7 @@ const MySubscriptionsPage: React.FC = () => {
                         </div>
                       </div>
                       <span className="font-semibold text-carehub-teal">
-                        {formatPrice((item.products?.price || 0) * item.quantity * (item.is_subscription ? 0.85 : 1))}
+                        {formatPrice((item.products?.price || 0) * item.quantity * (item.is_subscription ? (1 - getSubscriptionRate(item.products)) : 1))}
                       </span>
                     </div>
                   ))}

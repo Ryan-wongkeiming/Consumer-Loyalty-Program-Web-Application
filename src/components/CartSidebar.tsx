@@ -118,7 +118,7 @@ const CartSidebar: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <Info className="w-4 h-4 sm:w-5 sm:h-5 text-carehub-blue flex-shrink-0" />
                 <span className="text-xs sm:text-sm text-carehub-blue font-medium">
-                  Tạo đăng ký sản phẩm để nhận giảm giá 15% cộng MIỄN PHÍ VẬN CHUYỂN!
+                  Tạo đăng ký sản phẩm để nhận ưu đãi đăng ký + miễn phí vận chuyển!
                 </span>
               </div>
             </div>
@@ -353,7 +353,7 @@ const CartSidebar: React.FC = () => {
               {/* Free Shipping Notice */}
               <div className="text-center text-xs sm:text-sm text-carehub-text-medium">
                 <p>Miễn phí vận chuyển!</p>
-                <p className="hidden sm:block">Giới hạn {formatPrice(50000)} mỗi đơn hàng. <a href="#" className="text-carehub-teal underline">Xem chính sách mua hàng tại đây.</a></p>
+                <p className="hidden sm:block"><a href="#" className="text-carehub-teal underline">Xem chính sách mua hàng tại đây.</a></p>
               </div>
               
               {/* Free Sample CTA in Cart */}
