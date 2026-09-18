@@ -3,6 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { ArrowLeft, Search, Star, Clock, User, ShoppingCart, Heart } from 'lucide-react';
 import { searchSiteContent, SearchResult } from '../data/searchData';
 import { useCart } from '../context/CartContext';
+import ProductImage from '../components/ProductImage';
 
 const SearchResultsPage: React.FC = () => {
   const location = useLocation();
@@ -236,10 +237,11 @@ const SearchResultsPage: React.FC = () => {
                     {/* Image */}
                     <div className="flex-shrink-0">
                       <Link to={result.url}>
-                        <img
+                        <ProductImage
                           src={result.image}
                           alt={result.title}
                           className="w-full md:w-32 h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-200"
+                          fallbackClassName="bg-gray-100"
                         />
                       </Link>
                     </div>

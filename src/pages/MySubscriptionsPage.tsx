@@ -7,6 +7,7 @@ import {
   changeSubscriptionFrequency, Subscription,
 } from '../lib/subscriptions';
 import { formatPrice, getSubscriptionRate } from '../data/pricing';
+import ProductImage from '../components/ProductImage';
 
 const FREQUENCY_LABELS: Record<number, string> = {
   4: 'Giao hàng mỗi 4 tuần',
@@ -174,7 +175,7 @@ const MySubscriptionsPage: React.FC = () => {
                     <div key={item.id} className="flex items-center justify-between py-2">
                       <div className="flex items-center space-x-3">
                         {item.products?.image && (
-                          <img src={item.products.image} alt={item.products?.name || ''} className="w-12 h-12 object-cover rounded-lg" />
+                          <ProductImage src={item.products.image} alt={item.products?.name || ''} className="w-12 h-12 object-cover rounded-lg" fallbackClassName="bg-gray-100" />
                         )}
                         <div>
                           <p className="font-medium text-gray-900">{item.products?.name || 'Sản phẩm'}</p>

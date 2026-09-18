@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Star, ShoppingCart, Heart } from 'lucide-react';
 import { Product } from '../data/products';
 import { useCart } from '../context/CartContext';
+import ProductImage from './ProductImage';
 
 interface ProductCardProps {
   product: Product;
@@ -49,10 +50,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col h-full hover:scale-[1.02] min-h-[400px]">
       <Link to={`/product/${product.id}`}>
         <div className="relative overflow-hidden">
-          <img
+          <ProductImage
             src={product.image}
             alt={product.name}
             className="w-full h-44 sm:h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            fallbackClassName="bg-gray-100"
           />
           {product.originalPrice && (
             <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs sm:text-sm font-semibold">

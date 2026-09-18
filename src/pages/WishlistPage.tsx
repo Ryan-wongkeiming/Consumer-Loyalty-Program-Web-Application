@@ -4,6 +4,7 @@ import { ArrowLeft, Heart, ShoppingCart, Trash2, Star } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { getUserWishlist, removeFromWishlist, WishlistItem } from '../lib/auth';
+import ProductImage from '../components/ProductImage';
 
 const WishlistPage: React.FC = () => {
   const { user } = useAuth();
@@ -166,10 +167,11 @@ const WishlistPage: React.FC = () => {
               <div key={item.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full">
                 <Link to={`/product/${item.products.id}`}>
                   <div className="aspect-square overflow-hidden">
-                    <img
+                    <ProductImage
                       src={item.products.image}
                       alt={item.products.name}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      fallbackClassName="bg-gray-100"
                     />
                   </div>
                 </Link>

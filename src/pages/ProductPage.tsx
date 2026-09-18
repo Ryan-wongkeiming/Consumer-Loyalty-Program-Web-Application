@@ -10,6 +10,7 @@ import {
 import BundleSelector from '../components/BundleSelector';
 import MessageForm from '../components/MessageForm';
 import MessageList from '../components/MessageList';
+import ProductImage from '../components/ProductImage';
 
 const ProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -149,10 +150,12 @@ const ProductPage: React.FC = () => {
           {/* Product Image */}
           <div className="space-y-4">
             <div className="aspect-square bg-white rounded-lg shadow-sm overflow-hidden group w-full max-h-[60vh] sm:max-h-[70vh] lg:max-h-none">
-              <img
+              <ProductImage
                 src={productImages[selectedImageIndex]}
                 alt={product.name}
                 className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                eager
+                fallbackClassName="bg-gray-100"
               />
             </div>
             
@@ -168,10 +171,11 @@ const ProductPage: React.FC = () => {
                   }`}
                   onClick={() => setSelectedImageIndex(index)}
                 >
-                  <img
+                  <ProductImage
                     src={image}
                     alt={`${product.name} view ${index + 1}`}
                     className="w-full h-full object-contain hover:scale-105 transition-transform duration-200"
+                    fallbackClassName="bg-gray-100"
                   />
                 </div>
               ))}

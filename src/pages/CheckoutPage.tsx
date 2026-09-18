@@ -9,6 +9,7 @@ import { getCartSubtotal, getCartSavings, getUnitPrice, getSubscriptionRate, for
 import { getAllProvinces, getWardsByProvince, Province, Ward } from '../utils/locationData';
 import SearchableSelect from '../components/SearchableSelect';
 import CameraCapture from '../components/CameraCapture';
+import ProductImage from '../components/ProductImage';
 
 const ThankYouScreen: React.FC = () => {
   return (
@@ -533,10 +534,11 @@ export default function CheckoutPage() {
                 <div className="space-y-4 mb-6">
                   {state.items.map((item) => (
                     <div key={item.product.id} className="flex space-x-3">
-                      <img
+                      <ProductImage
                         src={item.product.image}
                         alt={item.product.name}
                         className="w-14 h-14 sm:w-16 sm:h-16 object-cover rounded flex-shrink-0"
+                        fallbackClassName="bg-gray-100"
                       />
                       <div className="flex-1">
                         <h3 className="font-medium text-gray-900 text-sm sm:text-base line-clamp-2 leading-tight">

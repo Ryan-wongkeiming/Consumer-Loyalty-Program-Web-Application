@@ -2136,46 +2136,46 @@ INSERT INTO public.products (
 -- GAIA Skin Naturals — baby bath time
 -- ============================================================
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_26Square_987318fa-9d12-4f2d-ba66-8ba0120c8278.jpg?v=1781226651&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_26Square_987318fa-9d12-4f2d-ba66-8ba0120c8278.jpg?v=1781226651&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_26Square_987318fa-9d12-4f2d-ba66-8ba0120c8278.jpg?v=1781226651&width=500',
+      'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_26Square_987318fa-9d12-4f2d-ba66-8ba0120c8278.jpg?v=1781226651&width=800',
       'https://gaiaskinnaturals.com/cdn/shop/files/GAIANaturalBabySleeptimeBath500mL-1_8af59144-8e17-4f06-aff8-d80707b40b0a.png?v=1781226711&width=800',
       'https://gaiaskinnaturals.com/cdn/shop/files/GAIANaturalBabySleeptimeBath250mL-1.png?v=1781226675&width=800'
     ]
 WHERE id = 'gaia-sleeptime-wash';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_29Square_8bcb4e09-4d9d-4a25-b30a-6e894924e5e5.jpg?v=1781226550&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_29Square_8bcb4e09-4d9d-4a25-b30a-6e894924e5e5.jpg?v=1781226550&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_29Square_8bcb4e09-4d9d-4a25-b30a-6e894924e5e5.jpg?v=1781226550&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_29Square_8bcb4e09-4d9d-4a25-b30a-6e894924e5e5.jpg?v=1781226550&width=800'
     ]
 WHERE id = 'gaia-hair-body-wash';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_23Square.jpg?v=1781226423&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_23Square.jpg?v=1781226423&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_23Square.jpg?v=1781226423&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_23Square.jpg?v=1781226423&width=800'
     ]
 WHERE id = 'gaia-bath-body-wash';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/products/DSC_6740.jpg?v=1652856777&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/products/DSC_6740.jpg?v=1652856777&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/products/DSC_6740.jpg?v=1652856777&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/products/DSC_6740.jpg?v=1652856777&width=800'
     ]
 WHERE id = 'gaia-hair-detangler';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/111125_DSC_1636.jpg?v=1781226225&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/111125_DSC_1636.jpg?v=1781226225&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/111125_DSC_1636.jpg?v=1781226225&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/111125_DSC_1636.jpg?v=1781226225&width=800'
     ]
 WHERE id = 'gaia-sleeptime-bubble-bath';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/DSC_4317.jpg?v=1713421973&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/DSC_4317.jpg?v=1713421973&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/DSC_4317.jpg?v=1713421973&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/DSC_4317.jpg?v=1713421973&width=800'
     ]
 WHERE id = 'gaia-2in1-shampoo-conditioner';
 
@@ -2183,37 +2183,37 @@ WHERE id = 'gaia-2in1-shampoo-conditioner';
 -- GAIA Skin Naturals — baby skin care
 -- ============================================================
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_20_Aug24Square.jpg?v=1745369031&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_20_Aug24Square.jpg?v=1745369031&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_20_Aug24Square.jpg?v=1745369031&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/23_GAIA_ProductShoot_20_Aug24Square.jpg?v=1745369031&width=800'
     ]
 WHERE id = 'gaia-baby-moisturiser';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/custom_resized_ee1e2363-c36f-4600-8059-58c2dbc0cfb9.jpg?v=1687753567&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/custom_resized_ee1e2363-c36f-4600-8059-58c2dbc0cfb9.jpg?v=1687753567&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/custom_resized_ee1e2363-c36f-4600-8059-58c2dbc0cfb9.jpg?v=1687753567&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/custom_resized_ee1e2363-c36f-4600-8059-58c2dbc0cfb9.jpg?v=1687753567&width=800'
     ]
 WHERE id = 'gaia-baby-powder';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/DSC_9633.jpg?v=1747804580&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/DSC_9633.jpg?v=1747804580&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/DSC_9633.jpg?v=1747804580&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/DSC_9633.jpg?v=1747804580&width=800'
     ]
 WHERE id = 'gaia-baby-massage-oil';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/IMG_8799_Oct24Square.jpg?v=1733441643&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/IMG_8799_Oct24Square.jpg?v=1733441643&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/IMG_8799_Oct24Square.jpg?v=1733441643&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/IMG_8799_Oct24Square.jpg?v=1733441643&width=800'
     ]
 WHERE id = 'gaia-eczema-cream';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/GAIANaturalBabyCradleCapLotion75mL-9.jpg?v=1733443008&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/GAIANaturalBabyCradleCapLotion75mL-9.jpg?v=1733443008&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/GAIANaturalBabyCradleCapLotion75mL-9.jpg?v=1733443008&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/GAIANaturalBabyCradleCapLotion75mL-9.jpg?v=1733443008&width=800'
     ]
 WHERE id = 'gaia-cradle-cap-lotion';
 
@@ -2221,30 +2221,30 @@ WHERE id = 'gaia-cradle-cap-lotion';
 -- GAIA Skin Naturals — oral care
 -- ============================================================
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/JG30091Square.jpg?v=1745370294&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/JG30091Square.jpg?v=1745370294&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/JG30091Square.jpg?v=1745370294&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/JG30091Square.jpg?v=1745370294&width=800'
     ]
 WHERE id = 'gaia-toothpaste-berry';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/JG30005Square_b3071172-ef31-4753-8df9-4365ba8c849d.jpg?v=1745370062&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/JG30005Square_b3071172-ef31-4753-8df9-4365ba8c849d.jpg?v=1745370062&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/JG30005Square_b3071172-ef31-4753-8df9-4365ba8c849d.jpg?v=1745370062&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/JG30005Square_b3071172-ef31-4753-8df9-4365ba8c849d.jpg?v=1745370062&width=800'
     ]
 WHERE id = 'gaia-toothpaste-bubblegum';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/JG30099Square.jpg?v=1745369671&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/JG30099Square.jpg?v=1745369671&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/JG30099Square.jpg?v=1745369671&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/JG30099Square.jpg?v=1745369671&width=800'
     ]
 WHERE id = 'gaia-toothpaste-mint';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/JG30072Square.jpg?v=1745369391&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/JG30072Square.jpg?v=1745369391&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/JG30072Square.jpg?v=1745369391&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/JG30072Square.jpg?v=1745369391&width=800'
     ]
 WHERE id = 'gaia-toothpaste-smoothie';
 
@@ -2252,30 +2252,30 @@ WHERE id = 'gaia-toothpaste-smoothie';
 -- GAIA Skin Naturals — change time
 -- ============================================================
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/DSC_0097.jpg?v=1733873700&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/DSC_0097.jpg?v=1733873700&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/DSC_0097.jpg?v=1733873700&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/DSC_0097.jpg?v=1733873700&width=800'
     ]
 WHERE id = 'gaia-nappy-bags';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/products/CottonPads.png?v=1615513088&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/products/CottonPads.png?v=1615513088&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/products/CottonPads.png?v=1615513088&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/products/CottonPads.png?v=1615513088&width=800'
     ]
 WHERE id = 'gaia-cotton-pads';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/DSC_6521.jpg?v=1723422122&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/DSC_6521.jpg?v=1723422122&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/DSC_6521.jpg?v=1723422122&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/DSC_6521.jpg?v=1723422122&width=800'
     ]
 WHERE id = 'gaia-water-wipes';
 
 UPDATE public.products
-SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/DSC_1659.jpg?v=1748499842&width=500',
+SET image = 'https://gaiaskinnaturals.com/cdn/shop/files/DSC_1659.jpg?v=1748499842&width=800',
     images = ARRAY[
-      'https://gaiaskinnaturals.com/cdn/shop/files/DSC_1659.jpg?v=1748499842&width=500'
+      'https://gaiaskinnaturals.com/cdn/shop/files/DSC_1659.jpg?v=1748499842&width=800'
     ]
 WHERE id = 'gaia-pure-water-wipes';
 
@@ -2283,25 +2283,25 @@ WHERE id = 'gaia-pure-water-wipes';
 -- The Little Oak Company — goat milk formula
 -- ============================================================
 UPDATE public.products
-SET image = 'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage_1_Front_-_purity_award.jpg?v=1774458198&width=500',
+SET image = 'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage_1_Front_-_purity_award.jpg?v=1774458198&width=800',
     images = ARRAY[
-      'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage_1_Front_-_purity_award.jpg?v=1774458198&width=500',
+      'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage_1_Front_-_purity_award.jpg?v=1774458198&width=800',
       'https://thelittleoakcompany.global/cdn/shop/files/Home_page_stage_1_907e78e4-e5f8-40ac-b416-6023e2c4b979.webp?v=1776127483&width=800'
     ]
 WHERE id = 'littleoak-infant-formula';
 
 UPDATE public.products
-SET image = 'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage-2-Front---purity-award_69814213-de40-4240-8797-0a39d541ee55.jpg?v=1774458336&width=500',
+SET image = 'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage-2-Front---purity-award_69814213-de40-4240-8797-0a39d541ee55.jpg?v=1774458336&width=800',
     images = ARRAY[
-      'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage-2-Front---purity-award_69814213-de40-4240-8797-0a39d541ee55.jpg?v=1774458336&width=500',
+      'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage-2-Front---purity-award_69814213-de40-4240-8797-0a39d541ee55.jpg?v=1774458336&width=800',
       'https://thelittleoakcompany.global/cdn/shop/files/Home_page_stage_2_33f0cefb-2007-4d82-82c6-77a27c188625.webp?v=1776127483&width=800'
     ]
 WHERE id = 'littleoak-follow-on-formula';
 
 UPDATE public.products
-SET image = 'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage-3-Front-Purity.jpg?v=1774458226&width=500',
+SET image = 'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage-3-Front-Purity.jpg?v=1774458226&width=800',
     images = ARRAY[
-      'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage-3-Front-Purity.jpg?v=1774458226&width=500',
+      'https://cdn.shopify.com/s/files/1/0784/2303/2087/files/Stage-3-Front-Purity.jpg?v=1774458226&width=800',
       'https://thelittleoakcompany.global/cdn/shop/files/Home_page_stage_3_06de040e-0daf-4ca1-9133-7601ab9adb22.webp?v=1776127483&width=800'
     ]
 WHERE id = 'littleoak-toddler-milk';
@@ -2527,7 +2527,7 @@ INSERT INTO public.products (
   'Natural Goat Milk Infant Formula 6 x 30g Travel Sachets',
   'Portable travel sachets of LittleOak natural goat milk infant formula with olive oil (Stage 1, 0-6 months). Perfect for outings, travel and feeding on the go — same From Fresh formula, pre-measured 30g sachets.',
   345000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO-Stage-1-Front_Olive-Oil_4_1.jpg?v=1776866521&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO-Stage-1-Front_Olive-Oil_4_1.jpg?v=1776866521&width=800',
   'Infant Formula',
   ARRAY['Travel-ready 30g sachets', 'Made from fresh whole goat milk', '100% palm oil free (POFCAP certified)', 'No GMOs, soy or maltodextrin'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2536,7 +2536,7 @@ INSERT INTO public.products (
   ARRAY['Not suitable as sole source for babies under 6 months without medical advice', 'Follow preparation instructions exactly'],
   '[{"id": "littleoak-infant-sachets-6x30g", "unit": "gói", "price": 345000, "title": "6 x 30g", "quantity": 6, "pricePerUnit": "₫345,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO-Stage-1-Front_Olive-Oil_4_1.jpg?v=1776866521&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO-Stage-1-Front_Olive-Oil_4_1.jpg?v=1776866521&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2544,7 +2544,7 @@ INSERT INTO public.products (
   'Natural Goat Milk Follow-on Formula 6 x 30g Travel Sachets',
   'Portable travel sachets of LittleOak natural goat milk follow-on formula with olive oil (Stage 2, 6-12 months). Pre-measured 30g sachets for feeding on the go.',
   345000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO_Stage2-SachetBox-Front_300dpi_1_5684daa7-c51c-4ce4-91cb-a2d8b060788d.png?v=1776867851&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO_Stage2-SachetBox-Front_300dpi_1_5684daa7-c51c-4ce4-91cb-a2d8b060788d.png?v=1776867851&width=800',
   'Infant Formula',
   ARRAY['Travel-ready 30g sachets', 'Made from fresh whole goat milk', '100% palm oil free (POFCAP certified)', 'No GMOs, soy or maltodextrin'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2553,7 +2553,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "littleoak-follow-on-sachets-6x30g", "unit": "gói", "price": 345000, "title": "6 x 30g", "quantity": 6, "pricePerUnit": "₫345,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO_Stage2-SachetBox-Front_300dpi_1_5684daa7-c51c-4ce4-91cb-a2d8b060788d.png?v=1776867851&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO_Stage2-SachetBox-Front_300dpi_1_5684daa7-c51c-4ce4-91cb-a2d8b060788d.png?v=1776867851&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2561,7 +2561,7 @@ INSERT INTO public.products (
   'Natural Goat Milk Toddler Milk 6 x 30g Travel Sachets',
   'Portable travel sachets of LittleOak natural goat milk toddler milk with olive oil (Stage 3, 12m+). Pre-measured 30g sachets for toddlers on the go.',
   345000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO-Stage-3-Front_Olive-Oil_6_1.png?v=1776868118&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO-Stage-3-Front_Olive-Oil_6_1.png?v=1776868118&width=800',
   'Infant Formula',
   ARRAY['Travel-ready 30g sachets', 'Made from fresh whole goat milk', '100% palm oil free (POFCAP certified)', 'Supports growing toddlers 12m+'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2570,7 +2570,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "littleoak-toddler-sachets-6x30g", "unit": "gói", "price": 345000, "title": "6 x 30g", "quantity": 6, "pricePerUnit": "₫345,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO-Stage-3-Front_Olive-Oil_6_1.png?v=1776868118&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LO-Stage-3-Front_Olive-Oil_6_1.png?v=1776868118&width=800'],
   'The Little Oak Company', 'littleoak'
 );
 
@@ -2588,7 +2588,7 @@ INSERT INTO public.products (
   'Premium Natural Cotton Burp Cloth',
   'Soft, absorbent 100% natural cotton burp cloth — gentle on baby skin and machine washable. A daily essential for feeding time.',
   145000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Cloth-1.png?v=1766115106&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Cloth-1.png?v=1766115106&width=800',
   'Baby Change Time',
   ARRAY['100% natural cotton', 'Soft & absorbent', 'Machine washable', 'Gentle on baby skin'],
   ARRAY['100% cotton'],
@@ -2596,7 +2596,7 @@ INSERT INTO public.products (
   ARRAY['Machine wash before first use'],
   '[{"id": "littleoak-burp-cloth", "unit": "gói", "price": 145000, "title": "1 pc", "quantity": 1, "pricePerUnit": "₫145,000 mỗi gói"}]'::jsonb,
   ARRAY['Babies'], ARRAY['Cotton'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Cloth-1.png?v=1766115106&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Cloth-1.png?v=1766115106&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2604,7 +2604,7 @@ INSERT INTO public.products (
   'LittleOak Calico Bag',
   'Reusable natural calico tote bag — a handy eco-friendly carry-all for nappies, wipes and baby essentials.',
   182000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LittleOak_040.jpg?v=1770079561&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LittleOak_040.jpg?v=1770079561&width=800',
   'Baby Change Time',
   ARRAY['Reusable & eco-friendly', 'Natural calico fabric', 'Spacious tote', 'Machine washable'],
   ARRAY['100% natural calico'],
@@ -2612,7 +2612,7 @@ INSERT INTO public.products (
   ARRAY['Hand wash recommended'],
   '[{"id": "littleoak-calico-bag", "unit": "gói", "price": 182000, "title": "1 pc", "quantity": 1, "pricePerUnit": "₫182,000 mỗi gói"}]'::jsonb,
   ARRAY['Babies'], ARRAY['Cotton'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LittleOak_040.jpg?v=1770079561&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LittleOak_040.jpg?v=1770079561&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2620,7 +2620,7 @@ INSERT INTO public.products (
   'LittleOak Organic Cotton Bandana Bib',
   'Stylish organic cotton bandana bib that keeps baby dry and cute — soft, absorbent, and gentle on sensitive skin.',
   199000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LittleOak_007_1.jpg?v=1770079531&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LittleOak_007_1.jpg?v=1770079531&width=800',
   'Baby Change Time',
   ARRAY['100% organic cotton', 'Soft & absorbent', 'Stylish bandana design', 'Gentle on sensitive skin'],
   ARRAY['100% organic cotton'],
@@ -2628,7 +2628,7 @@ INSERT INTO public.products (
   ARRAY['Machine wash before first use'],
   '[{"id": "littleoak-bandana-bib", "unit": "gói", "price": 199000, "title": "1 pc", "quantity": 1, "pricePerUnit": "₫199,000 mỗi gói"}]'::jsonb,
   ARRAY['Babies'], ARRAY['Cotton'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LittleOak_007_1.jpg?v=1770079531&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/LittleOak_007_1.jpg?v=1770079531&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2636,7 +2636,7 @@ INSERT INTO public.products (
   'LittleOak Cotton Towel - Powder Pink',
   'Hooded 100% cotton baby towel in soft powder pink — thick, absorbent and perfect after bath time.',
   363000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_071.jpg?v=1754967222&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_071.jpg?v=1754967222&width=800',
   'Baby Change Time',
   ARRAY['100% cotton hooded towel', 'Soft & absorbent', 'After-bath essential', 'Machine washable'],
   ARRAY['100% cotton'],
@@ -2644,7 +2644,7 @@ INSERT INTO public.products (
   ARRAY['Machine wash before first use'],
   '[{"id": "littleoak-towel-pink", "unit": "gói", "price": 363000, "title": "1 pc", "quantity": 1, "pricePerUnit": "₫363,000 mỗi gói"}]'::jsonb,
   ARRAY['Babies'], ARRAY['Cotton'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_071.jpg?v=1754967222&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_071.jpg?v=1754967222&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2652,7 +2652,7 @@ INSERT INTO public.products (
   'LittleOak Cotton Towel - French Green',
   'Hooded 100% cotton baby towel in French green — thick, absorbent and perfect after bath time.',
   363000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_034.jpg?v=1754967349&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_034.jpg?v=1754967349&width=800',
   'Baby Change Time',
   ARRAY['100% cotton hooded towel', 'Soft & absorbent', 'After-bath essential', 'Machine washable'],
   ARRAY['100% cotton'],
@@ -2660,7 +2660,7 @@ INSERT INTO public.products (
   ARRAY['Machine wash before first use'],
   '[{"id": "littleoak-towel-green", "unit": "gói", "price": 363000, "title": "1 pc", "quantity": 1, "pricePerUnit": "₫363,000 mỗi gói"}]'::jsonb,
   ARRAY['Babies'], ARRAY['Cotton'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_034.jpg?v=1754967349&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_034.jpg?v=1754967349&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2668,7 +2668,7 @@ INSERT INTO public.products (
   'LittleOak Cotton Towel - Butter Cream Yellow',
   'Hooded 100% cotton baby towel in buttery yellow — thick, absorbent and perfect after bath time.',
   418000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_023.jpg?v=1754967148&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_023.jpg?v=1754967148&width=800',
   'Baby Change Time',
   ARRAY['100% cotton hooded towel', 'Soft & absorbent', 'After-bath essential', 'Machine washable'],
   ARRAY['100% cotton'],
@@ -2676,7 +2676,7 @@ INSERT INTO public.products (
   ARRAY['Machine wash before first use'],
   '[{"id": "littleoak-towel-yellow", "unit": "gói", "price": 418000, "title": "1 pc", "quantity": 1, "pricePerUnit": "₫418,000 mỗi gói"}]'::jsonb,
   ARRAY['Babies'], ARRAY['Cotton'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_023.jpg?v=1754967148&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Little-Oak_023.jpg?v=1754967148&width=800'],
   'The Little Oak Company', 'littleoak'
 );
 
@@ -2752,7 +2752,7 @@ INSERT INTO public.products (
   '6 x Can Bundle - Natural Goat Milk Infant Formula with Olive Oil',
   'Six cans of LittleOak natural goat milk infant formula with olive oil (Stage 1, 0-6 months). Save 5% versus buying singles.',
   6840000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-6-can-bundle_9ad2298b-1689-4376-81d4-3e9e59aaba76.webp?v=1778813018&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-6-can-bundle_9ad2298b-1689-4376-81d4-3e9e59aaba76.webp?v=1778813018&width=800',
   'Infant Formula',
   ARRAY['6 x 400g cans', 'Save 5% on the bundle', 'Made from fresh whole goat milk', '100% palm oil free (POFCAP certified)'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2761,7 +2761,7 @@ INSERT INTO public.products (
   ARRAY['Not suitable as sole source for babies under 6 months without medical advice', 'Follow preparation instructions exactly'],
   '[{"id": "littleoak-infant-6can-bundle", "unit": "hộp", "price": 6840000, "title": "6 x 400g cans", "quantity": 6, "pricePerUnit": "₫1,140,000 mỗi hộp"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-6-can-bundle_9ad2298b-1689-4376-81d4-3e9e59aaba76.webp?v=1778813018&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-6-can-bundle_9ad2298b-1689-4376-81d4-3e9e59aaba76.webp?v=1778813018&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2769,7 +2769,7 @@ INSERT INTO public.products (
   'One & One Bundle - Natural Goat Milk Infant Formula with Olive Oil',
   'One can of LittleOak infant formula plus one box of 6 x 30g travel sachets (Stage 1, 0-6 months). Save 5% versus buying separately.',
   1476750, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-one-by-one_73c4b29a-c89a-4571-bdda-c0d25bddc383.webp?v=1778813621&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-one-by-one_73c4b29a-c89a-4571-bdda-c0d25bddc383.webp?v=1778813621&width=800',
   'Infant Formula',
   ARRAY['1 x 400g can + 6 x 30g sachets', 'Save 5% on the bundle', 'Made from fresh whole goat milk', '100% palm oil free (POFCAP certified)'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2778,7 +2778,7 @@ INSERT INTO public.products (
   ARRAY['Not suitable as sole source for babies under 6 months without medical advice', 'Follow preparation instructions exactly'],
   '[{"id": "littleoak-infant-one1-bundle", "unit": "gói", "price": 1476750, "title": "1 x 400g can + 6 x 30g sachets", "quantity": 1, "pricePerUnit": "₫1,476,750 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-one-by-one_73c4b29a-c89a-4571-bdda-c0d25bddc383.webp?v=1778813621&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-one-by-one_73c4b29a-c89a-4571-bdda-c0d25bddc383.webp?v=1778813621&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2786,7 +2786,7 @@ INSERT INTO public.products (
   'Family Saver Bundle - Natural Goat Milk Infant Formula with Olive Oil',
   'Four cans of LittleOak infant formula plus four boxes of 6 x 30g travel sachets (Stage 1, 0-6 months). Best value for families. Save 5%.',
   5871000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-family-saver_39ec6a15-9c45-40e1-9297-4ff929f94920.webp?v=1778813637&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-family-saver_39ec6a15-9c45-40e1-9297-4ff929f94920.webp?v=1778813637&width=800',
   'Infant Formula',
   ARRAY['4 x 400g cans + 4 x 6x30g sachet boxes', 'Best value for families', 'Save 5% on the bundle', 'Made from fresh whole goat milk'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2795,7 +2795,7 @@ INSERT INTO public.products (
   ARRAY['Not suitable as sole source for babies under 6 months without medical advice', 'Follow preparation instructions exactly'],
   '[{"id": "littleoak-infant-family-saver", "unit": "gói", "price": 5871000, "title": "4 x 400g cans + 4 x 6x30g sachet boxes", "quantity": 1, "pricePerUnit": "₫5,871,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-family-saver_39ec6a15-9c45-40e1-9297-4ff929f94920.webp?v=1778813637&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-1-family-saver_39ec6a15-9c45-40e1-9297-4ff929f94920.webp?v=1778813637&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2803,7 +2803,7 @@ INSERT INTO public.products (
   'Easy Everyday Sachet Bundle - Natural Goat Milk Infant Formula with Olive Oil',
   'Six boxes of LittleOak infant formula travel sachets (6 x 30g each, 36 sachets total). Convenient everyday feeding. Save 5%.',
   1966500, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-infant.webp?v=1752210365&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-infant.webp?v=1752210365&width=800',
   'Infant Formula',
   ARRAY['6 x 6x30g sachet boxes (36 sachets)', 'Convenient everyday feeding', 'Save 5% on the bundle', 'Made from fresh whole goat milk'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2812,7 +2812,7 @@ INSERT INTO public.products (
   ARRAY['Not suitable as sole source for babies under 6 months without medical advice', 'Follow preparation instructions exactly'],
   '[{"id": "littleoak-infant-easy-everyday", "unit": "gói", "price": 1966500, "title": "6 x 6x30g sachet boxes (36 sachets)", "quantity": 36, "pricePerUnit": "₫1,966,500 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-infant.webp?v=1752210365&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-infant.webp?v=1752210365&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 -- Stage 2: Follow-on Formula combos
@@ -2821,7 +2821,7 @@ INSERT INTO public.products (
   '6 x Can Bundle - Natural Goat Milk Follow-on Formula with Olive Oil',
   'Six cans of LittleOak natural goat milk follow-on formula with olive oil (Stage 2, 6-12 months). Save 5% versus buying singles.',
   6840000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-6-can-bundle_7f537893-ddc2-4719-a69b-e0867ce20ef4.webp?v=1778813687&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-6-can-bundle_7f537893-ddc2-4719-a69b-e0867ce20ef4.webp?v=1778813687&width=800',
   'Infant Formula',
   ARRAY['6 x 400g cans', 'Save 5% on the bundle', 'Made from fresh whole goat milk', '100% palm oil free (POFCAP certified)'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2830,7 +2830,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "littleoak-followon-6can-bundle", "unit": "hộp", "price": 6840000, "title": "6 x 400g cans", "quantity": 6, "pricePerUnit": "₫1,140,000 mỗi hộp"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-6-can-bundle_7f537893-ddc2-4719-a69b-e0867ce20ef4.webp?v=1778813687&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-6-can-bundle_7f537893-ddc2-4719-a69b-e0867ce20ef4.webp?v=1778813687&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2838,7 +2838,7 @@ INSERT INTO public.products (
   'One & One Bundle - Natural Goat Milk Follow-on Formula with Olive Oil',
   'One can of LittleOak follow-on formula plus one box of 6 x 30g travel sachets (Stage 2, 6-12 months). Save 5% versus buying separately.',
   1476750, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-one-by-one_d4b59429-83aa-4d91-a25f-16bfa7000c7f.webp?v=1778813737&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-one-by-one_d4b59429-83aa-4d91-a25f-16bfa7000c7f.webp?v=1778813737&width=800',
   'Infant Formula',
   ARRAY['1 x 400g can + 6 x 30g sachets', 'Save 5% on the bundle', 'Made from fresh whole goat milk', '100% palm oil free (POFCAP certified)'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2847,7 +2847,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "littleoak-followon-one1-bundle", "unit": "gói", "price": 1476750, "title": "1 x 400g can + 6 x 30g sachets", "quantity": 1, "pricePerUnit": "₫1,476,750 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-one-by-one_d4b59429-83aa-4d91-a25f-16bfa7000c7f.webp?v=1778813737&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-one-by-one_d4b59429-83aa-4d91-a25f-16bfa7000c7f.webp?v=1778813737&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2855,7 +2855,7 @@ INSERT INTO public.products (
   'Family Saver Bundle - Natural Goat Milk Follow-on Formula with Olive Oil',
   'Four cans of LittleOak follow-on formula plus four boxes of 6 x 30g travel sachets (Stage 2, 6-12 months). Best value for families. Save 5%.',
   5871000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-family-saver_8141004c-fc8f-44b9-b5cf-31d38e1ec82c.webp?v=1778813694&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-family-saver_8141004c-fc8f-44b9-b5cf-31d38e1ec82c.webp?v=1778813694&width=800',
   'Infant Formula',
   ARRAY['4 x 400g cans + 4 x 6x30g sachet boxes', 'Best value for families', 'Save 5% on the bundle', 'Made from fresh whole goat milk'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2864,7 +2864,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "littleoak-followon-family-saver", "unit": "gói", "price": 5871000, "title": "4 x 400g cans + 4 x 6x30g sachet boxes", "quantity": 1, "pricePerUnit": "₫5,871,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-family-saver_8141004c-fc8f-44b9-b5cf-31d38e1ec82c.webp?v=1778813694&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-2-family-saver_8141004c-fc8f-44b9-b5cf-31d38e1ec82c.webp?v=1778813694&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2872,7 +2872,7 @@ INSERT INTO public.products (
   'Easy Everyday Sachet Bundle - Natural Goat Milk Follow-on Formula with Olive Oil',
   'Six boxes of LittleOak follow-on formula travel sachets (6 x 30g each, 36 sachets total). Convenient everyday feeding. Save 5%.',
   1966500, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-follow-on.webp?v=1752210372&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-follow-on.webp?v=1752210372&width=800',
   'Infant Formula',
   ARRAY['6 x 6x30g sachet boxes (36 sachets)', 'Convenient everyday feeding', 'Save 5% on the bundle', 'Made from fresh whole goat milk'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2881,7 +2881,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "littleoak-followon-easy-everyday", "unit": "gói", "price": 1966500, "title": "6 x 6x30g sachet boxes (36 sachets)", "quantity": 36, "pricePerUnit": "₫1,966,500 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-follow-on.webp?v=1752210372&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-follow-on.webp?v=1752210372&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 -- Stage 3: Toddler Milk combos
@@ -2890,7 +2890,7 @@ INSERT INTO public.products (
   '6 x Can Bundle - Natural Goat Milk Toddler Milk with Olive Oil',
   'Six cans of LittleOak natural goat milk toddler milk with olive oil (Stage 3, 12m+). Save 5% versus buying singles.',
   6726000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-6-can-bundle_5ea24ac5-e79b-4ed5-8948-2f57083dd43c.webp?v=1778813769&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-6-can-bundle_5ea24ac5-e79b-4ed5-8948-2f57083dd43c.webp?v=1778813769&width=800',
   'Infant Formula',
   ARRAY['6 x 400g cans', 'Save 5% on the bundle', 'Made from fresh whole goat milk', '100% palm oil free (POFCAP certified)'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2899,7 +2899,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "littleoak-toddler-6can-bundle", "unit": "hộp", "price": 6726000, "title": "6 x 400g cans", "quantity": 6, "pricePerUnit": "₫1,121,000 mỗi hộp"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-6-can-bundle_5ea24ac5-e79b-4ed5-8948-2f57083dd43c.webp?v=1778813769&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-6-can-bundle_5ea24ac5-e79b-4ed5-8948-2f57083dd43c.webp?v=1778813769&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2907,7 +2907,7 @@ INSERT INTO public.products (
   'One & One Bundle - Natural Goat Milk Toddler Milk with Olive Oil',
   'One can of LittleOak toddler milk plus one box of 6 x 30g travel sachets (Stage 3, 12m+). Save 5% versus buying separately.',
   1452750, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-one-by-one_bc781a52-8466-4479-a95f-1c6eda80db1e.webp?v=1778813790&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-one-by-one_bc781a52-8466-4479-a95f-1c6eda80db1e.webp?v=1778813790&width=800',
   'Infant Formula',
   ARRAY['1 x 400g can + 6 x 30g sachets', 'Save 5% on the bundle', 'Made from fresh whole goat milk', '100% palm oil free (POFCAP certified)'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2916,7 +2916,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "littleoak-toddler-one1-bundle", "unit": "gói", "price": 1452750, "title": "1 x 400g can + 6 x 30g sachets", "quantity": 1, "pricePerUnit": "₫1,452,750 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-one-by-one_bc781a52-8466-4479-a95f-1c6eda80db1e.webp?v=1778813790&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-one-by-one_bc781a52-8466-4479-a95f-1c6eda80db1e.webp?v=1778813790&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2924,7 +2924,7 @@ INSERT INTO public.products (
   'Family Saver Bundle - Natural Goat Milk Toddler Milk with Olive Oil',
   'Four cans of LittleOak toddler milk plus four boxes of 6 x 30g travel sachets (Stage 3, 12m+). Best value for families. Save 5%.',
   5809000, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-family-saver_374e0d32-dc57-4ab5-a19f-d123fc03b412.webp?v=1778813860&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-family-saver_374e0d32-dc57-4ab5-a19f-d123fc03b412.webp?v=1778813860&width=800',
   'Infant Formula',
   ARRAY['4 x 400g cans + 4 x 6x30g sachet boxes', 'Best value for families', 'Save 5% on the bundle', 'Made from fresh whole goat milk'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2933,7 +2933,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "littleoak-toddler-family-saver", "unit": "gói", "price": 5809000, "title": "4 x 400g cans + 4 x 6x30g sachet boxes", "quantity": 1, "pricePerUnit": "₫5,809,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-family-saver_374e0d32-dc57-4ab5-a19f-d123fc03b412.webp?v=1778813860&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/Stage-3-family-saver_374e0d32-dc57-4ab5-a19f-d123fc03b412.webp?v=1778813860&width=800'],
   'The Little Oak Company', 'littleoak'
 ),
 (
@@ -2941,7 +2941,7 @@ INSERT INTO public.products (
   'Easy Everyday Sachet Bundle - Natural Goat Milk Toddler Milk with Olive Oil',
   'Six boxes of LittleOak toddler milk travel sachets (6 x 30g each, 36 sachets total). Convenient everyday feeding. Save 5%.',
   1966500, NULL,
-  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-toddler.webp?v=1752210356&width=500',
+  'https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-toddler.webp?v=1752210356&width=800',
   'Infant Formula',
   ARRAY['6 x 6x30g sachet boxes (36 sachets)', 'Convenient everyday feeding', 'Save 5% on the bundle', 'Made from fresh whole goat milk'],
   ARRAY['Fresh whole goat milk', 'Olive oil', '16 essential vitamins & minerals'],
@@ -2950,7 +2950,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "littleoak-toddler-easy-everyday", "unit": "gói", "price": 1966500, "title": "6 x 6x30g sachet boxes (36 sachets)", "quantity": 36, "pricePerUnit": "₫1,966,500 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Goat Milk'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-toddler.webp?v=1752210356&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0793/4220/7288/files/easy-everyday-toddler.webp?v=1752210356&width=800'],
   'The Little Oak Company', 'littleoak'
 );
 
@@ -2994,7 +2994,7 @@ INSERT INTO public.products (
   'Stage 1 Day Infant Formula 6 x 600g',
   'HAPPi Stage 1 Day is a nutritionally complete infant formula scientifically developed for day-time use between 5am–5pm. Day-specific nutrient blend to support daily energy needs.',
   1020000, NULL,
-  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_D.png?v=1739337805&width=500',
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_D.png?v=1739337805&width=800',
   'Infant Formula',
   ARRAY['Scientifically developed for day-time (5am-5pm)', 'Day-specific nucleotides and iron', 'Nutritionally complete infant formula', 'Australian made'],
   ARRAY['Skim milk', 'Lactoferrin', 'Nucleotides', 'Iron', '16 essential vitamins & minerals'],
@@ -3003,7 +3003,7 @@ INSERT INTO public.products (
   ARRAY['Not suitable as sole source for babies under 6 months without medical advice', 'Follow preparation instructions exactly'],
   '[{"id": "happi-day-infant-formula-stage-1-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_D.png?v=1739337805&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_D.png?v=1739337805&width=800'],
   'HAPPI Health', 'happi'
 ),
 (
@@ -3011,7 +3011,7 @@ INSERT INTO public.products (
   'Stage 1 Night Infant Formula 6 x 600g',
   'HAPPi Stage 1 Night is a nutritionally complete infant formula scientifically developed for night-time use between 5pm–5am. Richer in night-related nutrients to support brain and body development during sleep.',
   1020000, NULL,
-  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_N.png?v=1739337772&width=500',
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_N.png?v=1739337772&width=800',
   'Infant Formula',
   ARRAY['Scientifically developed for night-time (5pm-5am)', 'Richer in night-related nutrients', 'Supports brain & body development during sleep', 'Australian made'],
   ARRAY['Skim milk', 'Lactoferrin', 'Night-specific nucleotides', '16 essential vitamins & minerals'],
@@ -3020,7 +3020,7 @@ INSERT INTO public.products (
   ARRAY['Not suitable as sole source for babies under 6 months without medical advice', 'Follow preparation instructions exactly'],
   '[{"id": "happi-night-infant-formula-stage-1-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_N.png?v=1739337772&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S1_N.png?v=1739337772&width=800'],
   'HAPPI Health', 'happi'
 ),
 (
@@ -3028,7 +3028,7 @@ INSERT INTO public.products (
   'Stage 2 Day Follow On Formula 6 x 600g',
   'HAPPi Stage 2 Day is a nutritionally complete follow-on formula scientifically developed for day-time use between 5am–5pm for babies 6-12 months. Day-specific nutrient blend to support daily energy needs.',
   1020000, NULL,
-  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_D.png?v=1739337859&width=500',
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_D.png?v=1739337859&width=800',
   'Infant Formula',
   ARRAY['Scientifically developed for day-time (5am-5pm)', 'Day-specific nucleotides and iron', 'Nutritionally complete follow-on formula', 'Australian made'],
   ARRAY['Skim milk', 'Lactoferrin', 'Nucleotides', 'Iron', '16 essential vitamins & minerals'],
@@ -3037,7 +3037,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "happi-day-follow-on-formula-stage-2-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_D.png?v=1739337859&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_D.png?v=1739337859&width=800'],
   'HAPPI Health', 'happi'
 ),
 (
@@ -3045,7 +3045,7 @@ INSERT INTO public.products (
   'Stage 2 Night Follow On Formula 6 x 600g',
   'HAPPi Stage 2 Night is a nutritionally complete follow-on formula scientifically developed for night-time use between 5pm–5am for babies 6-12 months. Richer in night-related nutrients to support brain and body development during sleep.',
   1020000, NULL,
-  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_N.png?v=1739337827&width=500',
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_N.png?v=1739337827&width=800',
   'Infant Formula',
   ARRAY['Scientifically developed for night-time (5pm-5am)', 'Richer in night-related nutrients', 'Supports brain & body development during sleep', 'Australian made'],
   ARRAY['Skim milk', 'Lactoferrin', 'Night-specific nucleotides', '16 essential vitamins & minerals'],
@@ -3054,7 +3054,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "happi-night-follow-on-formula-stage-2-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_N.png?v=1739337827&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S2_N.png?v=1739337827&width=800'],
   'HAPPI Health', 'happi'
 ),
 (
@@ -3062,7 +3062,7 @@ INSERT INTO public.products (
   'Stage 3 Day Toddler Milk Drink 6 x 600g',
   'HAPPi Stage 3 Day is a nutritionally complete growing-up milk drink scientifically developed for day-time use between 5am–5pm for toddlers 12m+. Day-specific nutrient blend to support daily energy needs.',
   1020000, NULL,
-  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D.png?v=1739336605&width=500',
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D.png?v=1739336605&width=800',
   'Infant Formula',
   ARRAY['Scientifically developed for day-time (5am-5pm)', 'Supports daily energy needs', 'Nutritionally complete growing-up milk', 'Australian made'],
   ARRAY['Skim milk', 'Lactoferrin', 'Nucleotides', 'Iron', '16 essential vitamins & minerals'],
@@ -3071,7 +3071,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "happi-day-toddler-milk-stage-3-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D.png?v=1739336605&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D.png?v=1739336605&width=800'],
   'HAPPI Health', 'happi'
 ),
 (
@@ -3079,7 +3079,7 @@ INSERT INTO public.products (
   'Stage 3 Night Toddler Milk Drink 6 x 600g',
   'HAPPi Stage 3 Night is a nutritionally complete growing-up milk drink scientifically developed for night-time use between 5pm–5am for toddlers 12m+. Richer in night-related nutrients to support brain and body development during sleep.',
   1020000, NULL,
-  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D_6PK_2.png?v=1739337741&width=500',
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D_6PK_2.png?v=1739337741&width=800',
   'Infant Formula',
   ARRAY['Scientifically developed for night-time (5pm-5am)', 'Richer in night-related nutrients', 'Supports brain & body development during sleep', 'Australian made'],
   ARRAY['Skim milk', 'Lactoferrin', 'Night-specific nucleotides', '16 essential vitamins & minerals'],
@@ -3088,7 +3088,7 @@ INSERT INTO public.products (
   ARRAY['Follow preparation instructions exactly'],
   '[{"id": "happi-night-toddler-milk-stage-3-6x600g", "unit": "gói", "price": 1020000, "title": "6 x 600g", "quantity": 6, "pricePerUnit": "₫1,020,000 mỗi gói"}]'::jsonb,
   ARRAY['Infant Formula'], ARRAY['Lactoferrin'], ARRAY['General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D_6PK_2.png?v=1739337741&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/S3_D_6PK_2.png?v=1739337741&width=800'],
   'HAPPI Health', 'happi'
 ),
 -- ============================================================
@@ -3099,7 +3099,7 @@ INSERT INTO public.products (
   'HAPPI Adult Daily Immune+ Lactoferrin',
   'Daily immune support with lactoferrin — an iron-binding protein found in milk and a natural component of the immune system. Supports the body''s natural defence against infection.',
   900000, NULL,
-  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Adult_rgb_resized.png?v=1697252091&width=500',
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Adult_rgb_resized.png?v=1697252091&width=800',
   'Vitamins',
   ARRAY['Supports immune system function', 'Lactoferrin - natural immune component', 'Daily defence against infection', 'Australian made'],
   ARRAY['Lactoferrin', 'Zinc', 'Vitamin C', 'Vitamin D'],
@@ -3107,7 +3107,7 @@ INSERT INTO public.products (
   ARRAY['Always read the label', 'Follow directions for use'],
   '[{"id": "happi-adult-daily-immune", "unit": "hộp", "price": 900000, "title": "1 box", "quantity": 1, "pricePerUnit": "₫900,000 mỗi hộp"}]'::jsonb,
   ARRAY['Adult'], ARRAY['Lactoferrin'], ARRAY['General Health', 'Cold, Flu & Immunity'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Adult_rgb_resized.png?v=1697252091&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Adult_rgb_resized.png?v=1697252091&width=800'],
   'HAPPI Health', 'happi'
 ),
 (
@@ -3115,7 +3115,7 @@ INSERT INTO public.products (
   'HAPPI Women''s Daily Iron+ Lactoferrin',
   'Targeted relief from tiredness with less risk of gut irritation. Specially formulated for women across all stages of life to help prevent dietary iron deficiency and associated tiredness.',
   765000, NULL,
-  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Womens_rgb_resized.png?v=1697252244&width=500',
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Womens_rgb_resized.png?v=1697252244&width=800',
   'Vitamins',
   ARRAY['Targeted relief from tiredness', 'Less risk of gut irritation', 'Iron + lactoferrin advanced formula', 'For women at all life stages'],
   ARRAY['Iron', 'Lactoferrin', 'Vitamin C', 'Folate'],
@@ -3123,7 +3123,7 @@ INSERT INTO public.products (
   ARRAY['Always read the label', 'Keep out of reach of children'],
   '[{"id": "happi-womens-daily-iron", "unit": "hộp", "price": 765000, "title": "1 box", "quantity": 1, "pricePerUnit": "₫765,000 mỗi hộp"}]'::jsonb,
   ARRAY['Women''s'], ARRAY['Iron', 'Lactoferrin'], ARRAY['Energy', 'General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Womens_rgb_resized.png?v=1697252244&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Womens_rgb_resized.png?v=1697252244&width=800'],
   'HAPPI Health', 'happi'
 ),
 (
@@ -3131,7 +3131,7 @@ INSERT INTO public.products (
   'HAPPI Kids Daily Immune+ Lactoferrin',
   'Specifically formulated for growing kids 3+ with the nutrients zinc and lactoferrin to support the health and function of the immune system.',
   510000, NULL,
-  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Kids_hr.png?v=1697251938&width=500',
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Kids_hr.png?v=1697251938&width=800',
   'Kids Supplements',
   ARRAY['Formulated for kids 3+', 'Zinc + lactoferrin', 'Supports immune system health', 'Australian made'],
   ARRAY['Lactoferrin', 'Zinc', 'Vitamin C', 'Vitamin D'],
@@ -3139,7 +3139,7 @@ INSERT INTO public.products (
   ARRAY['Always read the label', 'Not for children under 3'],
   '[{"id": "happi-kids-daily-immune", "unit": "hộp", "price": 510000, "title": "1 box", "quantity": 1, "pricePerUnit": "₫510,000 mỗi hộp"}]'::jsonb,
   ARRAY['Kids'], ARRAY['Lactoferrin', 'Zinc'], ARRAY['Cold, Flu & Immunity', 'General Health'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Kids_hr.png?v=1697251938&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/Happi_Kids_hr.png?v=1697251938&width=800'],
   'HAPPI Health', 'happi'
 ),
 (
@@ -3147,7 +3147,7 @@ INSERT INTO public.products (
   'HAPPI Baby Lactoferrin Powder',
   'Lactoferrin is a dietary protein found in cow''s milk and every drop of breast milk. Baby Lactoferrin Powder supports immune health for babies and young children.',
   765000, NULL,
-  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/HAPPi_Baby_FOP800x800-768x768.png?v=1718877895&width=500',
+  'https://cdn.shopify.com/s/files/1/0632/9054/0221/files/HAPPi_Baby_FOP800x800-768x768.png?v=1718877895&width=800',
   'Baby Supplements',
   ARRAY['Lactoferrin for baby immune support', 'Dietary protein found in breast milk', '28 x 1g sachets', 'Australian made'],
   ARRAY['Lactoferrin', 'Vitamin C', 'Zinc'],
@@ -3155,7 +3155,7 @@ INSERT INTO public.products (
   ARRAY['Always read the label', 'Not a replacement for breast milk'],
   '[{"id": "happi-baby-lactoferrin-powder-28x1g", "unit": "hộp", "price": 765000, "title": "28 x 1g sachets", "quantity": 28, "pricePerUnit": "₫765,000 mỗi hộp"}]'::jsonb,
   ARRAY['Babies'], ARRAY['Lactoferrin'], ARRAY['General Health', 'Cold, Flu & Immunity'],
-  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/HAPPi_Baby_FOP800x800-768x768.png?v=1718877895&width=500'],
+  ARRAY['https://cdn.shopify.com/s/files/1/0632/9054/0221/files/HAPPi_Baby_FOP800x800-768x768.png?v=1718877895&width=800'],
   'HAPPI Health', 'happi'
 );
 

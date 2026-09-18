@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Star, Plus, Minus, ShoppingCart, Heart, Truck, Shield, RefreshCw, CheckCircle } from 'lucide-react';
 import { womensHealthProducts } from '../data/womensHealthProducts';
 import { useCart } from '../context/CartContext';
+import ProductImage from '../components/ProductImage';
 
 const WomensHealthProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -109,10 +110,12 @@ const WomensHealthProductPage: React.FC = () => {
           {/* Product Image */}
           <div className="space-y-4">
             <div className="aspect-square bg-white rounded-lg shadow-sm overflow-hidden group">
-              <img
+              <ProductImage
                 src={product.image}
                 alt={product.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                eager
+                fallbackClassName="bg-gray-100"
               />
             </div>
             

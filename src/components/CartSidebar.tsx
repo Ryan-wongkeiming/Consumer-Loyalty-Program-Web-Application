@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import { validatePromoCode } from '../data/promoCodes';
 import { getCartSubtotal, getCartSavings, getUnitPrice, formatPrice, FREQUENCIES } from '../data/pricing';
 import CameraCapture from './CameraCapture';
+import ProductImage from './ProductImage';
 
 const CartSidebar: React.FC = () => {
   const { state, dispatch } = useCart();
@@ -136,10 +137,11 @@ const CartSidebar: React.FC = () => {
                 {state.items.map((item) => (
                   <div key={item.product.id} className="bg-white border rounded-lg p-3 sm:p-4 shadow-sm">
                     <div className="flex space-x-4">
-                      <img
+                      <ProductImage
                         src={item.product.image}
                         alt={item.product.name}
                         className="w-14 h-14 sm:w-16 sm:h-16 object-cover rounded flex-shrink-0"
+                        fallbackClassName="bg-gray-100"
                       />
                       <div className="flex-1">
                         <div className="flex items-start justify-between">
