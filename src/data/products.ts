@@ -27,10 +27,11 @@ export interface Product {
 // Fetch products from Supabase
 const fetchProducts = async (): Promise<Product[]> => {
   try {
+    // Load all products (in stock and out of stock) so sold-out items
+    // still appear with a "Hết hàng" state instead of vanishing.
     const { data, error } = await supabase
       .from('products')
-      .select('*')
-      .eq('in_stock', true);
+      .select('*');
 
     if (error) {
       console.error('Error fetching products:', error);

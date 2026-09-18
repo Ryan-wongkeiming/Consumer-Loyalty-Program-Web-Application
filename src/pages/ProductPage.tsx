@@ -209,6 +209,11 @@ const ProductPage: React.FC = () => {
               <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 lg:mb-4 leading-tight">
                 {product.name}
               </h1>
+              {!product.inStock && (
+                <div className="mt-2 inline-flex items-center bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold">
+                  Hết hàng
+                </div>
+              )}
               <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed">
                 {product.description}
               </p>
@@ -229,10 +234,11 @@ const ProductPage: React.FC = () => {
               <div className="bg-green-50 p-4 lg:p-5 rounded-lg border border-green-200">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-semibold text-sm sm:text-base lg:text-lg text-gray-900">Đăng ký &amp; Tiết kiệm</h3>
-                  <label className="relative inline-flex items-center cursor-pointer">
+                  <label className={`relative inline-flex items-center ${!product.inStock ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}>
                     <input
                       type="checkbox"
                       checked={isSubscription}
+                      disabled={!product.inStock}
                       onChange={(e) => setIsSubscription(e.target.checked)}
                       className="sr-only peer"
                     />
@@ -335,10 +341,15 @@ const ProductPage: React.FC = () => {
               <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
                 <button 
                   onClick={handleAddToCart}
-                  className="flex-1 bg-carehub-teal text-white px-4 lg:px-6 py-3.5 rounded-lg hover:bg-carehub-teal-dark transition-all duration-300 flex items-center justify-center space-x-2 font-medium text-sm sm:text-base hover:scale-105 shadow-lg hover:shadow-xl min-h-[48px]"
+                  disabled={!product.inStock}
+                  className={`flex-1 px-4 lg:px-6 py-3.5 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 font-medium text-sm sm:text-base min-h-[48px] ${
+                    product.inStock
+                      ? 'bg-carehub-teal text-white hover:bg-carehub-teal-dark hover:scale-105 shadow-lg hover:shadow-xl'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
                 >
                   <ShoppingCart className="w-5 h-5 flex-shrink-0" />
-                  <span>{isSubscription ? 'Đăng ký ngay' : 'Thêm vào giỏ hàng'}</span>
+                  <span>{!product.inStock ? 'Hết hàng' : isSubscription ? 'Đăng ký ngay' : 'Thêm vào giỏ hàng'}</span>
                 </button>
                 <button className="p-3.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-300 sm:flex-shrink-0 hover:scale-105 hover:border-red-300 hover:text-red-500 min-h-[48px] flex items-center justify-center">
                   <Heart className="w-5 h-5 text-gray-600 hover:text-red-500" />
