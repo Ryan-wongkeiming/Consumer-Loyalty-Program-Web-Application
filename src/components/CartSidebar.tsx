@@ -49,7 +49,7 @@ const CartSidebar: React.FC = () => {
       return;
     }
 
-    const validPromo = await validatePromoCode(promoCode.trim());
+    const validPromo = await validatePromoCode(promoCode.trim(), getCartSubtotal(state.items));
     if (validPromo) {
       dispatch({
         type: 'APPLY_PROMO_CODE',
