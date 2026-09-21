@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Star, Plus, Minus, ShoppingCart, Heart, CheckCircle, Gift, Truck } from 'lucide-react';
 import { getProducts, Product } from '../data/products';
 import { useCart } from '../context/CartContext';
@@ -22,6 +22,7 @@ const ProductPage: React.FC = () => {
   const [deliveryFrequency, setDeliveryFrequency] = useState(FREQUENCIES[0].label);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { dispatch } = useCart();
+  const navigate = useNavigate();
   const [messageRefreshTrigger, setMessageRefreshTrigger] = useState(0);
 
   // Load product data from Supabase
@@ -115,7 +116,7 @@ const ProductPage: React.FC = () => {
 
   const handleContinueShopping = () => {
     // Navigate to homepage and scroll to products section
-    window.location.href = '/';
+    navigate('/');
     setTimeout(() => {
       const productsSection = document.getElementById('products-section');
       if (productsSection) {

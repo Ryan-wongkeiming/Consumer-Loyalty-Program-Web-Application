@@ -695,7 +695,7 @@ const LoyaltyPage: React.FC = () => {
                   onClick={() => {
                     setShowAuthModal(false);
                     // Navigate to home page where auth modal can be opened
-                    window.location.href = '/?auth=signup';
+                    navigate('/?auth=signup');
                   }}
                 >
                   Đăng ký ngay
@@ -706,7 +706,7 @@ const LoyaltyPage: React.FC = () => {
                   onClick={() => {
                     setShowAuthModal(false);
                     // Navigate to home page where auth modal can be opened
-                    window.location.href = '/?auth=signin';
+                    navigate('/?auth=signin');
                   }}
                 >
                   Đăng nhập

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Gift, CheckCircle, Users, Truck, Heart, AlertCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { getAllProvinces, getWardsByProvince, Province, Ward } from '../utils/locationData';
 import SearchableSelect from '../components/SearchableSelect';
@@ -47,6 +47,7 @@ const ThankYouScreen: React.FC = () => {
 };
 
 const FreeSamplePage: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -218,7 +219,7 @@ const FreeSamplePage: React.FC = () => {
       
       // Auto redirect after 4 seconds
       setTimeout(() => {
-        window.location.href = '/';
+        navigate('/');
       }, 4000);
 
     } catch (error) {
