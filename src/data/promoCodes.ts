@@ -21,17 +21,13 @@ export const validatePromoCode = async (
   try {
     const base = import.meta.env.VITE_SUPABASE_URL || '';
     const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
-    // Send the Supabase anon key (public) so the edge-function gateway
-    // accepts the request. If a user is logged in, also send their token.
-    let accessToken: string | null = null;
-    try {
-      accessToken = (await supabase.auth.getSession()).data.session?.access_token;
-    } catch { /* not logged in — fine, anon key suffices */ }
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      'apikey': anonKey,
-      'Authorization': accessToken ? `Bearer ${accessToken}` : `Bearer ${anonKey}`,
+      // The edge-function gateway accepts the anon key (public) as the Bearer
+      // token — no `apikey` header needed. Sending only `Authorization` keeps
+      // the CORS preflight simple (that header is allowed by the function).
+      'Authorization': `Bearer ${anonKey}`,
     };
 
     const res = await fetch(`${base}/functions/v1/validate-promo`, {
