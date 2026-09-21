@@ -131,17 +131,19 @@ export default function CheckoutPage() {
       return;
     }
 
-    const validPromo = await validatePromoCode(promoCode.trim());
+    const validPromo = await validatePromoCode(promoCode.trim(), subtotal);
 
     if (validPromo) {
       dispatch({
         type: 'APPLY_PROMO_CODE',
         payload: {
           code: validPromo.code,
-          discount: validPromo.discount,
+          discount: validPromo.discountAmount,
+          discountType: validPromo.discountType,
         },
       });
-      setPromoSuccess(`Áp dụng thành công! Giảm ${validPromo.discount.toLocaleString('vi-VN')}đ`);
+      const saved = validPromo.discountAmount.toLocaleString('vi-VN');
+      setPromoSuccess(`Áp dụng thành công! Giảm ${saved}đ`);
       setPromoError('');
       setPromoCode('');
     } else {

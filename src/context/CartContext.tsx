@@ -14,6 +14,7 @@ interface CartState {
   isOpen: boolean;
   appliedPromoCode: string | null;
   promoDiscount: number;
+  promoDiscountType: 'fixed' | 'percent';
 }
 
 type CartAction =
@@ -22,7 +23,7 @@ type CartAction =
   | { type: 'UPDATE_QUANTITY'; payload: { id: string; quantity: number } }
   | { type: 'UPDATE_SUBSCRIPTION'; payload: { id: string; isSubscription: boolean; deliveryFrequency: string } }
   | { type: 'TOGGLE_CART' }
-  | { type: 'APPLY_PROMO_CODE'; payload: { code: string; discount: number } }
+  | { type: 'APPLY_PROMO_CODE'; payload: { code: string; discount: number; discountType: 'fixed' | 'percent' } }
   | { type: 'REMOVE_PROMO_CODE' }
   | { type: 'CLEAR_CART' };
 
@@ -31,6 +32,7 @@ const initialState: CartState = {
   isOpen: false,
   appliedPromoCode: null,
   promoDiscount: 0,
+  promoDiscountType: 'fixed',
 };
 
 const cartReducer = (state: CartState, action: CartAction): CartState => {
@@ -102,6 +104,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         ...state,
         appliedPromoCode: action.payload.code,
         promoDiscount: action.payload.discount,
+        promoDiscountType: action.payload.discountType,
       };
 
     case 'REMOVE_PROMO_CODE':
@@ -109,6 +112,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         ...state,
         appliedPromoCode: null,
         promoDiscount: 0,
+        promoDiscountType: 'fixed',
       };
 
     case 'CLEAR_CART':
@@ -116,7 +120,8 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         ...state, 
         items: [], 
         appliedPromoCode: null, 
-        promoDiscount: 0 
+        promoDiscount: 0,
+        promoDiscountType: 'fixed',
       };
 
     default:

@@ -129,7 +129,11 @@ CREATE TABLE public.promo_codes (
     is_active BOOLEAN DEFAULT TRUE,
     type TEXT NOT NULL CHECK (type IN ('unique', 'multi-use')), -- 'unique' or 'multi-use'
     max_uses INTEGER, -- NULL for unlimited uses for multi-use codes
-    current_uses INTEGER DEFAULT 0
+    current_uses INTEGER DEFAULT 0,
+    discount_type TEXT NOT NULL DEFAULT 'fixed' CHECK (discount_type IN ('fixed', 'percent')),
+    expires_at TIMESTAMPTZ,
+    min_order_amount BIGINT DEFAULT 0,
+    applicable_brands TEXT[]
 );
 
 -- 3. Create the orders table
@@ -168,7 +172,9 @@ CREATE TABLE public.promo_code_usages (
     order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
     discount_amount_applied BIGINT NOT NULL,
     user_id UUID, -- Optional: Link to auth.users.id
-    used_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    used_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    customer_phone TEXT,
+    customer_email TEXT
 );
 
 
@@ -208,6 +214,13 @@ INSERT INTO public.promo_codes (code, discount, description, is_active, type, ma
 ('mecaheo', 100000, 'Giảm 100,000đ cho đơn hàng', TRUE, 'multi-use', NULL, 0),
 ('sieuthitruongtho', 100000, 'Giảm 100,000đ cho đơn hàng', TRUE, 'multi-use', NULL, 0);
 
+-- Demo codes for the enhanced promo system (2026-09-21):
+--  - CAREHUB10 : 10% off any order (percent type, unlimited)
+--  - CAREHUBONCE : one-time use 100,000đ code (unique type)
+INSERT INTO public.promo_codes (code, discount, description, is_active, type, max_uses, current_uses, discount_type) VALUES
+('CAREHUB10', 10, 'Giảm 10% cho đơn hàng', TRUE, 'multi-use', NULL, 0, 'percent'),
+('CAREHUBONCE', 100000, 'Giảm 100,000đ cho đơn hàng (one-time)', TRUE, 'unique', 1, 0, 'fixed');
+
 
 -- 8. Create the handle_promo_code_usage Function
 CREATE OR REPLACE FUNCTION public.handle_promo_code_usage()
@@ -223,6 +236,16 @@ BEGIN
         -- Check if promo code exists and is active
         IF NOT FOUND OR NOT promo_rec.is_active THEN
             RAISE EXCEPTION 'Promo code "%" is invalid or inactive.', NEW.promo_code_applied;
+        END IF;
+
+        -- Check expiry
+        IF promo_rec.expires_at IS NOT NULL AND promo_rec.expires_at < NOW() THEN
+            RAISE EXCEPTION 'Promo code "%" has expired.', NEW.promo_code_applied;
+        END IF;
+
+        -- Check minimum order amount
+        IF NEW.total_amount IS NOT NULL AND NEW.total_amount < promo_rec.min_order_amount THEN
+            RAISE EXCEPTION 'Promo code "%" requires a minimum order.', NEW.promo_code_applied;
         END IF;
 
         -- Check usage limits based on type
@@ -244,9 +267,9 @@ BEGIN
             is_active = CASE WHEN promo_rec.type = 'unique' THEN FALSE ELSE promo_rec.is_active END
         WHERE code = NEW.promo_code_applied;
 
-        -- Log the usage in the promo_code_usages table
-        INSERT INTO promo_code_usages (promo_code, order_id, discount_amount_applied, user_id)
-        VALUES (NEW.promo_code_applied, NEW.id, promo_rec.discount, NEW.user_id); -- Use NEW.user_id if available
+        -- Log the usage in the promo_code_usages table (with customer contact info)
+        INSERT INTO promo_code_usages (promo_code, order_id, discount_amount_applied, user_id, customer_phone, customer_email)
+        VALUES (NEW.promo_code_applied, NEW.id, promo_rec.discount, NEW.user_id, NEW.phone, NEW.email);
 
     END IF;
 
@@ -285,7 +308,7 @@ FOR ALL USING (auth.role() = 'service_role');
 -- Promo Codes Table Policies
 -- All users can read active promo codes for validation
 CREATE POLICY "Enable read access for active promo codes" ON public.promo_codes
-FOR SELECT USING (is_active = TRUE);
+FOR SELECT USING (is_active = TRUE AND (expires_at IS NULL OR expires_at > NOW()));
 -- Only service_role can insert, update, or delete promo codes
 CREATE POLICY "Enable service role full access on promo_codes" ON public.promo_codes
 FOR ALL USING (auth.role() = 'service_role');
