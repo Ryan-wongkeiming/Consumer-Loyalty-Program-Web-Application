@@ -742,6 +742,12 @@ CREATE INDEX IF NOT EXISTS idx_wishlist_user_id ON public.wishlist(user_id);
 CREATE INDEX IF NOT EXISTS idx_wishlist_product_id ON public.wishlist(product_id);
 CREATE INDEX IF NOT EXISTS idx_user_addresses_user_id ON public.user_addresses(user_id);
 CREATE INDEX IF NOT EXISTS idx_promo_code_usages_user_id ON public.promo_code_usages(user_id);
+CREATE INDEX IF NOT EXISTS idx_order_items_order_id ON public.order_items(order_id);
+CREATE INDEX IF NOT EXISTS idx_order_items_product_id ON public.order_items(product_id);
+CREATE INDEX IF NOT EXISTS idx_promo_code_usages_order_id ON public.promo_code_usages(order_id);
+CREATE INDEX IF NOT EXISTS idx_promo_code_usages_promo_code ON public.promo_code_usages(promo_code);
+CREATE INDEX IF NOT EXISTS idx_subscription_items_subscription_id ON public.subscription_items(subscription_id);
+CREATE INDEX IF NOT EXISTS idx_subscription_items_product_id ON public.subscription_items(product_id);
 
 -- Enable RLS on all tables
 ALTER TABLE public.user_profiles ENABLE ROW LEVEL SECURITY;
