@@ -116,3 +116,9 @@ VALUES
   ('Limited Edition Blackmores Product', 'An exclusive, high-value product not available for general purchase.', 5000, 'https://images.pexels.com/photos/4041390/pexels-photo-4041390.jpeg?auto=compress&cs=tinysrgb&w=800', 5, true),
   ('Luxury Natural Skincare Set', 'A set of premium, natural skincare products aligning with natural health.', 5000, 'https://images.pexels.com/photos/3987131/pexels-photo-3987131.jpeg?auto=compress&cs=tinysrgb&w=800', 15, true)
 ON CONFLICT (id) DO NOTHING;
+
+-- Data API grants (Supabase Oct 30 change: new tables need explicit grants)
+GRANT SELECT ON public.loyalty_gifts TO anon, authenticated;
+GRANT SELECT ON public.loyalty_redemptions TO authenticated;
+GRANT ALL ON public.loyalty_gifts TO service_role;
+GRANT ALL ON public.loyalty_redemptions TO service_role;

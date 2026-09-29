@@ -52,6 +52,10 @@ INSERT INTO free_samples (id, name, description, stock, is_active) VALUES
   ('blackmores-kids-multi', 'Blackmores Kids Multi', 'Vitamin tổng hợp cho trẻ em', 50, true)
 ON CONFLICT (id) DO NOTHING;
 
+-- Data API grants (Supabase Oct 30 change: new tables need explicit grants)
+GRANT SELECT ON public.free_samples TO anon, authenticated;
+GRANT ALL ON public.free_samples TO service_role;
+
 -- Add updated_at trigger
 CREATE OR REPLACE FUNCTION handle_updated_at()
 RETURNS TRIGGER AS $$

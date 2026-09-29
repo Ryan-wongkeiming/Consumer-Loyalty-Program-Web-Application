@@ -3388,3 +3388,66 @@ SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_name IN ('subscriptions', 'subscription_items', 'orders')
 ORDER BY table_name, ordinal_position;
+
+-- ============================================================
+-- Data API grants (Supabase Oct 30 change: new tables need explicit
+-- grants before PostgREST/supabase-js can reach them). This block
+-- covers every table created by this script so a fresh rebuild works.
+-- ============================================================
+GRANT SELECT ON public.products TO anon, authenticated;
+GRANT SELECT ON public.promo_codes TO anon, authenticated;
+GRANT INSERT ON public.orders TO anon, authenticated;
+GRANT INSERT ON public.order_items TO anon, authenticated;
+GRANT ALL ON public.promo_code_usages TO service_role;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.user_profiles TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.wishlist TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.user_addresses TO authenticated;
+GRANT ALL ON public.user_profiles TO service_role;
+GRANT ALL ON public.wishlist TO service_role;
+GRANT ALL ON public.user_addresses TO service_role;
+
+GRANT SELECT ON public.messages TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.messages TO authenticated;
+GRANT ALL ON public.messages TO service_role;
+
+GRANT SELECT ON public.user_loyalty_points TO authenticated;
+GRANT ALL ON public.loyalty_codes TO service_role;
+GRANT ALL ON public.user_loyalty_points TO service_role;
+
+GRANT SELECT ON public.loyalty_gifts TO anon, authenticated;
+GRANT SELECT ON public.loyalty_redemptions TO authenticated;
+GRANT ALL ON public.loyalty_gifts TO service_role;
+GRANT ALL ON public.loyalty_redemptions TO service_role;
+
+GRANT SELECT ON public.free_samples TO anon, authenticated;
+GRANT ALL ON public.free_samples TO service_role;
+
+GRANT ALL ON public.ocr_rate_limits TO service_role;
+
+GRANT SELECT, INSERT, UPDATE ON public.subscriptions TO authenticated;
+GRANT SELECT, INSERT, UPDATE ON public.subscription_items TO authenticated;
+GRANT ALL ON public.subscriptions TO service_role;
+GRANT ALL ON public.subscription_items TO service_role;
+
+GRANT SELECT ON public.articles TO anon, authenticated;
+GRANT SELECT ON public.topics TO anon, authenticated;
+GRANT SELECT ON public.womens_health_products TO anon, authenticated;
+GRANT SELECT ON public.womens_health_product_skus TO anon, authenticated;
+GRANT ALL ON public.articles TO service_role;
+GRANT ALL ON public.topics TO service_role;
+GRANT ALL ON public.womens_health_products TO service_role;
+GRANT ALL ON public.womens_health_product_skus TO service_role;
+GRANT ALL ON public.free_sample_requests TO service_role;
+
+-- Default privileges: future tables/sequences/functions in public get grants
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT SELECT ON TABLES TO anon;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT ALL ON TABLES TO service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT ALL ON SEQUENCES TO service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT ALL ON FUNCTIONS TO service_role;

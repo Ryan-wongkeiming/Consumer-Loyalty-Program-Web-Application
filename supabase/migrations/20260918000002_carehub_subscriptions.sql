@@ -112,7 +112,16 @@ CREATE POLICY "Users update own subscription items"
   );
 
 -- ============================================================
--- 5. Trigger: keep updated_at fresh
+-- 5. Data API grants (Supabase Oct 30 change: new tables need
+--    explicit grants before PostgREST/supabase-js can reach them)
+-- ============================================================
+GRANT SELECT, INSERT, UPDATE ON public.subscriptions TO authenticated;
+GRANT SELECT, INSERT, UPDATE ON public.subscription_items TO authenticated;
+GRANT ALL ON public.subscriptions TO service_role;
+GRANT ALL ON public.subscription_items TO service_role;
+
+-- ============================================================
+-- 6. Trigger: keep updated_at fresh
 -- ============================================================
 CREATE OR REPLACE FUNCTION public.set_subscription_updated_at()
 RETURNS TRIGGER AS $$

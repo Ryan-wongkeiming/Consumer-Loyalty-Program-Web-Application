@@ -45,3 +45,6 @@ USING (false) WITH CHECK (false);
 CREATE INDEX IF NOT EXISTS idx_ocr_rate_limits_user_id ON public.ocr_rate_limits(user_id);
 CREATE INDEX IF NOT EXISTS idx_ocr_rate_limits_created_at ON public.ocr_rate_limits(created_at);
 CREATE INDEX IF NOT EXISTS idx_ocr_rate_limits_user_time ON public.ocr_rate_limits(user_id, created_at);
+
+-- Data API grants (Supabase Oct 30 change: new tables need explicit grants)
+GRANT ALL ON public.ocr_rate_limits TO service_role;

@@ -105,3 +105,8 @@ INSERT INTO loyalty_codes (code, points) VALUES
   ('OMEGA80', 80),
   ('PROBIOTIC45', 45)
 ON CONFLICT (code) DO NOTHING;
+
+-- Data API grants (Supabase Oct 30 change: new tables need explicit grants)
+GRANT SELECT ON public.user_loyalty_points TO authenticated;
+GRANT ALL ON public.loyalty_codes TO service_role;
+GRANT ALL ON public.user_loyalty_points TO service_role;

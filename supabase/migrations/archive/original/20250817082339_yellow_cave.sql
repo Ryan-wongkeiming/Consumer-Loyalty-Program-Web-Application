@@ -87,6 +87,11 @@ CREATE INDEX IF NOT EXISTS idx_messages_product_id ON messages(product_id);
 CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_messages_approved ON messages(is_approved);
 
+-- Data API grants (Supabase Oct 30 change: new tables need explicit grants)
+GRANT SELECT ON public.messages TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.messages TO authenticated;
+GRANT ALL ON public.messages TO service_role;
+
 -- Create storage bucket for media uploads
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('media', 'media', true)
