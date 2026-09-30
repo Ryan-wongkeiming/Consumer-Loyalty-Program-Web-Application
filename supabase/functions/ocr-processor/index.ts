@@ -1,5 +1,7 @@
+// Restrict CORS to the deployed site. The app is served from GitHub Pages.
+const ALLOWED_ORIGIN = 'https://ryan-wongkeiming.github.io';
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };

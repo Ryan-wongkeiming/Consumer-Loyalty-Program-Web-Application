@@ -1,7 +1,9 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.54.0';
 
+// Restrict CORS to the deployed site. The app is served from GitHub Pages.
+const ALLOWED_ORIGIN = 'https://ryan-wongkeiming.github.io';
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
@@ -95,234 +97,61 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Start transaction-like operations using service role client
-    // 1. Get user's current loyalty points
-    const { data: userPoints, error: pointsError } = await supabaseAdmin
-      .from('user_loyalty_points')
-      .select('total_points')
-      .eq('user_id', user.id)
-      .maybeSingle();
+    // Run the whole redemption inside a single DB transaction via the
+    // redeem_gift RPC. Either all writes commit or none do — no manual
+    // compensating rollback needed.
+    const { data, error } = await supabaseAdmin.rpc('redeem_gift', {
+      p_user_id: user.id,
+      p_gift_id: gift_id,
+      p_shipping: shipping_details ?? null,
+    });
 
-    if (pointsError) {
-      console.error('Error fetching user points:', pointsError);
+    if (error) {
+      console.error('redeem_gift RPC error:', error);
+      const msg = error.message || '';
+      if (msg.includes('Insufficient points')) {
+        return new Response(
+          JSON.stringify({ error: 'Không đủ điểm thưởng để đổi quà này.' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      if (msg.includes('out of stock')) {
+        return new Response(
+          JSON.stringify({ error: 'Quà tặng đã hết hàng.' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      if (msg.includes('not found or inactive')) {
+        return new Response(
+          JSON.stringify({ error: 'Quà tặng không tồn tại hoặc không còn khả dụng.' }),
+          { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
       return new Response(
-        JSON.stringify({ error: 'Không thể lấy thông tin điểm thưởng' }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
+        JSON.stringify({ error: 'Có lỗi xảy ra khi đổi quà. Vui lòng thử lại.' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    const currentPoints = userPoints?.total_points || 0;
-
-    // 2. Get gift details
-    const { data: gift, error: giftError } = await supabaseAdmin
-      .from('loyalty_gifts')
-      .select('*')
-      .eq('id', gift_id)
-      .eq('is_active', true)
-      .single();
-
-    if (giftError || !gift) {
-      return new Response(
-        JSON.stringify({ error: 'Quà tặng không tồn tại hoặc không còn khả dụng' }),
-        {
-          status: 404,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-    }
-
-    // 3. Validate redemption
-    if (currentPoints < gift.points_required) {
-      return new Response(
-        JSON.stringify({ 
-          error: `Không đủ điểm thưởng. Bạn cần ${gift.points_required} điểm nhưng chỉ có ${currentPoints} điểm.` 
-        }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-    }
-
-    if (gift.stock <= 0) {
-      return new Response(
-        JSON.stringify({ error: 'Quà tặng đã hết hàng' }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-    }
-
-    // 4. Perform redemption operations
-    try {
-      // Track what has been written so we can roll back on failure.
-      // Supabase edge functions cannot run a multi-statement SQL transaction,
-      // so we compensate: undo each successful write in reverse order.
-      const writeLog = {
-        pointsDeducted: false,
-        stockDecremented: false,
-        redemptionRecorded: false,
-      };
-
-      // Deduct points from user
-      if (userPoints) {
-        // Update existing points record
-        const { error: updatePointsError } = await supabaseAdmin
-          .from('user_loyalty_points')
-          .update({ 
-            total_points: currentPoints - gift.points_required,
-            last_updated_at: new Date().toISOString()
-          })
-          .eq('user_id', user.id);
-
-        if (updatePointsError) {
-          throw new Error(`Lỗi cập nhật điểm: ${updatePointsError.message}`);
-        }
-      } else {
-        // Create new points record (shouldn't happen in normal flow, but safety check)
-        const { error: insertPointsError } = await supabaseAdmin
-          .from('user_loyalty_points')
-          .insert({
-            user_id: user.id,
-            total_points: Math.max(0, 0 - gift.points_required), // This would be negative, but constraint prevents it
-            last_updated_at: new Date().toISOString()
-          });
-
-        if (insertPointsError) {
-          throw new Error(`Lỗi tạo bản ghi điểm: ${insertPointsError.message}`);
-        }
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: `Đổi quà thành công! Bạn đã nhận "${data.gift_name}".`,
+        gift_name: data.gift_name,
+        points_spent: data.points_spent,
+        remaining_points: data.remaining_points,
+      }),
+      {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
-      writeLog.pointsDeducted = true;
-
-      // Decrement gift stock
-      const { error: updateStockError } = await supabaseAdmin
-        .from('loyalty_gifts')
-        .update({ 
-          stock: gift.stock - 1,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', gift_id);
-
-      if (updateStockError) {
-        throw new Error(`Lỗi cập nhật kho: ${updateStockError.message}`);
-      }
-      writeLog.stockDecremented = true;
-
-      // Record the redemption
-      const redemptionData: {
-        user_id: string;
-        gift_id: string;
-        points_spent: number;
-        status: string;
-        notes: string;
-        full_name?: string;
-        phone?: string;
-        email?: string | null;
-        address?: string;
-        city?: string;
-        ward?: string;
-      } = {
-        user_id: user.id,
-        gift_id: gift_id,
-        points_spent: gift.points_required,
-        status: 'completed',
-        notes: `Đổi quà: ${gift.name}`
-      };
-
-      // Add shipping details if provided
-      if (shipping_details) {
-        redemptionData.full_name = shipping_details.full_name;
-        redemptionData.phone = shipping_details.phone;
-        redemptionData.email = shipping_details.email || null;
-        redemptionData.address = shipping_details.address;
-        redemptionData.city = shipping_details.city;
-        redemptionData.ward = shipping_details.ward;
-        if (shipping_details.notes) {
-          redemptionData.notes = `${redemptionData.notes}. Ghi chú: ${shipping_details.notes}`;
-        }
-      }
-
-      const { error: redemptionError } = await supabaseAdmin
-        .from('loyalty_redemptions')
-        .insert(redemptionData);
-
-      if (redemptionError) {
-        throw new Error(`Lỗi ghi nhận đổi quà: ${redemptionError.message}`);
-      }
-      writeLog.redemptionRecorded = true;
-
-      // Return success response
-      const newTotalPoints = currentPoints - gift.points_required;
-      return new Response(
-        JSON.stringify({
-          success: true,
-          message: `Đổi quà thành công! Bạn đã nhận "${gift.name}".`,
-          gift_name: gift.name,
-          points_spent: gift.points_required,
-          remaining_points: newTotalPoints
-        }),
-        {
-          status: 200,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-
-    } catch (error) {
-      console.error('Redemption transaction error:', error);
-
-      // Compensating rollback: undo any writes already applied so a partial
-      // failure does not leave the user's points or the gift stock inconsistent.
-      const rollbackTimestamp = new Date().toISOString();
-
-      if (writeLog.redemptionRecorded) {
-        await supabaseAdmin
-          .from('loyalty_redemptions')
-          .delete()
-          .eq('user_id', user.id)
-          .eq('gift_id', gift_id)
-          .eq('status', 'completed');
-      }
-
-      if (writeLog.stockDecremented) {
-        await supabaseAdmin
-          .from('loyalty_gifts')
-          .update({
-            stock: gift.stock,
-            updated_at: rollbackTimestamp,
-          })
-          .eq('id', gift_id);
-      }
-
-      if (writeLog.pointsDeducted) {
-        await supabaseAdmin
-          .from('user_loyalty_points')
-          .update({
-            total_points: currentPoints,
-            last_updated_at: rollbackTimestamp,
-          })
-          .eq('user_id', user.id);
-      }
-
-      return new Response(
-        JSON.stringify({ 
-          error: error instanceof Error ? error.message : 'Có lỗi xảy ra khi đổi quà. Vui lòng thử lại.' 
-        }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-    }
+    );
 
   } catch (error) {
     console.error('Unexpected error in redeem-gift function:', error);
     return new Response(
-      JSON.stringify({ 
-        error: 'Có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.' 
+      JSON.stringify({
+        error: 'Có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.',
       }),
       {
         status: 500,

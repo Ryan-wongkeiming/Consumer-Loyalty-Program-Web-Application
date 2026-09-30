@@ -1,10 +1,16 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.54.0';
 
+// Restrict CORS to the deployed site. The app is served from GitHub Pages.
+const ALLOWED_ORIGIN = 'https://ryan-wongkeiming.github.io';
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
+
+// Max free-sample requests per client per window (anti-abuse).
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
 interface FreeSampleRequest {
   fullName: string;
@@ -17,6 +23,20 @@ interface FreeSampleRequest {
   ward: string;
   notes?: string;
   sampleTypeId: string;
+}
+
+// Derive a stable client key from the request. Prefer the real client IP
+// (x-forwarded-for) so anonymous visitors are throttled individually.
+function getClientKey(req: Request): string {
+  const forwarded = req.headers.get('x-forwarded-for');
+  if (forwarded) {
+    return forwarded.split(',')[0].trim();
+  }
+  const cfConnecting = req.headers.get('cf-connecting-ip');
+  if (cfConnecting) {
+    return cfConnecting.trim();
+  }
+  return 'unknown';
 }
 
 Deno.serve(async (req: Request) => {
@@ -45,6 +65,28 @@ Deno.serve(async (req: Request) => {
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
+
+    // ---- Rate limit check (anti-abuse) ----
+    const clientKey = getClientKey(req);
+    const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW_MS).toISOString();
+
+    const { count: recentCount, error: rateError } = await supabase
+      .from('free_sample_rate_limits')
+      .select('id', { count: 'exact', head: true })
+      .eq('client_key', clientKey)
+      .gte('window_start', windowStart);
+
+    if (rateError) {
+      console.error('Rate limit check error:', rateError);
+    } else if ((recentCount ?? 0) >= RATE_LIMIT_MAX) {
+      return new Response(
+        JSON.stringify({ error: 'Bạn đã đăng ký quá nhiều lần. Vui lòng thử lại sau.' }),
+        {
+          status: 429,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
 
     // Parse request body
     const requestData: FreeSampleRequest = await req.json();
@@ -156,6 +198,15 @@ Deno.serve(async (req: Request) => {
         }
       );
     }
+
+    // Record the request for rate limiting.
+    await supabase
+      .from('free_sample_rate_limits')
+      .insert({
+        client_key: clientKey,
+        request_count: 1,
+        window_start: new Date().toISOString(),
+      });
 
     return new Response(
       JSON.stringify({
