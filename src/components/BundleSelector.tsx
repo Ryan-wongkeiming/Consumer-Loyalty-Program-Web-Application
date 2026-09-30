@@ -1,6 +1,6 @@
 import React from 'react';
 import { Check } from 'lucide-react';
-import { BundleTier, formatPrice, getBundleMultiplier } from '../data/pricing';
+import { BundleTier, formatPrice } from '../data/pricing';
 import { Product } from '../data/products';
 
 interface BundleSelectorProps {

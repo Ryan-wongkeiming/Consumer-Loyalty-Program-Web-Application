@@ -82,7 +82,7 @@ const ProductPage: React.FC = () => {
 
   // ---- Savings Master Plan pricing (single source of truth: ../data/pricing) ----
   const bundleTiers = getBundleTiers(product);
-  const subscriptionMultiplier = getSubscriptionMultiplier(product, deliveryFrequency);
+  const subscriptionMultiplier = getSubscriptionMultiplier(product);
   const unitPrice = getUnitPrice(product, {
     quantity,
     isSubscription,

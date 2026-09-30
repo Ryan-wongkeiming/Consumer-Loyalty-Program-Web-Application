@@ -303,7 +303,7 @@ export const redeemLoyaltyCode = async (code: string) => {
   const result = await response.json();
   
   if (!response.ok) {
-    throw new Error(result.message || 'Có lỗi xảy ra khi đổi mã');
+    throw new Error(result.error || 'Có lỗi xảy ra khi đổi mã');
   }
 
   return result;

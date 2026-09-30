@@ -76,15 +76,12 @@ export const getSubscriptionRate = (product: Product): number => {
 
 // Frequency bonus: flat discount at every frequency (Blackmores AU lesson).
 // The frequency dropdown is a delivery-timing choice, not a price dial.
-export const getFrequencyBonus = (_deliveryFrequency: string): number => {
+export const getFrequencyBonus = (): number => {
   return 0;
 };
 
-export const getSubscriptionMultiplier = (
-  product: Product,
-  deliveryFrequency: string
-): number => {
-  return 1 - getSubscriptionRate(product) + getFrequencyBonus(deliveryFrequency);
+export const getSubscriptionMultiplier = (product: Product): number => {
+  return 1 - getSubscriptionRate(product) + getFrequencyBonus();
 };
 
 // The full stacked unit price for a cart line
@@ -94,7 +91,7 @@ export const getUnitPrice = (
 ): number => {
   let price = product.price;
   if (opts.isSubscription) {
-    price = product.price * getSubscriptionMultiplier(product, opts.deliveryFrequency);
+    price = product.price * getSubscriptionMultiplier(product);
   }
   return Math.round(price * getBundleMultiplier(product, opts.quantity));
 };

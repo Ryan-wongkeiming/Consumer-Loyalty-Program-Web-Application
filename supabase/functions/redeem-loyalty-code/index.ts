@@ -72,6 +72,30 @@ Deno.serve(async (req: Request) => {
       );
     }
 
+    // ---- Rate limit check (anti-abuse): max 10 redemptions per user per hour ----
+    const RATE_LIMIT_MAX = 10;
+    const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+    const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW_MS).toISOString();
+
+    const { count: recentCount, error: rateError } = await supabaseAdmin
+      .from('redemption_rate_limits')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('action', 'redeem_loyalty_code')
+      .gte('created_at', windowStart);
+
+    if (rateError) {
+      console.error('Rate limit check error:', rateError);
+    } else if ((recentCount ?? 0) >= RATE_LIMIT_MAX) {
+      return new Response(
+        JSON.stringify({ error: 'Bạn đã thực hiện quá nhiều giao dịch. Vui lòng thử lại sau.' }),
+        {
+          status: 429,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
     // Parse request body
     const { code }: { code: string } = await req.json();
     if (!code || typeof code !== 'string') {
@@ -122,6 +146,11 @@ Deno.serve(async (req: Request) => {
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    // Record the redemption for rate limiting.
+    await supabaseAdmin
+      .from('redemption_rate_limits')
+      .insert({ user_id: user.id, action: 'redeem_loyalty_code' });
 
     return new Response(
       JSON.stringify({

@@ -99,15 +99,6 @@ export default function CheckoutPage() {
     }
   }, [formData.city]);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
-
   const calculateSubtotal = () => {
     return getCartSubtotal(state.items);
   };

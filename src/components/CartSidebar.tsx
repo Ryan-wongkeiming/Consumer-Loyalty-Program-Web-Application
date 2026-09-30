@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { X, Plus, Minus, ShoppingBag, Info, ChevronDown, Check, AlertCircle, Trash2, Camera } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { validatePromoCode } from '../data/promoCodes';
-import { getCartSubtotal, getCartSavings, getUnitPrice, formatPrice, FREQUENCIES } from '../data/pricing';
+import { getCartSubtotal, getCartSavings, getUnitPrice, FREQUENCIES } from '../data/pricing';
 import CameraCapture from './CameraCapture';
 import ProductImage from './ProductImage';
 
@@ -28,7 +28,6 @@ const CartSidebar: React.FC = () => {
     return getCartSubtotal(state.items);
   };
 
-  const subscriptionDiscount = 0; // Subtotal already reflects subscription pricing
   const subtotal = calculateSubtotal();
   const cartSavings = getCartSavings(state.items);
   const shippingCost = 0; // Set to 0 VND, can be adjusted later if needed

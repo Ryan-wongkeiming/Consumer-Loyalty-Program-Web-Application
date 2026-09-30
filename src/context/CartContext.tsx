@@ -134,8 +134,35 @@ const CartContext = createContext<{
   dispatch: React.Dispatch<CartAction>;
 } | null>(null);
 
+const CART_STORAGE_KEY = 'carehub_cart';
+
+// Restore the cart from localStorage so a page refresh does not lose it.
+const loadInitialState = (): CartState => {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as CartState;
+      if (parsed && Array.isArray(parsed.items)) {
+        return { ...initialState, ...parsed };
+      }
+    }
+  } catch (error) {
+    console.error('Error restoring cart from localStorage:', error);
+  }
+  return initialState;
+};
+
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [state, dispatch] = useReducer(cartReducer, undefined, loadInitialState);
+
+  // Persist the cart whenever it changes.
+  React.useEffect(() => {
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state));
+    } catch (error) {
+      console.error('Error saving cart to localStorage:', error);
+    }
+  }, [state]);
 
   return (
     <CartContext.Provider value={{ state, dispatch }}>
