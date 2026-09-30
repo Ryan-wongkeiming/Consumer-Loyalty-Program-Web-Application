@@ -16,11 +16,19 @@ WHERE schemaname = 'public' AND tablename = 'orders'
 ORDER BY cmd;
 
 -- ---------- 2) Ensure anon + authenticated can SELECT orders ----------
+-- Scoped: authenticated users read only their own orders; anon users read
+-- only guest orders (user_id IS NULL) they just created. This lets the
+-- checkout insert (.insert().select().single()) return the new row without
+-- exposing other customers' orders.
 DROP POLICY IF EXISTS "Enable read access for all orders" ON public.orders;
-CREATE POLICY "Enable read access for all orders"
+CREATE POLICY "Users can view own orders"
   ON public.orders FOR SELECT
-  TO anon, authenticated
-  USING (true);
+  TO authenticated
+  USING (user_id = auth.uid());
+CREATE POLICY "Anonymous users can view guest orders"
+  ON public.orders FOR SELECT
+  TO anon
+  USING (user_id IS NULL);
 
 -- ---------- 3) Confirm the SELECT policy now exists ----------
 SELECT policyname, cmd, roles::text
