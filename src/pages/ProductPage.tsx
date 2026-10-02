@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Star, Plus, Minus, ShoppingCart, Heart, CheckCircle, Gift, Truck } from 'lucide-react';
-import { addToWishlist } from '../lib/auth';
+import { Star, Plus, Minus, ShoppingCart, CheckCircle, Gift, Truck } from 'lucide-react';
 import { getProducts, Product } from '../data/products';
 import { useCart } from '../context/CartContext';
 import {
@@ -12,6 +11,7 @@ import BundleSelector from '../components/BundleSelector';
 import MessageForm from '../components/MessageForm';
 import MessageList from '../components/MessageList';
 import ProductImage from '../components/ProductImage';
+import WishlistHeart from '../components/WishlistHeart';
 
 const ProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -357,14 +357,7 @@ const ProductPage: React.FC = () => {
                   <ShoppingCart className="w-5 h-5 flex-shrink-0" />
                   <span>{!product.inStock ? 'Hết hàng' : isSubscription ? 'Đăng ký ngay' : 'Thêm vào giỏ hàng'}</span>
                 </button>
-                <button className="p-3.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-300 sm:flex-shrink-0 hover:scale-105 hover:border-red-300 hover:text-red-500 min-h-[48px] flex items-center justify-center"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    addToWishlist(product.id);
-                  }}>
-                  <Heart className="w-5 h-5 text-gray-600 hover:text-red-500" />
-                </button>
+                <WishlistHeart productId={product.id} className="p-3.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-300 sm:flex-shrink-0 hover:scale-105 hover:border-red-300 cursor-pointer" />
               </div>
               
               {/* Free shipping note for subscribers */}

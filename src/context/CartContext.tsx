@@ -38,8 +38,13 @@ const initialState: CartState = {
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case 'ADD_ITEM': {
+      // Match on product.id + subscription flag + delivery frequency so a one-time
+      // tin and a subscription tin for the same product are separate lines.
       const existingItemIndex = state.items.findIndex(
-        item => item.product.id === action.payload.product.id
+        item =>
+          item.product.id === action.payload.product.id &&
+          item.isSubscription === action.payload.isSubscription &&
+          item.deliveryFrequency === action.payload.deliveryFrequency
       );
       
       if (existingItemIndex >= 0) {
@@ -137,13 +142,16 @@ const CartContext = createContext<{
 const CART_STORAGE_KEY = 'carehub_cart';
 
 // Restore the cart from localStorage so a page refresh does not lose it.
+// Never restore isOpen (a refresh should not reopen the sidebar).
+// Also strip stale state fields that should be recomputed.
 const loadInitialState = (): CartState => {
   try {
     const raw = localStorage.getItem(CART_STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as CartState;
       if (parsed && Array.isArray(parsed.items)) {
-        return { ...initialState, ...parsed };
+        // Force isOpen to false on load regardless of what was persisted
+        return { ...initialState, items: parsed.items, isOpen: false };
       }
     }
   } catch (error) {

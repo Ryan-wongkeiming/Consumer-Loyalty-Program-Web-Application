@@ -4,6 +4,7 @@ import { ArrowLeft, Heart, ShoppingCart, Trash2, Star } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { getUserWishlist, removeFromWishlist, WishlistItem } from '../lib/auth';
+import { formatPrice } from '../data/pricing';
 import ProductImage from '../components/ProductImage';
 
 const WishlistPage: React.FC = () => {
@@ -74,14 +75,6 @@ const WishlistPage: React.FC = () => {
       },
     });
     dispatch({ type: 'TOGGLE_CART' });
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-    }).format(price);
   };
 
   const renderStars = (rating: number) => {

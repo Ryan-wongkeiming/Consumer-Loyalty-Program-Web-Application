@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabaseClient';
 import { validatePromoCode } from '../data/promoCodes';
-import { getCartSubtotal, getCartSavings, getUnitPrice, getSubscriptionRate, formatPrice } from '../data/pricing';
+import { getCartSubtotal, getCartSavings, getUnitPrice, getSubscriptionRate, formatPrice, STANDARD_SHIPPING_FEE } from '../data/pricing';
 import { getAllProvinces, getWardsByProvince, Province, Ward } from '../utils/locationData';
 import SearchableSelect from '../components/SearchableSelect';
 import CameraCapture from '../components/CameraCapture';
@@ -105,24 +105,27 @@ export default function CheckoutPage() {
 
   const subtotal = calculateSubtotal();
   const totalSavings = getCartSavings(state.items);
-  const shippingCost = 0; // Set to 0 VND, can be adjusted later if needed
+  // Standard shipping fee unless all items are subscriptions (free shipping)
+  const allSubscriptions = state.items.length > 0 && state.items.every(item => item.isSubscription);
+  const shippingCost = allSubscriptions ? 0 : STANDARD_SHIPPING_FEE;
   const promoDiscountVND = state.promoDiscount;
   const total = Math.max(0, subtotal + shippingCost - promoDiscountVND);
 
-  const handleApplyPromoCode = async () => {
+  const handleApplyPromoCode = async (codeOverride?: string) => {
     if (state.appliedPromoCode) {
       setPromoError('Chỉ được áp dụng một mã giảm giá cho mỗi đơn hàng');
       setPromoSuccess('');
       return;
     }
 
-    if (!promoCode.trim()) {
+    const codeToValidate = codeOverride ?? promoCode;
+    if (!codeToValidate?.trim()) {
       setPromoError('Vui lòng nhập mã giảm giá');
       setPromoSuccess('');
       return;
     }
 
-    const validPromo = await validatePromoCode(promoCode.trim(), subtotal);
+    const validPromo = await validatePromoCode(codeToValidate.trim(), subtotal);
 
     if (validPromo) {
       dispatch({
@@ -154,8 +157,8 @@ export default function CheckoutPage() {
     setPromoError('');
     setPromoSuccess('');
     setShowCamera(false);
-    // Auto-apply the captured code directly
-    await handleApplyPromoCode();
+    // Auto-apply the scanned code directly (no setTimeout, no stale state)
+    await handleApplyPromoCode(code);
   };
 
   const validateForm = () => {
@@ -191,6 +194,15 @@ export default function CheckoutPage() {
     e.preventDefault();
     
     if (!validateForm()) {
+      return;
+    }
+
+    // Block checkout if cart has subscription items and user is not logged in
+    const hasSubscriptionItems = state.items.some(item => item.isSubscription);
+    if (hasSubscriptionItems && !user) {
+      dispatch({ type: 'TOGGLE_CART' }); // Close cart/checkout overlay
+      navigate('/'); // Redirect to home so auth modal can open
+      setErrors({ general: 'Vui lòng đăng nhập để đặt hàng có sản phẩm đăng ký.' });
       return;
     }
 
@@ -251,48 +263,62 @@ export default function CheckoutPage() {
 
       if (orderItemsError) {
         console.error('Error creating order items:', orderItemsError);
+        // Delete the orphan order so a promo code is not consumed by an empty order
+        await supabase.from('orders').delete().eq('id', orderId);
         setErrors({ general: 'Đã xảy ra lỗi khi thêm sản phẩm vào đơn hàng. Vui lòng liên hệ hỗ trợ.' });
-        // Potentially, you might want to delete the order if order items fail to insert
         setIsSubmitting(false);
         return;
       }
 
       // 3. If any item is a subscription and user is logged in,
-      //    create the subscription + items (Blackmores rule: account required)
+      //    create the subscription + items (Blackmores rule: account required).
+      // Each subscription line keeps its own frequency — do not collapse.
       const subscriptionItems = state.items.filter(item => item.isSubscription);
       if (subscriptionItems.length > 0 && user) {
-        const freq = subscriptionItems[0].deliveryFrequency;
-        const frequencyWeeks = freq.includes('4') ? 4 : freq.includes('12') ? 12 : 8;
-        const nextDate = new Date();
-        nextDate.setDate(nextDate.getDate() + frequencyWeeks * 7);
+        // Group by frequency so we create one subscription per unique frequency
+        const freqMap = new Map<string, typeof subscriptionItems>();
+        for (const item of subscriptionItems) {
+          const existing = freqMap.get(item.deliveryFrequency);
+          if (existing) {
+            existing.push(item);
+          } else {
+            freqMap.set(item.deliveryFrequency, [item]);
+          }
+        }
 
-        const { data: subData, error: subError } = await supabase
-          .from('subscriptions')
-          .insert({
-            user_id: user.id,
-            frequency_weeks: frequencyWeeks,
-            next_delivery_date: nextDate.toISOString().split('T')[0],
-            status: 'active',
-          })
-          .select()
-          .single();
+        for (const [freq, items] of freqMap) {
+          const frequencyWeeks = freq.includes('4') ? 4 : freq.includes('12') ? 12 : 8;
+          const nextDate = new Date();
+          nextDate.setDate(nextDate.getDate() + frequencyWeeks * 7);
 
-        if (!subError && subData) {
-          const subItems = subscriptionItems.map(item => ({
-            subscription_id: subData.id,
-            product_id: item.product.id,
-            quantity: item.quantity,
-            is_subscription: true,
-            delivery_frequency: item.deliveryFrequency,
-            bundle_tier: item.bundleTier || null,
-          }));
-          await supabase.from('subscription_items').insert(subItems);
+          const { data: subData, error: subError } = await supabase
+            .from('subscriptions')
+            .insert({
+              user_id: user.id,
+              frequency_weeks: frequencyWeeks,
+              next_delivery_date: nextDate.toISOString().split('T')[0],
+              status: 'active',
+            })
+            .select()
+            .single();
 
-          // Link the order to the subscription
-          await supabase
-            .from('orders')
-            .update({ subscription_id: subData.id })
-            .eq('id', orderId);
+          if (!subError && subData) {
+            const subItems = items.map(item => ({
+              subscription_id: subData.id,
+              product_id: item.product.id,
+              quantity: item.quantity,
+              is_subscription: true,
+              delivery_frequency: item.deliveryFrequency,
+              bundle_tier: item.bundleTier || null,
+            }));
+            await supabase.from('subscription_items').insert(subItems);
+
+            // Link the order to the subscription (first one only, or link all)
+            await supabase
+              .from('orders')
+              .update({ subscription_id: subData.id })
+              .eq('id', orderId);
+          }
         }
       }
 
@@ -501,16 +527,18 @@ export default function CheckoutPage() {
                   <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Phương thức giao hàng</h2>
                 </div>
 
-                <div className="border border-carehub-teal rounded-lg p-3 sm:p-4 bg-green-50">
+                <div className={`border rounded-lg p-3 sm:p-4 ${allSubscriptions ? 'border-green-200 bg-green-50' : 'border-carehub-teal bg-green-50'}`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <CheckCircle className="w-5 h-5 text-carehub-teal mr-3" />
+                      <CheckCircle className={`w-5 h-5 mr-3 ${allSubscriptions ? 'text-green-600' : 'text-carehub-teal'}`} />
                       <div>
                         <p className="font-medium text-sm sm:text-base text-gray-900">Giao hàng tiêu chuẩn</p>
                         <p className="text-xs sm:text-sm text-gray-600">Thời gian giao hàng: 3-5 ngày làm việc</p>
                       </div>
                     </div>
-                    <span className="font-semibold text-sm sm:text-base text-carehub-teal">Miễn phí</span>
+                    <span className={`font-semibold text-sm sm:text-base ${allSubscriptions ? 'text-green-600' : 'text-carehub-teal'}`}>
+                      {allSubscriptions ? 'Miễn phí' : formatPrice(STANDARD_SHIPPING_FEE)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -579,7 +607,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between text-sm sm:text-base">
                     <span>Phí vận chuyển:</span>
-                    <span>Miễn phí</span>
+                    <span>{allSubscriptions ? 'Miễn phí' : formatPrice(STANDARD_SHIPPING_FEE)}</span>
                   </div>
                   {state.promoDiscount > 0 && (
                     <div className="flex justify-between text-sm sm:text-base text-green-600">

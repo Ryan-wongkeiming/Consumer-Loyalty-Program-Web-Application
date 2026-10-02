@@ -117,6 +117,34 @@ export interface WishlistItem {
   };
 }
 
+/**
+ * Returns the set of product IDs currently in the user's wishlist.
+ * Returns an empty set if the user is not logged in.
+ */
+export const getUserWishlistProductIds = async (): Promise<Set<string>> => {
+  const user = await getCurrentUser();
+  if (!user) {
+    return new Set();
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('wishlist')
+      .select('product_id')
+      .eq('user_id', user.id);
+
+    if (error) {
+      console.error('Error getting user wishlist IDs:', error);
+      return new Set();
+    }
+
+    return new Set((data || []).map((row: { product_id: string }) => row.product_id));
+  } catch (error) {
+    console.error('Error getting user wishlist IDs:', error);
+    return new Set();
+  }
+};
+
 export const getUserWishlist = async (): Promise<WishlistItem[]> => {
   const user = await getCurrentUser();
   if (!user) {

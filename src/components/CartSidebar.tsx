@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { X, Plus, Minus, ShoppingBag, Info, ChevronDown, Check, AlertCircle, Trash2, Camera } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { validatePromoCode } from '../data/promoCodes';
-import { getCartSubtotal, getCartSavings, getUnitPrice, FREQUENCIES } from '../data/pricing';
+import { getCartSubtotal, getCartSavings, getUnitPrice, FREQUENCIES, formatPrice, STANDARD_SHIPPING_FEE } from '../data/pricing';
 import CameraCapture from './CameraCapture';
 import ProductImage from './ProductImage';
 
@@ -15,40 +15,34 @@ const CartSidebar: React.FC = () => {
   const [promoSuccess, setPromoSuccess] = useState('');
   const [showCamera, setShowCamera] = useState(false);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
-
   const calculateSubtotal = () => {
     return getCartSubtotal(state.items);
   };
 
   const subtotal = calculateSubtotal();
   const cartSavings = getCartSavings(state.items);
-  const shippingCost = 0; // Set to 0 VND, can be adjusted later if needed
+  // Standard shipping fee unless all items are subscriptions (free shipping)
+  const allSubscriptions = state.items.length > 0 && state.items.every(item => item.isSubscription);
+  const shippingCost = allSubscriptions ? 0 : STANDARD_SHIPPING_FEE;
   const promoCodeDiscount = state.promoDiscount; // Renamed for clarity
   const total = Math.max(0, subtotal + shippingCost - promoCodeDiscount);
   const totalSavings = cartSavings + promoCodeDiscount; // Renamed for clarity
 
-  const handleApplyPromoCode = async () => {
+  const handleApplyPromoCode = async (codeOverride?: string) => {
     if (state.appliedPromoCode) {
       setPromoError('Chỉ được áp dụng một mã giảm giá cho mỗi đơn hàng');
       setPromoSuccess('');
       return;
     }
 
-    if (!promoCode.trim()) {
+    const codeToValidate = codeOverride ?? promoCode;
+    if (!codeToValidate?.trim()) {
       setPromoError('Vui lòng nhập mã giảm giá');
       setPromoSuccess('');
       return;
     }
 
-    const validPromo = await validatePromoCode(promoCode.trim(), getCartSubtotal(state.items));
+    const validPromo = await validatePromoCode(codeToValidate.trim(), getCartSubtotal(state.items));
     if (validPromo) {
       dispatch({
         type: 'APPLY_PROMO_CODE',
@@ -83,8 +77,8 @@ const CartSidebar: React.FC = () => {
     setPromoError('');
     setPromoSuccess('');
     setShowCamera(false);
-    // Auto-apply the captured code directly
-    await handleApplyPromoCode();
+    // Auto-apply the scanned code directly (no setTimeout, no stale state)
+    await handleApplyPromoCode(code);
   };
 
   if (!state.isOpen) return null;
@@ -352,10 +346,16 @@ const CartSidebar: React.FC = () => {
                 </button>
               </div>
 
-              {/* Free Shipping Notice */}
+              {/* Shipping Notice */}
               <div className="text-center text-xs sm:text-sm text-carehub-text-medium">
-                <p>Miễn phí vận chuyển!</p>
-                <p className="hidden sm:block"><a href="#" className="text-carehub-teal underline">Xem chính sách mua hàng tại đây.</a></p>
+                {allSubscriptions ? (
+                  <p>Miễn phí vận chuyển cho đơn đăng ký!</p>
+                ) : (
+                  <>
+                    <p>Phí vận chuyển: {formatPrice(STANDARD_SHIPPING_FEE)}</p>
+                    <p className="hidden sm:block"><a href="#" className="text-carehub-teal underline">Xem chính sách mua hàng tại đây.</a></p>
+                  </>
+                )}
               </div>
               
               {/* Free Sample CTA in Cart */}

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, ShoppingCart, Heart } from 'lucide-react';
+import { Star, ShoppingCart } from 'lucide-react';
 import { Product } from '../data/products';
 import { useCart } from '../context/CartContext';
-import { addToWishlist } from '../lib/auth';
+import { formatPrice } from '../data/pricing';
+import WishlistHeart from './WishlistHeart';
 import ProductImage from './ProductImage';
 
 interface ProductCardProps {
@@ -12,15 +13,6 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { dispatch } = useCart();
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -67,14 +59,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               ĐĂNG KÝ
             </div>
           )}
-          <button className="absolute bottom-2 right-2 p-2.5 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              addToWishlist(product.id);
-            }}>
-            <Heart className="w-5 h-5 text-gray-600 hover:text-red-500" />
-          </button>
+          <div className="absolute bottom-2 right-2 p-2.5 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <WishlistHeart productId={product.id} className="cursor-pointer" />
+          </div>
         </div>
       </Link>
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, ChevronDown, Star, ShoppingCart, Heart, Clock, User } from 'lucide-react';
+import { Search, ChevronDown, Star, ShoppingCart, Clock, User } from 'lucide-react';
 import { getArticles } from '../data/articles';
 import { getTopics } from '../data/topics';
 import { womensHealthProducts } from '../data/womensHealthProducts';
+import WishlistHeart from '../components/WishlistHeart';
 
 interface HealthPost {
   id: string;
@@ -286,9 +287,9 @@ const WomensHealthPage: React.FC = () => {
                     </span>
                   </div>
                   {post.type === 'Product' && (
-                    <button className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Heart className="w-4 h-4 text-gray-600 hover:text-red-500" />
-                    </button>
+                    <div className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <WishlistHeart productId={post.id} className="cursor-pointer" />
+                    </div>
                   )}
                 </div>
 

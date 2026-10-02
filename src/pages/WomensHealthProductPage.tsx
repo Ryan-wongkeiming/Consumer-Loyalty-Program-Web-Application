@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Star, Plus, Minus, ShoppingCart, Heart, Truck, Shield, RefreshCw, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Star, Plus, Minus, ShoppingCart, Truck, Shield, RefreshCw, CheckCircle } from 'lucide-react';
 import { womensHealthProducts } from '../data/womensHealthProducts';
 import { useCart } from '../context/CartContext';
+import WishlistHeart from '../components/WishlistHeart';
 import ProductImage from '../components/ProductImage';
 
 const WomensHealthProductPage: React.FC = () => {
@@ -245,9 +246,7 @@ const WomensHealthProductPage: React.FC = () => {
                   <ShoppingCart className="w-5 h-5" />
                   <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
                 </button>
-                <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                  <Heart className="w-5 h-5 text-gray-600" />
-                </button>
+                <WishlistHeart productId={product?.id || ''} className="cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors" />
               </div>
             </div>
 

@@ -39,8 +39,8 @@ DECLARE
     promo_rec promo_codes%ROWTYPE;
 BEGIN
     IF NEW.promo_code_applied IS NOT NULL THEN
-        -- Lock the promo code row to prevent race conditions
-        SELECT * INTO promo_rec FROM promo_codes WHERE code = NEW.promo_code_applied FOR UPDATE;
+        -- Lock the promo code row to prevent race conditions (case-insensitive)
+        SELECT * INTO promo_rec FROM promo_codes WHERE code ILIKE NEW.promo_code_applied FOR UPDATE;
 
         IF NOT FOUND OR NOT promo_rec.is_active THEN
             RAISE EXCEPTION 'Promo code "%" is invalid or inactive.', NEW.promo_code_applied;
@@ -74,20 +74,20 @@ BEGIN
         -- Usage limits
         IF promo_rec.type = 'unique' THEN
             IF promo_rec.current_uses >= 1 THEN
-                RAISE EXCEPTION 'Unique promo code "%" has already been used.', NEW.promo_code_applied;
+                RAISE EXCEPTION 'Unique promo code "%" has already been used.', promo_rec.code;
             END IF;
         ELSIF promo_rec.type = 'multi-use' THEN
             IF promo_rec.max_uses IS NOT NULL AND promo_rec.current_uses >= promo_rec.max_uses THEN
-                RAISE EXCEPTION 'Multi-use promo code "%" has reached its maximum usage limit.', NEW.promo_code_applied;
+                RAISE EXCEPTION 'Multi-use promo code "%" has reached its maximum usage limit.', promo_rec.code;
             END IF;
         END IF;
 
-        -- Update usage counters
+        -- Update usage counters (case-insensitive)
         UPDATE promo_codes
         SET
             current_uses = promo_rec.current_uses + 1,
             is_active = CASE WHEN promo_rec.type = 'unique' THEN FALSE ELSE promo_rec.is_active END
-        WHERE code = NEW.promo_code_applied;
+        WHERE code ILIKE NEW.promo_code_applied;
 
         -- Log usage (Point 4: include customer contact info)
         -- Calculate the actual applied discount amount

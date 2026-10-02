@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { ArrowLeft, Search, Star, Clock, User, ShoppingCart, Heart } from 'lucide-react';
+import { ArrowLeft, Search, Star, Clock, User, ShoppingCart } from 'lucide-react';
 import { searchSiteContent, SearchResult } from '../data/searchData';
 import { useCart } from '../context/CartContext';
+import WishlistHeart from '../components/WishlistHeart';
 import ProductImage from '../components/ProductImage';
 
 const SearchResultsPage: React.FC = () => {
@@ -268,9 +269,7 @@ const SearchResultsPage: React.FC = () => {
                         </div>
                         
                         {result.type === 'Product' && (
-                          <button className="p-2 text-gray-400 hover:text-red-500 transition-colors">
-                            <Heart className="w-5 h-5" />
-                          </button>
+                          <WishlistHeart productId={result.id} className="cursor-pointer" />
                         )}
                       </div>
 
