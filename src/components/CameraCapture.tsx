@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, X, RotateCcw } from 'lucide-react';
+import { supabase } from '../lib/supabaseClient';
 
 interface CameraCaptureProps {
   onCodeDetected: (code: string) => void;
@@ -110,30 +111,32 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCodeDetected, onClose }
         throw new Error('Không thể tạo canvas context');
       }
 
-      // Set canvas dimensions to match video
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      // Cap dimensions to keep payload reasonable
+      const MAX_DIM = 1024;
+      let w = video.videoWidth;
+      let h = video.videoHeight;
+      if (w > MAX_DIM || h > MAX_DIM) {
+        const scale = MAX_DIM / Math.max(w, h);
+        w = Math.round(w * scale);
+        h = Math.round(h * scale);
+      }
+      canvas.width = w;
+      canvas.height = h;
       
       // Draw current video frame to canvas
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      context.drawImage(video, 0, 0, w, h);
 
-      // Preprocess: Convert to grayscale and enhance contrast
-      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      
-      for (let i = 0; i < data.length; i += 4) {
-        // Convert to grayscale
-        const gray = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
-        // Apply binary threshold for contrast enhancement
-        const threshold = gray > 128 ? 255 : 0;
-        data[i] = threshold;     // Red
-        data[i + 1] = threshold; // Green
-        data[i + 2] = threshold; // Blue
-        // Alpha channel remains unchanged
+      // Send a compressed COLOR JPEG — do NOT binarize.
+      // Modern vision models perform better with natural color input.
+      const imageDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+
+      // Get the user's auth token (not the anon key)
+      const { data: { session } } = await supabase.auth.getSession();
+      const authToken = session?.access_token;
+
+      if (!authToken) {
+        throw new Error('Bạn cần đăng nhập để sử dụng tính năng camera.');
       }
-      
-      context.putImageData(imageData, 0, 0);
-      const imageDataUrl = canvas.toDataURL('image/png');
 
       // Send to OCR service with retry logic (up to 2 attempts)
       let lastError: Error | null = null;
@@ -142,7 +145,7 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCodeDetected, onClose }
           const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ocr-processor`, {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+              'Authorization': `Bearer ${authToken}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ image: imageDataUrl }),

@@ -86,7 +86,16 @@ Deno.serve(async (req: Request) => {
 
     if (rateError) {
       console.error('Rate limit check error:', rateError);
-    } else if ((recentCount ?? 0) >= RATE_LIMIT_MAX) {
+      // Fail closed: if we can't check the limit, reject the request
+      return new Response(
+        JSON.stringify({ error: 'Không thể kiểm tra giới hạn. Vui lòng thử lại sau.' }),
+        {
+          status: 503,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+    if ((recentCount ?? 0) >= RATE_LIMIT_MAX) {
       return new Response(
         JSON.stringify({ error: 'Bạn đã thực hiện quá nhiều giao dịch. Vui lòng thử lại sau.' }),
         {
@@ -119,6 +128,12 @@ Deno.serve(async (req: Request) => {
       );
     }
 
+    // Record the rate-limit attempt BEFORE calling the RPC so that even
+    // a failed RPC doesn't allow an extra attempt through.
+    await supabaseAdmin
+      .from('redemption_rate_limits')
+      .insert({ user_id: user.id, action: 'redeem_loyalty_code' });
+
     // Run the whole claim + credit inside a single DB transaction via the
     // redeem_loyalty_code RPC. Either all writes commit or none do.
     const { data, error } = await supabaseAdmin.rpc('redeem_loyalty_code', {
@@ -146,11 +161,6 @@ Deno.serve(async (req: Request) => {
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
-
-    // Record the redemption for rate limiting.
-    await supabaseAdmin
-      .from('redemption_rate_limits')
-      .insert({ user_id: user.id, action: 'redeem_loyalty_code' });
 
     return new Response(
       JSON.stringify({

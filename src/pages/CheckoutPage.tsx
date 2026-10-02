@@ -210,29 +210,35 @@ export default function CheckoutPage() {
     setErrors({}); // Clear previous errors
 
     try {
-      // 1. Insert into orders table
-      const { data: orderData, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          full_name: formData.fullName,
-          phone: formData.phone,
-          email: formData.email,
-          address: formData.address,
-          city: formData.city,
-          ward: formData.ward,
-          notes: formData.notes,
-          total_amount: total, // Use the calculated total
-          promo_code_applied: state.appliedPromoCode, // Pass applied promo code
-          user_id: user?.id || null, // Link to user if logged in
-        })
-        .select()
-        .single();
+      // Build items array for place_order RPC
+      const itemsPayload = state.items.map(item => ({
+        product_id: item.product.id,
+        quantity: item.quantity,
+        is_subscription: item.isSubscription,
+        delivery_frequency: item.deliveryFrequency,
+        bundle_tier: item.bundleTier || null,
+      }));
 
-      if (orderError) {
-        console.error('Error creating order:', orderError);
-        // Check for specific error messages from the trigger
-        if (orderError.message.includes('Promo code')) {
-          setErrors({ general: orderError.message });
+      // Call place_order RPC — server computes prices atomically
+      const { data: orderResult, error: rpcError } = await supabase.rpc('place_order', {
+        p_full_name: formData.fullName,
+        p_phone: formData.phone,
+        p_email: formData.email || null,
+        p_address: formData.address,
+        p_city: formData.city,
+        p_ward: formData.ward,
+        p_notes: formData.notes || null,
+        p_promo_code: state.appliedPromoCode,
+        p_items: itemsPayload,
+        p_user_id: user?.id || null,
+      });
+
+      if (rpcError) {
+        console.error('Error placing order via RPC:', rpcError);
+        if (rpcError.message.includes('Promo code')) {
+          setErrors({ general: rpcError.message });
+        } else if (rpcError.message.includes('not found')) {
+          setErrors({ general: 'Một hoặc nhiều sản phẩm không còn tồn tại. Vui lòng cập nhật giỏ hàng.' });
         } else {
           setErrors({ general: 'Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại.' });
         }
@@ -240,89 +246,7 @@ export default function CheckoutPage() {
         return;
       }
 
-      const orderId = orderData.id;
-
-      // 2. Insert into order_items table
-      const orderItemsToInsert = state.items.map(item => ({
-        order_id: orderId,
-        product_id: item.product.id,
-        product_name: item.product.name,
-        quantity: item.quantity,
-        price_at_purchase: getUnitPrice(item.product, {
-          quantity: item.quantity,
-          isSubscription: item.isSubscription,
-          deliveryFrequency: item.deliveryFrequency,
-        }),
-        is_subscription: item.isSubscription,
-        delivery_frequency: item.deliveryFrequency,
-      }));
-
-      const { error: orderItemsError } = await supabase
-        .from('order_items')
-        .insert(orderItemsToInsert);
-
-      if (orderItemsError) {
-        console.error('Error creating order items:', orderItemsError);
-        // Delete the orphan order so a promo code is not consumed by an empty order
-        await supabase.from('orders').delete().eq('id', orderId);
-        setErrors({ general: 'Đã xảy ra lỗi khi thêm sản phẩm vào đơn hàng. Vui lòng liên hệ hỗ trợ.' });
-        setIsSubmitting(false);
-        return;
-      }
-
-      // 3. If any item is a subscription and user is logged in,
-      //    create the subscription + items (Blackmores rule: account required).
-      // Each subscription line keeps its own frequency — do not collapse.
-      const subscriptionItems = state.items.filter(item => item.isSubscription);
-      if (subscriptionItems.length > 0 && user) {
-        // Group by frequency so we create one subscription per unique frequency
-        const freqMap = new Map<string, typeof subscriptionItems>();
-        for (const item of subscriptionItems) {
-          const existing = freqMap.get(item.deliveryFrequency);
-          if (existing) {
-            existing.push(item);
-          } else {
-            freqMap.set(item.deliveryFrequency, [item]);
-          }
-        }
-
-        for (const [freq, items] of freqMap) {
-          const frequencyWeeks = freq.includes('4') ? 4 : freq.includes('12') ? 12 : 8;
-          const nextDate = new Date();
-          nextDate.setDate(nextDate.getDate() + frequencyWeeks * 7);
-
-          const { data: subData, error: subError } = await supabase
-            .from('subscriptions')
-            .insert({
-              user_id: user.id,
-              frequency_weeks: frequencyWeeks,
-              next_delivery_date: nextDate.toISOString().split('T')[0],
-              status: 'active',
-            })
-            .select()
-            .single();
-
-          if (!subError && subData) {
-            const subItems = items.map(item => ({
-              subscription_id: subData.id,
-              product_id: item.product.id,
-              quantity: item.quantity,
-              is_subscription: true,
-              delivery_frequency: item.deliveryFrequency,
-              bundle_tier: item.bundleTier || null,
-            }));
-            await supabase.from('subscription_items').insert(subItems);
-
-            // Link the order to the subscription (first one only, or link all)
-            await supabase
-              .from('orders')
-              .update({ subscription_id: subData.id })
-              .eq('id', orderId);
-          }
-        }
-      }
-
-      // If everything is successful
+      // Order placed successfully — show thank you screen
       setShowThankYou(true);
       setIsSubmitting(false);
       

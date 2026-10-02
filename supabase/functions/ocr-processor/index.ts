@@ -1,14 +1,18 @@
-// Restrict CORS to the deployed site. The app is served from GitHub Pages.
-const ALLOWED_ORIGIN = 'https://ryan-wongkeiming.github.io';
+// Restrict CORS to the configured origin + localhost in development.
+const ALLOWED_ORIGIN = Deno.env.get('ALLOWED_ORIGIN') || 'https://ryan-wongkeiming.github.io';
 const corsHeaders = {
   'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
 
 // Maximum payload size for the image (bytes). 5 MB keeps the request reasonable
 // for a mobile camera capture while still allowing a sharp 1280x720 frame.
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+
+// Rate limit: max OCR calls per user per hour
+const OCR_RATE_LIMIT_MAX = 20;
+const OCR_RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
 Deno.serve(async (req: Request) => {
   // Handle CORS preflight requests
@@ -26,6 +30,67 @@ Deno.serve(async (req: Request) => {
         JSON.stringify({ error: 'Method not allowed' }),
         {
           status: 405,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    // ---- Auth check: require logged-in user ----
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ') || authHeader.length < 50) {
+      return new Response(
+        JSON.stringify({ error: 'Yêu cầu đăng nhập để sử dụng tính năng này' }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    const token = authHeader.slice(7);
+
+    // Initialize Supabase client with service role
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2.54.0');
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Verify the token is valid by getting the user
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.' }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    // ---- Rate limit check (per user, fail closed on error) ----
+    const windowStart = new Date(Date.now() - OCR_RATE_LIMIT_WINDOW_MS).toISOString();
+    const { count: recentCount, error: rateError } = await supabase
+      .from('ocr_rate_limits')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .gte('created_at', windowStart);
+
+    if (rateError) {
+      console.error('OCR rate limit check error:', rateError);
+      return new Response(
+        JSON.stringify({ error: 'Không thể kiểm tra giới hạn. Vui lòng thử lại sau.' }),
+        {
+          status: 503,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    if ((recentCount ?? 0) >= OCR_RATE_LIMIT_MAX) {
+      return new Response(
+        JSON.stringify({ error: 'Bạn đã quét quá nhiều mã. Vui lòng thử lại sau.' }),
+        {
+          status: 429,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         }
       );
@@ -57,17 +122,6 @@ Deno.serve(async (req: Request) => {
 
     const mimeType = dataUrlMatch[1];
     const base64Data = dataUrlMatch[2];
-
-    // Reject non-image MIME types
-    if (!mimeType.startsWith('image/')) {
-      return new Response(
-        JSON.stringify({ error: 'Loại hình không hợp lệ' }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-    }
 
     // Decode and enforce a size cap
     let imageBytes: Uint8Array;
@@ -110,7 +164,7 @@ Deno.serve(async (req: Request) => {
     if (!ocrApiUrl || !ocrApiKey) {
       return new Response(
         JSON.stringify({
-          error: 'OCR belum được cấu. Vui lòng thử lại sau.',
+          error: 'OCR chưa được cấu hình. Vui lòng thử lại sau.',
         }),
         {
           status: 503,
@@ -120,6 +174,8 @@ Deno.serve(async (req: Request) => {
     }
 
     // Call the configured OpenAI-compatible vision endpoint
+    // NOTE: Image is sent as-is (color, compressed) — no binarization.
+    // The browser-side CameraCapture component handles compression.
     const ocrResponse = await fetch(ocrApiUrl, {
       method: 'POST',
       headers: {
@@ -163,6 +219,14 @@ Deno.serve(async (req: Request) => {
     const ocrResult = await ocrResponse.json();
     const text = ocrResult?.choices?.[0]?.message?.content?.trim() || '';
 
+    // Record the rate limit entry AFTER successful processing
+    await supabase
+      .from('ocr_rate_limits')
+      .insert({
+        user_id: user.id,
+        created_at: new Date().toISOString(),
+      });
+
     return new Response(
       JSON.stringify({ text }),
       {
@@ -174,7 +238,7 @@ Deno.serve(async (req: Request) => {
     console.error('Unexpected error in ocr-processor function:', error);
     return new Response(
       JSON.stringify({
-        error: 'Có lỗi không mong muốn xảyra. Vui lòng thử lại sau.',
+        error: 'Có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.',
       }),
       {
         status: 500,
