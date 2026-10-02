@@ -37,6 +37,8 @@ const WishlistPage = lazy(() => import('./pages/WishlistPage'));
 const AddressesPage = lazy(() => import('./pages/AddressesPage'));
 const LoyaltyPage = lazy(() => import('./pages/LoyaltyPage'));
 const RedeemConfirmationPage = lazy(() => import('./pages/RedeemConfirmationPage'));
+const StaffDashboardPage = lazy(() => import('./pages/StaffDashboardPage'));
+import RouteErrorBoundary from './components/RouteErrorBoundary';
 
 // Component to handle scroll to top on route changes.
 // Fixes mobile bug: tapping a product after scrolling the homepage would open
@@ -78,30 +80,31 @@ function App() {
             <main className="flex-grow">
               <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-carehub-teal"></div></div>}>
                 <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/product/:id" element={<ProductPage />} />
-                  <Route path="/carehub-subscribe" element={<ProductPage />} />
-                  <Route path="/free-sample" element={<FreeSamplePage />} />
-                  <Route path="/about" element={<AboutPage />} />
-                  <Route path="/checkout" element={<CheckoutPage />} />
-                  <Route path="/womens-health" element={<WomensHealthPage />} />
-                  <Route path="/womens-health/article/:id" element={<ArticleDetailPage />} />
-                  <Route path="/womens-health/topic/:id" element={<TopicDetailPage />} />
-                  <Route path="/womens-health/product/:id" element={<WomensHealthProductPage />} />
-                  <Route path="/search" element={<SearchResultsPage />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-                  <Route path="/editorial-policy" element={<EditorialPolicyPage />} />
-                  <Route path="/terms-of-use" element={<TermsOfUsePage />} />
-                  <Route path="/cookies" element={<CookiesPage />} />
-                  <Route path="/profile" element={<ProfilePage />} />
-                  <Route path="/my-orders" element={<MyOrdersPage />} />
-                  <Route path="/my-subscriptions" element={<MySubscriptionsPage />} />
-                  <Route path="/subscription-faqs" element={<SubscriptionFAQsPage />} />
-                  <Route path="/subscription-terms" element={<SubscriptionTermsPage />} />
-                  <Route path="/wishlist" element={<WishlistPage />} />
-                  <Route path="/addresses" element={<AddressesPage />} />
-                  <Route path="/loyalty" element={<LoyaltyPage />} />
-                  <Route path="/loyalty/redeem/:giftId" element={<RedeemConfirmationPage />} />
+                  <Route path="/" element={<RouteErrorBoundary><HomePage /></RouteErrorBoundary>} />
+                  <Route path="/product/:id" element={<RouteErrorBoundary><ProductPage /></RouteErrorBoundary>} />
+                  <Route path="/carehub-subscribe" element={<RouteErrorBoundary><ProductPage /></RouteErrorBoundary>} />
+                  <Route path="/free-sample" element={<RouteErrorBoundary><FreeSamplePage /></RouteErrorBoundary>} />
+                  <Route path="/about" element={<RouteErrorBoundary><AboutPage /></RouteErrorBoundary>} />
+                  <Route path="/checkout" element={<RouteErrorBoundary><CheckoutPage /></RouteErrorBoundary>} />
+                  <Route path="/womens-health" element={<RouteErrorBoundary><WomensHealthPage /></RouteErrorBoundary>} />
+                  <Route path="/womens-health/article/:id" element={<RouteErrorBoundary><ArticleDetailPage /></RouteErrorBoundary>} />
+                  <Route path="/womens-health/topic/:id" element={<RouteErrorBoundary><TopicDetailPage /></RouteErrorBoundary>} />
+                  <Route path="/womens-health/product/:id" element={<RouteErrorBoundary><WomensHealthProductPage /></RouteErrorBoundary>} />
+                  <Route path="/search" element={<RouteErrorBoundary><SearchResultsPage /></RouteErrorBoundary>} />
+                  <Route path="/privacy-policy" element={<RouteErrorBoundary><PrivacyPolicyPage /></RouteErrorBoundary>} />
+                  <Route path="/editorial-policy" element={<RouteErrorBoundary><EditorialPolicyPage /></RouteErrorBoundary>} />
+                  <Route path="/terms-of-use" element={<RouteErrorBoundary><TermsOfUsePage /></RouteErrorBoundary>} />
+                  <Route path="/cookies" element={<RouteErrorBoundary><CookiesPage /></RouteErrorBoundary>} />
+                  <Route path="/profile" element={<RouteErrorBoundary><ProfilePage /></RouteErrorBoundary>} />
+                  <Route path="/my-orders" element={<RouteErrorBoundary><MyOrdersPage /></RouteErrorBoundary>} />
+                  <Route path="/my-subscriptions" element={<RouteErrorBoundary><MySubscriptionsPage /></RouteErrorBoundary>} />
+                  <Route path="/subscription-faqs" element={<RouteErrorBoundary><SubscriptionFAQsPage /></RouteErrorBoundary>} />
+                  <Route path="/subscription-terms" element={<RouteErrorBoundary><SubscriptionTermsPage /></RouteErrorBoundary>} />
+                  <Route path="/wishlist" element={<RouteErrorBoundary><WishlistPage /></RouteErrorBoundary>} />
+                  <Route path="/addresses" element={<RouteErrorBoundary><AddressesPage /></RouteErrorBoundary>} />
+                  <Route path="/loyalty" element={<RouteErrorBoundary><LoyaltyPage /></RouteErrorBoundary>} />
+                  <Route path="/loyalty/redeem/:giftId" element={<RouteErrorBoundary><RedeemConfirmationPage /></RouteErrorBoundary>} />
+                  <Route path="/staff" element={<RouteErrorBoundary><StaffDashboardPage /></RouteErrorBoundary>} />
                 </Routes>
               </Suspense>
             </main>

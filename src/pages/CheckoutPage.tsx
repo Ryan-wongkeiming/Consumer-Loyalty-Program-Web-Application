@@ -220,7 +220,7 @@ export default function CheckoutPage() {
       }));
 
       // Call place_order RPC — server computes prices atomically
-      const { data: orderResult, error: rpcError } = await supabase.rpc('place_order', {
+      const { error: rpcError } = await supabase.rpc('place_order', {
         p_full_name: formData.fullName,
         p_phone: formData.phone,
         p_email: formData.email || null,
