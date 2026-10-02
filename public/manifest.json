@@ -1,0 +1,24 @@
+{
+  "name": "CareHub — Sức khỏe tự nhiên & Chăm sóc gia đình",
+  "short_name": "CareHub",
+  "description": "Nền tảng sức khỏe tự nhiên và chăm sóc gia đình, mang đến các sản phẩm chất lượng từ những thương hiệu uy tín.",
+  "start_url": "/Consumer-Loyalty-Program-Web-Application/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0d9488",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
