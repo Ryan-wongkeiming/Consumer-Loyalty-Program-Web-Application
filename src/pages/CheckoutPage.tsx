@@ -149,13 +149,13 @@ export default function CheckoutPage() {
     setPromoError('');
   };
 
-  const handleCameraCapture = (code: string) => {
+  const handleCameraCapture = async (code: string) => {
     setPromoCode(code);
     setPromoError('');
     setPromoSuccess('');
     setShowCamera(false);
-    // Auto-apply the captured code
-    setTimeout(() => handleApplyPromoCode(), 100);
+    // Auto-apply the captured code directly
+    await handleApplyPromoCode();
   };
 
   const validateForm = () => {

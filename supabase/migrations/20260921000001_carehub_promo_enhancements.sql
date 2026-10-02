@@ -51,10 +51,25 @@ BEGIN
             RAISE EXCEPTION 'Promo code "%" has expired.', NEW.promo_code_applied;
         END IF;
 
-        -- Point 2: minimum order amount check
-        IF NEW.total_amount IS NOT NULL AND NEW.total_amount < promo_rec.min_order_amount THEN
-            RAISE EXCEPTION 'Promo code "%" requires a minimum order of %đ.', NEW.promo_code_applied, promo_rec.min_order_amount;
-        END IF;
+        -- Point 2: minimum order amount check (against pre-discount subtotal)
+        -- Calculate pre-discount subtotal from order items
+        DECLARE
+            pre_discount_subtotal BIGINT := 0;
+            item_record RECORD;
+        BEGIN
+            SELECT SUM(oi.quantity * p.price) INTO pre_discount_subtotal
+            FROM order_items oi
+            JOIN products p ON oi.product_id = p.id
+            WHERE oi.order_id = NEW.id;
+            
+            IF pre_discount_subtotal IS NULL THEN
+                pre_discount_subtotal := 0;
+            END IF;
+            
+            IF NEW.total_amount IS NOT NULL AND pre_discount_subtotal < promo_rec.min_order_amount THEN
+                RAISE EXCEPTION 'Promo code "%" requires a minimum order of %đ.', NEW.promo_code_applied, promo_rec.min_order_amount;
+            END IF;
+        END;
 
         -- Usage limits
         IF promo_rec.type = 'unique' THEN
@@ -75,8 +90,46 @@ BEGIN
         WHERE code = NEW.promo_code_applied;
 
         -- Log usage (Point 4: include customer contact info)
-        INSERT INTO promo_code_usages (promo_code, order_id, discount_amount_applied, user_id, customer_phone, customer_email)
-        VALUES (NEW.promo_code_applied, NEW.id, promo_rec.discount, NEW.user_id, NEW.phone, NEW.email);
+        -- Calculate the actual applied discount amount
+        DECLARE
+            applied_discount BIGINT;
+            item_record RECORD;
+            subtotal_before_discount BIGINT := 0;
+        BEGIN
+            -- Calculate pre-discount subtotal
+            SELECT SUM(oi.quantity * p.price) INTO subtotal_before_discount
+            FROM order_items oi
+            JOIN products p ON oi.product_id = p.id
+            WHERE oi.order_id = NEW.id;
+            
+            IF subtotal_before_discount IS NULL THEN
+                subtotal_before_discount := 0;
+            END IF;
+            
+            -- Calculate applied discount based on type
+            IF promo_rec.discount_type = 'percent' THEN
+                applied_discount := ROUND(subtotal_before_discount * promo_rec.discount / 100);
+            ELSE
+                applied_discount := promo_rec.discount;
+            END IF;
+            
+            -- Check applicable brands if specified
+            IF promo_rec.applicable_brands IS NOT NULL AND array_length(promo_rec.applicable_brands, 1) > 0 THEN
+                -- Check if all items in the order are from applicable brands
+                PERFORM 1
+                FROM order_items oi
+                JOIN products p ON oi.product_id = p.id
+                WHERE oi.order_id = NEW.id
+                  AND p.brand <> ALL(promo_rec.applicable_brands);
+                  
+                IF FOUND THEN
+                    RAISE EXCEPTION 'Promo code "%" is not applicable to all items in the order.', NEW.promo_code_applied;
+                END IF;
+            END IF;
+            
+            INSERT INTO promo_code_usages (promo_code, order_id, discount_amount_applied, user_id, customer_phone, customer_email)
+            VALUES (NEW.promo_code_applied, NEW.id, applied_discount, NEW.user_id, NEW.phone, NEW.email);
+        END;
     END IF;
 
     RETURN NEW;

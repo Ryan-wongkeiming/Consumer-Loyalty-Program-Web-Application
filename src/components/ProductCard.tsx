@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Star, ShoppingCart, Heart } from 'lucide-react';
 import { Product } from '../data/products';
 import { useCart } from '../context/CartContext';
+import { addToWishlist } from '../lib/auth';
 import ProductImage from './ProductImage';
 
 interface ProductCardProps {
@@ -66,7 +67,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               ĐĂNG KÝ
             </div>
           )}
-          <button className="absolute bottom-2 right-2 p-2.5 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button className="absolute bottom-2 right-2 p-2.5 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              addToWishlist(product.id);
+            }}>
             <Heart className="w-5 h-5 text-gray-600 hover:text-red-500" />
           </button>
         </div>

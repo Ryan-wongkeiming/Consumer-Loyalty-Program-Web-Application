@@ -26,7 +26,7 @@ export const validatePromoCode = async (
     const { data, error } = await supabase
       .from('promo_codes')
       .select('code, discount, description, is_active, discount_type, expires_at, min_order_amount, type, max_uses, current_uses')
-      .eq('code', code.trim().toLowerCase())
+      .ilike('code', code.trim())
       .eq('is_active', true)
       .single();
 

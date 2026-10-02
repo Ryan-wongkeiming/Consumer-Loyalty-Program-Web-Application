@@ -79,6 +79,25 @@ export const removeFromWishlist = async (productId: string) => {
   }
 };
 
+// Add item to wishlist
+export const addToWishlist = async (productId: string) => {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error('User must be authenticated to add items to wishlist');
+  }
+
+  const { error } = await supabase
+    .from('wishlist')
+    .insert({
+      user_id: user.id,
+      product_id: productId,
+    });
+
+  if (error) {
+    throw error;
+  }
+};
+
 // Get user's wishlist
 export interface WishlistItem {
   id: string;

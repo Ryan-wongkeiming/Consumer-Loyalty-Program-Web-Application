@@ -54,10 +54,11 @@ const CartSidebar: React.FC = () => {
         type: 'APPLY_PROMO_CODE',
         payload: {
           code: validPromo.code,
-          discount: validPromo.discount,
+          discount: validPromo.discountAmount,
+          discountType: validPromo.discountType,
         },
       });
-      setPromoSuccess(`Áp dụng thành công! Giảm ${validPromo.discount.toLocaleString('vi-VN')}đ`);
+      setPromoSuccess(`Áp dụng thành công! Giảm ${validPromo.discountAmount.toLocaleString('vi-VN')}đ`);
       setPromoError('');
       setPromoCode('');
     } else {
@@ -77,13 +78,13 @@ const CartSidebar: React.FC = () => {
     navigate('/checkout');
   };
 
-  const handleCameraCapture = (code: string) => {
+  const handleCameraCapture = async (code: string) => {
     setPromoCode(code);
     setPromoError('');
     setPromoSuccess('');
     setShowCamera(false);
-    // Auto-apply the captured code
-    setTimeout(() => handleApplyPromoCode(), 100);
+    // Auto-apply the captured code directly
+    await handleApplyPromoCode();
   };
 
   if (!state.isOpen) return null;
