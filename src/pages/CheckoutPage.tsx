@@ -63,6 +63,8 @@ export default function CheckoutPage() {
   const [promoError, setPromoError] = useState('');
   const [promoSuccess, setPromoSuccess] = useState('');
   const [showCamera, setShowCamera] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'vietqr'>('cod');
+  const [vietqrUrl, setVietqrUrl] = useState<string | null>(null);
 
   const handleInputChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
@@ -220,7 +222,7 @@ export default function CheckoutPage() {
       }));
 
       // Call place_order RPC — server computes prices atomically
-      const { error: rpcError } = await supabase.rpc('place_order', {
+      const { data: orderResult, error: rpcError } = await supabase.rpc('place_order', {
         p_full_name: formData.fullName,
         p_phone: formData.phone,
         p_email: formData.email || null,
@@ -231,6 +233,7 @@ export default function CheckoutPage() {
         p_promo_code: state.appliedPromoCode,
         p_items: itemsPayload,
         p_user_id: user?.id || null,
+        p_payment_method: paymentMethod,
       });
 
       if (rpcError) {
@@ -246,7 +249,24 @@ export default function CheckoutPage() {
         return;
       }
 
-      // Order placed successfully — show thank you screen
+      // Order placed successfully
+      if (paymentMethod === 'vietqr' && orderResult) {
+        // Generate VietQR payment URL
+        const { data: vietqrData, error: vietqrError } = await supabase.rpc('generate_vietqr_payment_url', {
+          p_order_id: orderResult.order_id,
+          p_amount: orderResult.total,
+        });
+
+        if (!vietqrError && vietqrData) {
+          try {
+            const parsedUrl = typeof vietqrData === 'string' ? JSON.parse(vietqrData) : vietqrData;
+            setVietqrUrl(parsedUrl.payment_url || parsedUrl.qr_code_url || '#');
+          } catch {
+            setVietqrUrl('#');
+          }
+        }
+      }
+
       setShowThankYou(true);
       setIsSubmitting(false);
       
@@ -553,17 +573,49 @@ export default function CheckoutPage() {
                   <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Phương thức thanh toán</h2>
                 </div>
 
-                <div className="border border-carehub-teal rounded-lg p-3 sm:p-4 bg-green-50">
-                  <div className="flex items-center">
-                    <CheckCircle className="w-5 h-5 text-carehub-teal mr-3" />
-                    <div>
+                <div className="space-y-3">
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('cod')}
+                    className={`w-full border rounded-lg p-3 sm:p-4 flex items-center ${
+                      paymentMethod === 'cod'
+                        ? 'border-carehub-teal bg-green-50'
+                        : 'border-gray-200 hover:bg-gray-50'
+                    }`}
+                  >
+                    <CheckCircle className={`w-5 h-5 mr-3 ${paymentMethod === 'cod' ? 'text-carehub-teal' : 'text-gray-400'}`} />
+                    <div className="text-left">
                       <p className="font-medium text-sm sm:text-base text-gray-900">Thanh toán khi nhận hàng (COD)</p>
-                      <p className="text-xs sm:text-sm text-gray-600">
-                        Thanh toán bằng tiền mặt khi nhận được hàng
-                      </p>
+                      <p className="text-xs sm:text-sm text-gray-600">Thanh toán bằng tiền mặt khi nhận được hàng</p>
                     </div>
-                  </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('vietqr')}
+                    className={`w-full border rounded-lg p-3 sm:p-4 flex items-center ${
+                      paymentMethod === 'vietqr'
+                        ? 'border-carehub-teal bg-blue-50'
+                        : 'border-gray-200 hover:bg-gray-50'
+                    }`}
+                  >
+                    <CheckCircle className={`w-5 h-5 mr-3 ${paymentMethod === 'vietqr' ? 'text-carehub-teal' : 'text-gray-400'}`} />
+                    <div className="text-left">
+                      <p className="font-medium text-sm sm:text-base text-gray-900">Thanh toán qua VietQR</p>
+                      <p className="text-xs sm:text-sm text-gray-600">Quét mã QR để chuyển khoản ngân hàng</p>
+                    </div>
+                  </button>
                 </div>
+
+                {paymentMethod === 'vietqr' && vietqrUrl && (
+                  <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
+                    <p className="text-sm text-gray-800 mb-2">Quét mã QR bằng ứng dụng ngân hàng của bạn:</p>
+                    <a href={vietqrUrl} target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 bg-carehub-teal text-white rounded-lg hover:bg-carehub-teal-dark transition-colors">
+                      Mở liên kết thanh toán
+                    </a>
+                    <p className="text-xs text-gray-500 mt-2">Bạn sẽ được chuyển đến trang thanh toán của ngân hàng</p>
+                  </div>
+                )}
 
                 <div className="mt-4 p-3 bg-blue-50 rounded-lg">
                   <p className="text-xs sm:text-sm text-blue-800">

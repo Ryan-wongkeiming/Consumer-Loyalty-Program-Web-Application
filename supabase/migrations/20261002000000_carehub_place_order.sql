@@ -22,7 +22,8 @@ DROP FUNCTION IF EXISTS public.place_order(
     p_notes TEXT,
     p_promo_code TEXT,
     p_items JSONB,
-    p_user_id UUID
+    p_user_id UUID,
+    p_payment_method TEXT
 );
 
 CREATE OR REPLACE FUNCTION public.place_order(
@@ -35,7 +36,8 @@ CREATE OR REPLACE FUNCTION public.place_order(
     p_notes TEXT,
     p_promo_code TEXT,
     p_items JSONB,          -- array of item objects
-    p_user_id UUID
+    p_user_id UUID,
+    p_payment_method TEXT   -- 'cod' or 'vietqr', defaults to 'cod'
 ) RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
@@ -227,11 +229,20 @@ BEGIN
     -- Compute final total
     v_total := GREATEST(0, v_subtotal + v_shipping_fee - v_discount_amount);
 
+    -- Determine payment method (default to 'cod')
+    DECLARE
+        v_payment_method TEXT := COALESCE(p_payment_method, 'cod');
+    BEGIN
+        IF v_payment_method NOT IN ('cod', 'vietqr') THEN
+            v_payment_method := 'cod';
+        END IF;
+    END;
+
     -- Create order row
     INSERT INTO orders (full_name, phone, email, address, city, ward, notes,
-                         total_amount, promo_code_applied, user_id)
+                         total_amount, promo_code_applied, user_id, payment_method)
     VALUES (p_full_name, p_phone, p_email, p_address, p_city, p_ward, p_notes,
-            v_total, p_promo_code, p_user_id)
+            v_total, p_promo_code, p_user_id, COALESCE(p_payment_method, 'cod'))
     RETURNING id INTO v_order_id;
 
     -- Record promo usage with actual order_id
@@ -317,5 +328,5 @@ END;
 $$;
 
 GRANT EXECUTE ON FUNCTION public.place_order(
-    TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, JSONB, UUID
+    TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, JSONB, UUID, TEXT
 ) TO anon, authenticated;
