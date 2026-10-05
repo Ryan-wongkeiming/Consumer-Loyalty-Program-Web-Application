@@ -7,6 +7,7 @@ import { supabase } from '../lib/supabaseClient';
 import { validatePromoCode } from '../data/promoCodes';
 import { getCartSubtotal, getCartSavings, getUnitPrice, getSubscriptionRate, formatPrice, STANDARD_SHIPPING_FEE } from '../data/pricing';
 import { getAllProvinces, getWardsByProvince, Province, Ward } from '../utils/locationData';
+import { getEnabledCarriers, getShippingFee, isFreeShipping, generateTrackingNumber, type DeliveryCarrier } from '../data/deliveryServices';
 import SearchableSelect from '../components/SearchableSelect';
 import CameraCapture from '../components/CameraCapture';
 import ProductImage from '../components/ProductImage';
@@ -64,7 +65,15 @@ export default function CheckoutPage() {
   const [promoSuccess, setPromoSuccess] = useState('');
   const [showCamera, setShowCamera] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'vietqr'>('cod');
+  const [selectedCarrier, setSelectedCarrier] = useState<string>('lalamove');
   const [vietqrUrl, setVietqrUrl] = useState<string | null>(null);
+  
+  // Available delivery carriers (from env-configured list)
+  const carriers = getEnabledCarriers();
+  const defaultCarrier = carriers.length > 0 ? carriers[0].id : '';
+  if (!carriers.some(c => c.id === selectedCarrier) && carriers.length > 0) {
+    setSelectedCarrier(carriers[0].id);
+  }
 
   const handleInputChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
@@ -107,9 +116,11 @@ export default function CheckoutPage() {
 
   const subtotal = calculateSubtotal();
   const totalSavings = getCartSavings(state.items);
-  // Standard shipping fee unless all items are subscriptions (free shipping)
+  // Shipping fee based on selected carrier (free for all-subscription orders)
   const allSubscriptions = state.items.length > 0 && state.items.every(item => item.isSubscription);
-  const shippingCost = allSubscriptions ? 0 : STANDARD_SHIPPING_FEE;
+  const shippingCost = isFreeShipping(subtotal, selectedCarrier, allSubscriptions)
+    ? 0
+    : getShippingFee(selectedCarrier, subtotal);
   const promoDiscountVND = state.promoDiscount;
   const total = Math.max(0, subtotal + shippingCost - promoDiscountVND);
 
@@ -471,20 +482,61 @@ export default function CheckoutPage() {
                   <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Phương thức giao hàng</h2>
                 </div>
 
-                <div className={`border rounded-lg p-3 sm:p-4 ${allSubscriptions ? 'border-green-200 bg-green-50' : 'border-carehub-teal bg-green-50'}`}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <CheckCircle className={`w-5 h-5 mr-3 ${allSubscriptions ? 'text-green-600' : 'text-carehub-teal'}`} />
-                      <div>
-                        <p className="font-medium text-sm sm:text-base text-gray-900">Giao hàng tiêu chuẩn</p>
-                        <p className="text-xs sm:text-sm text-gray-600">Thời gian giao hàng: 3-5 ngày làm việc</p>
-                      </div>
-                    </div>
-                    <span className={`font-semibold text-sm sm:text-base ${allSubscriptions ? 'text-green-600' : 'text-carehub-teal'}`}>
-                      {allSubscriptions ? 'Miễn phí' : formatPrice(STANDARD_SHIPPING_FEE)}
-                    </span>
+                {carriers.length > 1 ? (
+                  <div className="space-y-3">
+                    {carriers.map((carrier) => {
+                      const fee = isFreeShipping(subtotal, carrier.id, allSubscriptions) 
+                        ? 0 
+                        : getShippingFee(carrier.id, subtotal);
+                      const isSelected = selectedCarrier === carrier.id;
+                      
+                      return (
+                        <button
+                          key={carrier.id}
+                          type="button"
+                          onClick={() => setSelectedCarrier(carrier.id)}
+                          className={`w-full border rounded-lg p-3 sm:p-4 flex items-start text-left transition-all ${
+                            isSelected 
+                              ? 'border-carehub-teal bg-green-50 ring-1 ring-carehub-teal' 
+                              : 'border-gray-200 hover:bg-gray-50'
+                          }`}
+                        >
+                          <CheckCircle className={`w-5 h-5 mr-3 mt-0.5 flex-shrink-0 ${isSelected ? 'text-carehub-teal' : 'text-gray-400'}`} />
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                              <p className="font-medium text-sm sm:text-base text-gray-900">{carrier.name}</p>
+                              <span className={`font-semibold text-sm sm:text-base ${fee === 0 ? 'text-green-600' : 'text-carehub-teal'}`}>
+                                {fee === 0 ? 'Miễn phí' : formatPrice(fee)}
+                              </span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-gray-600 mt-1">{carrier.description}</p>
+                            <p className="text-xs text-gray-500 mt-1">Dự kiến: {carrier.estimatedDays}</p>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
-                </div>
+                ) : (
+                  // Single carrier or none — show default option
+                  <div className={`border rounded-lg p-3 sm:p-4 ${allSubscriptions ? 'border-green-200 bg-green-50' : 'border-carehub-teal bg-green-50'}`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <CheckCircle className={`w-5 h-5 mr-3 ${allSubscriptions ? 'text-green-600' : 'text-carehub-teal'}`} />
+                        <div>
+                          <p className="font-medium text-sm sm:text-base text-gray-900">
+                            {carriers.length > 0 ? carriers[0].name : 'Giao hàng tiêu chuẩn'}
+                          </p>
+                          <p className="text-xs sm:text-sm text-gray-600">
+                            {carriers.length > 0 ? carriers[0].estimatedDays : 'Thời gian giao hàng: 3-5 ngày làm việc'}
+                          </p>
+                        </div>
+                      </div>
+                      <span className={`font-semibold text-sm sm:text-base ${allSubscriptions ? 'text-green-600' : 'text-carehub-teal'}`}>
+                        {allSubscriptions ? 'Miễn phí' : formatPrice(STANDARD_SHIPPING_FEE)}
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -551,7 +603,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between text-sm sm:text-base">
                     <span>Phí vận chuyển:</span>
-                    <span>{allSubscriptions ? 'Miễn phí' : formatPrice(STANDARD_SHIPPING_FEE)}</span>
+                    <span>{shippingCost === 0 ? 'Miễn phí' : formatPrice(shippingCost)}</span>
                   </div>
                   {state.promoDiscount > 0 && (
                     <div className="flex justify-between text-sm sm:text-base text-green-600">
