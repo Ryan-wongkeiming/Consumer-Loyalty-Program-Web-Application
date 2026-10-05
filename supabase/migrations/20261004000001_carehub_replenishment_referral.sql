@@ -25,9 +25,11 @@ CREATE TABLE IF NOT EXISTS user_baby_profiles (
 -- RLS for baby profiles (only owner can read/write)
 ALTER TABLE user_baby_profiles ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can view own baby profile" ON user_baby_profiles;
 CREATE POLICY "Users can view own baby profile" ON user_baby_profiles
 FOR SELECT USING (user_id = auth.uid());
 
+DROP POLICY IF EXISTS "Users can manage own baby profile" ON user_baby_profiles;
 CREATE POLICY "Users can manage own baby profile" ON user_baby_profiles
 FOR ALL USING (user_id = auth.uid());
 

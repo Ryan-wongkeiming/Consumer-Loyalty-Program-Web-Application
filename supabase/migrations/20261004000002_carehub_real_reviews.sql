@@ -10,7 +10,7 @@
 -- ---------- Product reviews table ----------
 CREATE TABLE IF NOT EXISTS product_reviews (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    product_id TEXT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     user_id UUID NOT NULL REFERENCES auth.users(id),
     order_id UUID REFERENCES orders(id), -- ensures reviewer actually bought it
     rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),

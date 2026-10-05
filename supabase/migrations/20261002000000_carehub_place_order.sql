@@ -60,6 +60,7 @@ DECLARE
     v_first_sub_id UUID := NULL;
     v_applied_freq TEXT;
     v_bundle_tier_json JSONB;
+    v_idx INTEGER := 0;       -- manual ordinality counter
 BEGIN
     -- Validate items array is not empty
     IF p_items IS NULL OR jsonb_array_length(p_items) = 0 THEN
@@ -90,7 +91,10 @@ BEGIN
         line_total BIGINT
     ) ON COMMIT DROP;
 
-    FOR v_item WITH ORDINALITY IN SELECT jsonb_array_elements(p_items) LOOP
+    -- Loop through items using jsonb_array_elements with manual index tracking
+    FOR v_item IN SELECT jsonb_array_elements(p_items) LOOP
+        v_idx := v_idx + 1;
+
         -- Load product from database (never trust client prices)
         SELECT * INTO v_product
         FROM products
@@ -152,7 +156,7 @@ BEGIN
         -- Store computed values
         INSERT INTO _order_items_calc (idx, product_id, quantity, is_subscription,
                                         delivery_frequency, bundle_tier, unit_price, line_total)
-        VALUES (v_item, (v_item->>'product_id')::UUID,
+        VALUES (v_idx, (v_item->>'product_id')::UUID,
                 (v_item->>'quantity')::INTEGER,
                 COALESCE((v_item->>'is_subscription')::BOOLEAN, false),
                 v_item->>'delivery_frequency', v_bundle_tier_json,
@@ -263,7 +267,9 @@ BEGIN
     JOIN products p ON p.id = oic.product_id;
 
     -- Create subscriptions grouped by frequency
-    FOR v_item WITH ORDINALITY IN SELECT jsonb_array_elements(p_items) LOOP
+    -- Reset index for second pass through items
+    v_idx := 0;
+    FOR v_item IN SELECT jsonb_array_elements(p_items) LOOP
         IF COALESCE((v_item->>'is_subscription')::BOOLEAN, false) THEN
             v_applied_freq := v_item->>'delivery_frequency';
 

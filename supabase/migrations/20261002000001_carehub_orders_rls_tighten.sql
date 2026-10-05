@@ -18,13 +18,13 @@ DECLARE
     rec RECORD;
 BEGIN
     FOR rec IN
-        SELECT polname
+        SELECT policyname
         FROM pg_policies
         WHERE tablename = 'orders'
           AND cmd = 'INSERT'
           AND (policyqual IS NULL OR policyqual::text = 'true')
     LOOP
-        EXECUTE format('DROP POLICY IF EXISTS %I ON public.orders', rec.polname);
+        EXECUTE format('DROP POLICY IF EXISTS %I ON public.orders', rec.policyname);
     END LOOP;
 END $$;
 
@@ -38,13 +38,13 @@ DECLARE
     rec RECORD;
 BEGIN
     FOR rec IN
-        SELECT polname
+        SELECT policyname
         FROM pg_policies
         WHERE tablename = 'order_items'
           AND cmd = 'INSERT'
           AND (policyqual IS NULL OR policyqual::text = 'true')
     LOOP
-        EXECUTE format('DROP POLICY IF EXISTS %I ON public.order_items', rec.polname);
+        EXECUTE format('DROP POLICY IF EXISTS %I ON public.order_items', rec.policyname);
     END LOOP;
 END $$;
 

@@ -31,9 +31,11 @@ VALUES
 -- RLS for challenge definitions (readable by all, writable by service)
 ALTER TABLE challenge_definitions ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Anyone can read challenges" ON challenge_definitions;
 CREATE POLICY "Anyone can read challenges" ON challenge_definitions
 FOR SELECT USING (is_active = true OR auth.uid() IS NOT NULL);
 
+DROP POLICY IF EXISTS "Service can manage challenges" ON challenge_definitions;
 CREATE POLICY "Service can manage challenges" ON challenge_definitions
 FOR ALL WITH CHECK (true);
 

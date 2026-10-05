@@ -26,12 +26,14 @@
 -- These assume the bucket is already created and public.
 
 -- Allow anyone to view images (public read)
-CREATE POLICY IF NOT EXISTS "Public Access" ON storage.objects
+DROP POLICY IF EXISTS "Public Access" ON storage.objects;
+CREATE POLICY "Public Access" ON storage.objects
 FOR SELECT
 USING (bucket_id = 'product-images');
 
 -- Allow authenticated users to upload images
-CREATE POLICY IF NOT EXISTS "Authenticated users can upload" ON storage.objects
+DROP POLICY IF EXISTS "Authenticated users can upload" ON storage.objects;
+CREATE POLICY "Authenticated users can upload" ON storage.objects
 FOR INSERT
 WITH CHECK (
     bucket_id = 'product-images'
@@ -39,7 +41,8 @@ WITH CHECK (
 );
 
 -- Allow authenticated users to delete their own uploads
-CREATE POLICY IF NOT EXISTS "Authenticated users can delete" ON storage.objects
+DROP POLICY IF EXISTS "Authenticated users can delete" ON storage.objects;
+CREATE POLICY "Authenticated users can delete" ON storage.objects
 FOR DELETE
 USING (
     bucket_id = 'product-images'
