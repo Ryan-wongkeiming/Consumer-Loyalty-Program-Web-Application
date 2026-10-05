@@ -1,58 +1,94 @@
-# CareHub — Multi-Brand Health & Wellness Storefront
+# CareHub
 
-CareHub is a multi-brand e-commerce web application selling natural health and
-wellness products from **Blackmores**, **GAIA Skin Naturals**, and
-**The Little Oak Company** (55 products total).
+CareHub is a Vietnamese multi-brand health and wellness storefront that combines product catalog, COD checkout, loyalty points, subscriptions, free samples, and pack-code scanning into one platform.
 
-## Tech stack
+## Brands
 
-- **React 18 + TypeScript + Vite 5** (frontend)
-- **Tailwind CSS 3** (styling)
-- **React Router 7** (routing)
-- **Supabase** (PostgreSQL database + Auth)
-- Deployable to **Vercel / Netlify**
+| Brand | Focus |
+|---|---|
+| **Blackmores** | Vitamins, minerals, fish oil, infant formula |
+| **GAIA Skin Naturals** | Baby bath, skin, hair, oral care |
+| **The Little Oak Company** | Goat milk infant formula (cans, sachets, combos) |
+| **HAPPI Health** | Health products |
 
-## Quick start
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18 + TypeScript + Vite 5 |
+| Styling | Tailwind CSS 3 |
+| Routing | React Router 7 |
+| Backend / Database | Supabase (PostgreSQL) |
+| Auth | Supabase Auth |
+| Hosting | GitHub Pages |
+
+## Features
+
+- Product catalog with brand/category filtering and search
+- Shopping cart with bundle pricing and subscribe-and-save discounts
+- COD (Cash on Delivery) checkout
+- Promo codes (percent and fixed discount, expiry, usage limits, brand restrictions)
+- Loyalty points system (pack-code scan earn + gift redemption)
+- Free sample requests
+- User accounts and wishlist
+- Subscription management (pause, skip, change frequency)
+- Women's health content section
+- Staff dashboard for order and subscription management
+
+## Quick Start
 
 ```bash
+# 1. Install dependencies
 npm install
-cp .env.example .env   # fill in your Supabase URL + anon key
-npm run dev            # -> http://localhost:5173
+
+# 2. Set up environment variables
+cp .env.example .env
+# Edit .env and add your Supabase URL and anon key
+
+# 3. Start development server
+npm run dev
+# Opens at http://localhost:5173/Consumer-Loyalty-Program-Web-Application/
+
+# 4. Build for production
+npm run build
+
+# 5. Run linting and type-checking
+npm run lint
+npx tsc --noEmit
 ```
 
-**The app reads all product data from Supabase.** A fresh database must be set
-up first: open `rebuild_all.sql` and run it in your Supabase project's SQL
-Editor (see `handover/HANDOVER.md` §5 for the full steps).
-
-## Scripts
-
-| Command | Purpose |
-|---|---|
-| `npm run dev` | Local dev server |
-| `npm run build` | Production build → `dist/` |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | ESLint |
-
-## Documentation
-
-| File | Contents |
-|---|---|
-| `handover/HANDOVER.md` | Full client handover guide (setup, DB, credentials, checklist) |
-| `handover/DEPLOY.md` | Step-by-step Vercel / Netlify deployment |
-| `rebuild_all.sql` | Complete database script (schema + all 55 products) |
-
-## Project structure
+## Project Structure
 
 ```
-src/                 # React source (components, pages, context, data, lib)
-supabase/migrations/ # SQL migration history (archive/original = original schema)
-handover/            # Client handover docs
-rebuild_all.sql      # Full DB rebuild script
-.env.example         # Environment template (never commit .env)
+├── src/                    # React source code
+│   ├── components/         # Header, ProductCard, CartSidebar, etc.
+│   ├── pages/              # Home, Product, Checkout, Loyalty, etc.
+│   ├── context/            # Auth + Cart state management
+│   ├── data/               # Products, promo codes, pricing logic
+│   └── lib/                # Supabase client, auth helpers
+├── supabase/
+│   ├── functions/          # Edge functions (OCR, redemptions, free samples)
+│   └── migrations/         # SQL database migrations
+├── scripts/
+│   └── catalog_cleanup.mjs # Pre-launch catalog quality check
+└── docs/                   # Documentation (operational plan, demo checklist, etc.)
 ```
 
-## Notes
+## Database Setup
 
-- Product images hotlink to the brands' public CDNs.
-- Online payment is not integrated; checkout records orders.
-- See `handover/HANDOVER.md` §8 for the client confirmation checklist.
+The app requires a Supabase project with the schema and seed data applied:
+
+1. Create a Supabase project at [supabase.com](https://supabase.com/dashboard)
+2. Open SQL Editor
+3. Run `rebuild_all.sql` (full schema + seed data)
+4. Copy your Supabase URL and anon key into `.env`
+
+For existing projects, apply migrations in filename order from `supabase/migrations/`.
+
+## Deployment
+
+See `docs/DEPLOYMENT-GUIDE.md` for step-by-step deployment instructions (GitHub Pages, Vercel, custom domain).
+
+## License
+
+This project is proprietary software prepared for client handover.

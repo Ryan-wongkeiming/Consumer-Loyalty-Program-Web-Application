@@ -129,7 +129,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       } else if (data.user && !data.session) {
         // Email confirmation is enabled - user needs to confirm email
         // Don't set user/session, just let the signup complete
-        console.log('User created, email confirmation required');
       }
     } catch (error) {
       console.error('Sign up error:', error);
