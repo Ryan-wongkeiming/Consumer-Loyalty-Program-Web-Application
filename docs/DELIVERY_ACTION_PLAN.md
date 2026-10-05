@@ -78,4 +78,64 @@
 
 ---
 
+## Notes for Later (Don't Forget)
+
+### Delivery fees — update when contracts are signed
+
+Default shipping rates in `src/data/deliveryServices.ts` are placeholders:
+
+```
+Lalamove = 35,000 VND  (urban same-day, 2-4 hours)
+Viettel Post = 25,000 VND  (nationwide, 2-4 days)
+VNPost = 18,000 VND  (cheapest, 3-5 days)
+```
+
+After signing contracts, change these three numbers to your actual contract rates. In production, replace them with live API calls that calculate prices based on distance and package size.
+
+### Enable/disable carriers without code changes
+
+Three lines in `.env` control which carriers appear at checkout:
+
+```
+VITE_ENABLE_LALAMOVE=true
+VITE_ENABLE_VIETTEL_POST=true
+VITE_ENABLE_VNPOST=true
+```
+
+Set any to `false` and that carrier disappears from checkout. No code editing needed.
+
+---
+
+## How to Browse and See Results
+
+To see the camera fix and delivery carrier selection in action:
+
+**Step 1:** Start the dev server
+```bash
+npm run dev
+```
+
+**Step 2:** Open in browser
+```
+http://localhost:5173/Consumer-Loyalty-Program-Web-Application/
+```
+
+**Step 3 — Test camera fix:**
+- Go to the Cart page or Loyalty page
+- Tap the camera icon next to the promo code input
+- Grant camera permission when prompted
+- Video should play immediately (no blank screen)
+- Tap "Chụp" to capture
+- The scanned code auto-applies
+
+**Step 4 — Test carrier selection:**
+- Add products to cart
+- Go to Checkout page
+- Scroll to "Phương thức giao hàng" section
+- You should see three selectable cards: Lalamove, Viettel Post, VNPost
+- Click different carriers — the shipping fee in the order summary updates
+- All-subscription carts show "Miễn phí" for all carriers
+
+---
+
 *This file is the shared checkpoint between you and the assistant. Update status as tasks complete.*
