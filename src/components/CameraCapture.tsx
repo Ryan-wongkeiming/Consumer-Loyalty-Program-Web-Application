@@ -211,27 +211,28 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCodeDetected, onClose }
 
         {/* Camera View */}
         <div className="relative">
-          {isActive ? (
-            <div className="relative">
-              <video
-                ref={videoRef}
-                className="w-full h-64 object-cover bg-black"
-                playsInline
-                muted
-              />
-              {/* Overlay guide */}
-              <div className="absolute inset-4 border-2 border-white border-dashed rounded-lg flex items-center justify-center">
-                <p className="text-white text-sm text-center bg-black bg-opacity-50 px-2 py-1 rounded">
-                  Đặt mã giảm giá trong khung này
-                </p>
-              </div>
-            </div>
-          ) : (
+          {/* Video element always exists in DOM so stream attaches correctly */}
+          <video
+            ref={videoRef}
+            className={`w-full h-64 object-cover bg-black ${!isActive ? 'hidden' : ''}`}
+            playsInline
+            muted
+          />
+          {/* Show placeholder only when camera hasn't started yet */}
+          {!isActive && (
             <div className="h-64 bg-gray-100 flex items-center justify-center">
               <div className="text-center">
                 <Camera className="w-12 h-12 text-gray-400 mx-auto mb-2" />
                 <p className="text-gray-600">Đang khởi động camera...</p>
               </div>
+            </div>
+          )}
+          {/* Overlay guide — only show when camera is active */}
+          {isActive && (
+            <div className="absolute inset-4 border-2 border-white border-dashed rounded-lg flex items-center justify-center">
+              <p className="text-white text-sm text-center bg-black bg-opacity-50 px-2 py-1 rounded">
+                Đặt mã giảm giá trong khung này
+              </p>
             </div>
           )}
         </div>
