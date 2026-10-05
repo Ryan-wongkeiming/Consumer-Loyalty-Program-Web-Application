@@ -7,7 +7,7 @@ import { supabase } from '../lib/supabaseClient';
 import { validatePromoCode } from '../data/promoCodes';
 import { getCartSubtotal, getCartSavings, getUnitPrice, getSubscriptionRate, formatPrice, STANDARD_SHIPPING_FEE } from '../data/pricing';
 import { getAllProvinces, getWardsByProvince, Province, Ward } from '../utils/locationData';
-import { getEnabledCarriers, getShippingFee, isFreeShipping } from '../data/deliveryServices';
+import { getEnabledCarriers, getShippingFee, isFreeShipping, generateTrackingNumber, type DeliveryCarrier } from '../data/deliveryServices';
 import SearchableSelect from '../components/SearchableSelect';
 import CameraCapture from '../components/CameraCapture';
 import ProductImage from '../components/ProductImage';
@@ -70,6 +70,7 @@ export default function CheckoutPage() {
   
   // Available delivery carriers (from env-configured list)
   const carriers = getEnabledCarriers();
+  const defaultCarrier = carriers.length > 0 ? carriers[0].id : '';
   if (!carriers.some(c => c.id === selectedCarrier) && carriers.length > 0) {
     setSelectedCarrier(carriers[0].id);
   }

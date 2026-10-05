@@ -53,20 +53,11 @@
 ## Current State
 
 - **Git branch:** main
-- **Latest commit:** `9a20bbd` — feat: delivery carrier selection in checkout with env-controlled enable/disable
-- **Total commits ahead of origin/main:** 10
+- **Latest commit:** `5d61cdc` — fix: 6 migration correctness fixes
+- **Total commits ahead of origin/main:** 8
 - **Working tree:** clean
 - **Client status:** Not yet shown anything
 - **Demo status:** Not scheduled
-
-## Recent Commits (Since Delivery Prep Started)
-
-| Commit | Description |
-|---|---|
-| `9a20bbd` | feat: delivery carrier selection UI + env config for Lalamove/Viettel Post/VNPost |
-| `25b74d8` | fix: camera race condition + delivery services abstraction layer |
-| `5d61cdc` | fix: 6 migration correctness fixes (PG compat, idempotency) |
-| `9a90849` | docs: delivery package preparation — README, quickstart, deployment guides, etc. |
 
 ## Open Decisions
 
@@ -75,66 +66,6 @@
 | Standard shipping fee | 30,000 VND with configurable freeship mechanism | Client | 2026-10-02 |
 | Promo code canonical case | Normalize to uppercase on write, compare case-insensitively on read | Dev | 2026-10-02 |
 | Free shipping threshold | No threshold; only all-subscription orders ship free | Client (default) | 2026-10-02 |
-
----
-
-## Notes for Later (Don't Forget)
-
-### Delivery fees — update when contracts are signed
-
-Default shipping rates in `src/data/deliveryServices.ts` are placeholders:
-
-```
-Lalamove = 35,000 VND  (urban same-day, 2-4 hours)
-Viettel Post = 25,000 VND  (nationwide, 2-4 days)
-VNPost = 18,000 VND  (cheapest, 3-5 days)
-```
-
-After signing contracts, change these three numbers to your actual contract rates. In production, replace them with live API calls that calculate prices based on distance and package size.
-
-### Enable/disable carriers without code changes
-
-Three lines in `.env` control which carriers appear at checkout:
-
-```
-VITE_ENABLE_LALAMOVE=true
-VITE_ENABLE_VIETTEL_POST=true
-VITE_ENABLE_VNPOST=true
-```
-
-Set any to `false` and that carrier disappears from checkout. No code editing needed.
-
----
-
-## How to Browse and See Results
-
-To see the camera fix and delivery carrier selection in action:
-
-**Step 1:** Start the dev server
-```bash
-npm run dev
-```
-
-**Step 2:** Open in browser
-```
-http://localhost:5173/Consumer-Loyalty-Program-Web-Application/
-```
-
-**Step 3 — Test camera fix:**
-- Go to the Cart page or Loyalty page
-- Tap the camera icon next to the promo code input
-- Grant camera permission when prompted
-- Video should play immediately (no blank screen)
-- Tap "Chụp" to capture
-- The scanned code auto-applies
-
-**Step 4 — Test carrier selection:**
-- Add products to cart
-- Go to Checkout page
-- Scroll to "Phương thức giao hàng" section
-- You should see three selectable cards: Lalamove, Viettel Post, VNPost
-- Click different carriers — the shipping fee in the order summary updates
-- All-subscription carts show "Miễn phí" for all carriers
 
 ---
 
