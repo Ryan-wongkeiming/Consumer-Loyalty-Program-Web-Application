@@ -30,13 +30,13 @@ jobs:
 
       - name: Create .env from secrets (fallback to committed public config)
         run: |
-          # Prefer repo secrets when set; otherwise fall back to the
-          # committed public config (.env.production). The anon key is
-          # public by design — RLS protects the data.
+          # Start from the committed public config (includes carrier flags).
           cp .env.production .env
+          # If repo secrets are set, override ONLY the Supabase values,
+          # preserving the carrier enable flags from .env.production.
           if [ -n "${{ secrets.VITE_SUPABASE_URL }}" ]; then
-            echo "VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}" > .env
-            echo "VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}" >> .env
+            sed -i "s|^VITE_SUPABASE_URL=.*|VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}|" .env
+            sed -i "s|^VITE_SUPABASE_ANON_KEY=.*|VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}|" .env
           fi
           echo "Using VITE_SUPABASE_URL=$VITE_SUPABASE_URL" >/dev/null 2>&1 || true
 
