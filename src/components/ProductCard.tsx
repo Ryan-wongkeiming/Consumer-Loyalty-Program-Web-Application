@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, ShoppingCart } from 'lucide-react';
+import { Star, ShoppingCart, Heart } from 'lucide-react';
 import { Product } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { formatPrice } from '../data/pricing';
