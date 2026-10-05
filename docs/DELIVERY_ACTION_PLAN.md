@@ -53,11 +53,20 @@
 ## Current State
 
 - **Git branch:** main
-- **Latest commit:** `5d61cdc` — fix: 6 migration correctness fixes
-- **Total commits ahead of origin/main:** 8
+- **Latest commit:** `9a20bbd` — feat: delivery carrier selection in checkout with env-controlled enable/disable
+- **Total commits ahead of origin/main:** 10
 - **Working tree:** clean
 - **Client status:** Not yet shown anything
 - **Demo status:** Not scheduled
+
+## Recent Commits (Since Delivery Prep Started)
+
+| Commit | Description |
+|---|---|
+| `9a20bbd` | feat: delivery carrier selection UI + env config for Lalamove/Viettel Post/VNPost |
+| `25b74d8` | fix: camera race condition + delivery services abstraction layer |
+| `5d61cdc` | fix: 6 migration correctness fixes (PG compat, idempotency) |
+| `9a90849` | docs: delivery package preparation — README, quickstart, deployment guides, etc. |
 
 ## Open Decisions
 
