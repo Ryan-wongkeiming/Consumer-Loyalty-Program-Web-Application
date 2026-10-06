@@ -11,6 +11,7 @@ import { getEnabledCarriers, getShippingFee, isFreeShipping } from '../data/deli
 import SearchableSelect from '../components/SearchableSelect';
 import CameraCapture from '../components/CameraCapture';
 import ProductImage from '../components/ProductImage';
+import AuthModal from '../components/AuthModal';
 
 const ThankYouScreen: React.FC = () => {
   return (
@@ -67,6 +68,7 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'vietqr'>('cod');
   const [selectedCarrier, setSelectedCarrier] = useState<string>('lalamove');
   const [vietqrUrl, setVietqrUrl] = useState<string | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   
   // Available delivery carriers (from env-configured list)
   const carriers = getEnabledCarriers();
@@ -212,8 +214,7 @@ export default function CheckoutPage() {
     // Block checkout if cart has subscription items and user is not logged in
     const hasSubscriptionItems = state.items.some(item => item.isSubscription);
     if (hasSubscriptionItems && !user) {
-      dispatch({ type: 'TOGGLE_CART' }); // Close cart/checkout overlay
-      navigate('/'); // Redirect to home so auth modal can open
+      setShowAuthModal(true);
       setErrors({ general: 'Vui lòng đăng nhập để đặt hàng có sản phẩm đăng ký.' });
       return;
     }
@@ -816,6 +817,15 @@ export default function CheckoutPage() {
         <CameraCapture
           onCodeDetected={handleCameraCapture}
           onClose={() => setShowCamera(false)}
+        />
+      )}
+
+      {/* Auth Modal for subscription checkout */}
+      {showAuthModal && (
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          initialMode="signin"
         />
       )}
     </div>
