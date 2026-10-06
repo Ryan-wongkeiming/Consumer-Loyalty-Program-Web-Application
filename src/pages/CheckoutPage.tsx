@@ -53,7 +53,6 @@ const ThankYouScreen: React.FC<{ carrierName?: string; estimatedDays?: string }>
 export default function CheckoutPage() {
   const { state, dispatch } = useCart();
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
