@@ -175,7 +175,7 @@ const CookiesPage: React.FC = () => {
                   <div className="mt-4 space-y-2 text-gray-700">
                     <p><strong>Email:</strong> info@carehub.com</p>
                     <p><strong>Phone:</strong> 1800 803 760</p>
-                    <p><strong>Địa chỉ:</strong> 20 Jubilee Ave, Warriewood NSW 2102, Australia</p>
+                    <p><strong>Địa chỉ:</strong> 109 Chapel St, Kingsgrove, NSW 2208, Australia</p>
                   </div>
                 </div>
               </section>
