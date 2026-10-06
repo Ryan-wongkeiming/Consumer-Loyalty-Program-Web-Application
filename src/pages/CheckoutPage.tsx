@@ -698,16 +698,6 @@ export default function CheckoutPage() {
                   </button>
                 </div>
 
-                {paymentMethod === 'vietqr' && vietqrUrl && (
-                  <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
-                    <p className="text-sm text-gray-800 mb-2">Quét mã QR bằng ứng dụng ngân hàng của bạn:</p>
-                    <a href={vietqrUrl} target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 bg-carehub-teal text-white rounded-lg hover:bg-carehub-teal-dark transition-colors">
-                      Mở liên kết thanh toán
-                    </a>
-                    <p className="text-xs text-gray-500 mt-2">Bạn sẽ được chuyển đến trang thanh toán của ngân hàng</p>
-                  </div>
-                )}
-
                 <div className="mt-4 p-3 bg-blue-50 rounded-lg">
                   <p className="text-xs sm:text-sm text-blue-800">
                     <strong>Lưu ý:</strong> Vui lòng kiểm tra kỹ sản phẩm trước khi thanh toán cho shipper.
