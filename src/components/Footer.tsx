@@ -67,8 +67,8 @@ const Footer: React.FC = () => {
               <div className="flex items-start space-x-2">
                 <MapPin className="w-4 h-4 text-carehub-teal mt-1" />
                 <span className="text-gray-300">
-                  20 Jubilee Ave<br />
-                  Warriewood NSW 2102
+                  109 Chapel St<br />
+                  Kingsgrove NSW 2208
                 </span>
               </div>
             </div>
