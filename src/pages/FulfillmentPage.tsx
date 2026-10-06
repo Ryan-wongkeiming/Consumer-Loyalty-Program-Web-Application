@@ -6,6 +6,7 @@ import {
   AlertCircle, User, MapPin, Phone, Mail, Shield
 } from 'lucide-react';
 import { getOrders, getOrderDetails, updateOrderStatus, addTrackingNumber, exportOrdersToCSV } from '../lib/orders';
+import { sendZnsNotification } from '../lib/zalo';
 import type { Order, OrderDetail } from '../lib/orders';
 
 type TabKey = 'all' | 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'vietqr';
@@ -140,6 +141,22 @@ const FulfillmentPage: React.FC = () => {
       }
       setStatusNotes('');
       loadOrders();
+
+      // Z2: auto-send ZNS notification on meaningful status transitions
+      const znsTemplate = {
+        confirmed: 'order_confirmed',
+        processing: 'order_confirmed',
+        shipped: 'order_shipped',
+        delivered: 'order_delivered',
+      }[newStatus] as 'order_confirmed' | 'order_shipped' | 'order_delivered' | undefined;
+
+      if (znsTemplate) {
+        await sendZnsNotification({
+          orderId: selectedOrder.id,
+          templateType: znsTemplate,
+          phone: selectedOrder.phone,
+        });
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Không thể cập nhật trạng thái';
       console.error('Error updating status:', err);
@@ -163,6 +180,13 @@ const FulfillmentPage: React.FC = () => {
       setCarrierName(updated.carrier_name || '');
       setNewStatus('shipped');
       loadOrders();
+
+      // Z2: notify customer when a tracking number is assigned (order shipped)
+      await sendZnsNotification({
+        orderId: selectedOrder.id,
+        templateType: 'order_shipped',
+        phone: selectedOrder.phone,
+      });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Không thể thêm mã vận đơn';
       console.error('Error adding tracking:', err);

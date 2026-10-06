@@ -39,6 +39,7 @@ const LoyaltyPage = lazy(() => import('./pages/LoyaltyPage'));
 const RedeemConfirmationPage = lazy(() => import('./pages/RedeemConfirmationPage'));
 const StaffDashboardPage = lazy(() => import('./pages/StaffDashboardPage'));
 const FulfillmentPage = lazy(() => import('./pages/FulfillmentPage'));
+const ZaloAuthCallbackPage = lazy(() => import('./pages/ZaloAuthCallbackPage'));
 import ProtectedRoute from './components/ProtectedRoute';
 import RouteErrorBoundary from './components/RouteErrorBoundary';
 
@@ -108,6 +109,7 @@ function App() {
                   <Route path="/loyalty/redeem/:giftId" element={<RouteErrorBoundary><RedeemConfirmationPage /></RouteErrorBoundary>} />
                   <Route path="/staff" element={<ProtectedRoute requiredRole="staff"><RouteErrorBoundary><StaffDashboardPage /></RouteErrorBoundary></ProtectedRoute>} />
                   <Route path="/fulfillment" element={<ProtectedRoute requiredRole="staff"><RouteErrorBoundary><FulfillmentPage /></RouteErrorBoundary></ProtectedRoute>} />
+                  <Route path="/auth/callback/zalo" element={<RouteErrorBoundary><ZaloAuthCallbackPage /></RouteErrorBoundary>} />
                 </Routes>
               </Suspense>
             </main>

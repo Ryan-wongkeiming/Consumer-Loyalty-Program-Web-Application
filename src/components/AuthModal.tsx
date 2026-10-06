@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Mail, Lock, User, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { ZALO_ENABLED, startZaloLogin } from '../lib/zalo';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -261,6 +262,24 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 's
                 )}
               </button>
             </form>
+
+            {ZALO_ENABLED && (
+              <div className="mt-4">
+                <div className="relative flex items-center mb-4">
+                  <div className="flex-grow border-t border-gray-200"></div>
+                  <span className="mx-4 text-xs text-gray-500">hoặc</span>
+                  <div className="flex-grow border-t border-gray-200"></div>
+                </div>
+                <button
+                  type="button"
+                  onClick={startZaloLogin}
+                  className="w-full flex items-center justify-center py-2.5 px-4 bg-[#0068FF] text-white rounded-lg hover:bg-[#0057d6] transition-colors font-medium"
+                >
+                  <span className="w-5 h-5 mr-2 flex items-center justify-center bg-white rounded-full text-[#0068FF] text-xs font-bold">Z</span>
+                  Đăng nhập bằng Zalo
+                </button>
+              </div>
+            )}
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
