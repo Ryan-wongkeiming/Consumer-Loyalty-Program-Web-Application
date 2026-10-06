@@ -12,6 +12,7 @@ import SearchableSelect from '../components/SearchableSelect';
 import CameraCapture from '../components/CameraCapture';
 import ProductImage from '../components/ProductImage';
 import AuthModal from '../components/AuthModal';
+import VietQRPaymentScreen from '../components/VietQRPaymentScreen';
 
 const ThankYouScreen: React.FC<{ carrierName?: string; estimatedDays?: string }> = ({ carrierName, estimatedDays }) => {
   return (
@@ -72,8 +73,18 @@ export default function CheckoutPage() {
   const [showCamera, setShowCamera] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'vietqr'>('cod');
   const [selectedCarrier, setSelectedCarrier] = useState<string>('lalamove');
-  const [vietqrUrl, setVietqrUrl] = useState<string | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  
+  // VietQR payment screen state
+  const [vietqrData, setVietqrData] = useState<{
+    orderId: string;
+    amount: number;
+    bankCode: string;
+    accountNumber: string;
+    accountName: string;
+    description: string;
+    note?: string;
+  } | null>(null);
   
   // Available delivery carriers (from env-configured list)
   const carriers = getEnabledCarriers();
@@ -266,8 +277,10 @@ export default function CheckoutPage() {
       }
 
       // Order placed successfully
+      setIsSubmitting(false);
+
       if (paymentMethod === 'vietqr' && orderResult) {
-        // Generate VietQR payment URL
+        // Generate VietQR payment URL and show payment screen
         const { data: vietqrData, error: vietqrError } = await supabase.rpc('generate_vietqr_payment_url', {
           p_order_id: orderResult.order_id,
           p_amount: orderResult.total,
@@ -275,22 +288,24 @@ export default function CheckoutPage() {
 
         if (!vietqrError && vietqrData) {
           try {
-            const parsedUrl = typeof vietqrData === 'string' ? JSON.parse(vietqrData) : vietqrData;
-            setVietqrUrl(parsedUrl.payment_url || parsedUrl.qr_code_url || '#');
+            const parsed = typeof vietqrData === 'string' ? JSON.parse(vietqrData) : vietqrData;
+            setVietqrData({
+              orderId: orderResult.order_id,
+              amount: parsed.amount || orderResult.total,
+              bankCode: parsed.bank_code || 'VBBANK',
+              accountNumber: parsed.account_number || '',
+              accountName: parsed.account_name || '',
+              description: parsed.description || '',
+              note: parsed.note,
+            });
           } catch {
-            setVietqrUrl('#');
+            console.error('Failed to parse VietQR data');
           }
         }
+      } else {
+        // COD — show thank you immediately
+        setShowThankYou(true);
       }
-
-      setShowThankYou(true);
-      setIsSubmitting(false);
-      
-      // Auto redirect after 4 seconds
-      setTimeout(() => {
-        dispatch({ type: 'CLEAR_CART' });
-        navigate('/');
-      }, 4000);
 
     } catch (error) {
       console.error('Unexpected error during checkout:', error);
@@ -313,6 +328,25 @@ export default function CheckoutPage() {
           </Link>
         </div>
       </div>
+    );
+  }
+
+  // Show VietQR payment screen if order placed with VietQR
+  if (vietqrData) {
+    return (
+      <VietQRPaymentScreen
+        orderId={vietqrData.orderId}
+        amount={vietqrData.amount}
+        bankCode={vietqrData.bankCode}
+        accountNumber={vietqrData.accountNumber}
+        accountName={vietqrData.accountName}
+        description={vietqrData.description}
+        note={vietqrData.note}
+        onConfirm={() => {
+          dispatch({ type: 'CLEAR_CART' });
+          setShowThankYou(true);
+        }}
+      />
     );
   }
 
