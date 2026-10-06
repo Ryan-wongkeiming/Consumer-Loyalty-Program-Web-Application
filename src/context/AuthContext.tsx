@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabaseClient';
 import { getUserProfile, UserProfile } from '../lib/auth';
@@ -45,77 +45,74 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [role, setRole] = useState<'customer' | 'staff' | 'admin'>('customer');
   const [loading, setLoading] = useState(true);
 
+  // Refs to hold latest callback values — avoids recreating effects
+  const profileRef = useRef<(userId: string) => void>(() => {});
+  const roleRef = useRef<() => void>(() => {});
+
+  // Set up initial defaults
+  profileRef.current = async (userId: string) => {
+    try {
+      const userProfile = await getUserProfile(userId);
+      setProfile(userProfile);
+    } catch (error) {
+      console.error('Error refreshing profile:', error);
+    }
+  };
+
+  roleRef.current = async () => {
+    try {
+      const newRole = await fetchUserRole();
+      setRole(newRole);
+    } catch {
+      setRole('customer');
+    }
+  };
+
+  // Stable refresh functions that always use the latest refs
   const refreshProfile = useCallback(async () => {
     if (user) {
-      try {
-        const userProfile = await getUserProfile(user.id);
-        setProfile(userProfile);
-      } catch (error) {
-        console.error('Error refreshing profile:', error);
-      }
+      profileRef.current(user.id);
     } else {
       setProfile(null);
     }
   }, [user]);
 
-  // Refresh role when user changes
-  const refreshRole = useCallback(async () => {
-    if (user) {
-      const newRole = await fetchUserRole();
-      setRole(newRole);
-    } else {
-      setRole('customer');
-    }
-  }, [user]);
-
+  // Single effect: runs ONCE — no callback deps, avoids re-render loops
   useEffect(() => {
-    // Get initial session
-    const getInitialSession = async () => {
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error('Error getting session:', error);
-        } else {
-          setSession(session);
-          setUser(session?.user ?? null);
-          
-          if (session?.user) {
-            await refreshProfile();
-            await refreshRole();
-          }
-        }
-      } catch (error) {
-        console.error('Error in getInitialSession:', error);
-      } finally {
-        setLoading(false);
+    let cancelled = false;
+
+    const applyAuthState = async (sess: Session | null) => {
+      setSession(sess);
+      setUser(sess?.user ?? null);
+
+      if (sess?.user) {
+        await profileRef.current(sess.user.id);
+        await roleRef.current();
+      } else {
+        setProfile(null);
+        setRole('customer');
       }
+
+      if (!cancelled) setLoading(false);
     };
 
-    getInitialSession();
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session: initialSession } }) => {
+      if (!cancelled) applyAuthState(initialSession);
+    });
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          await refreshProfile();
-          await refreshRole();
-        } else {
-          setProfile(null);
-          setRole('customer');
-        }
-        
-        setLoading(false);
+      (_event, sess) => {
+        if (!cancelled) applyAuthState(sess);
       }
     );
 
     return () => {
+      cancelled = true;
       subscription.unsubscribe();
     };
-  }, [refreshProfile, refreshRole]);
+  }, []); // Runs ONCE — no callback deps
 
   const signUp = async (email: string, password: string, fullName?: string) => {
     setLoading(true);
@@ -124,24 +121,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         email,
         password,
         options: {
-          data: {
-            full_name: fullName,
-          },
+          data: { full_name: fullName },
         },
       });
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
-      // Handle both confirmed and unconfirmed email scenarios
       if (data.user && data.session) {
-        setUser(data.user);
         setSession(data.session);
-        await refreshProfile();
-        await refreshRole();
-      } else if (data.user && !data.session) {
-        // Email confirmation is enabled - user needs to confirm email
+        setUser(data.user);
+        await profileRef.current(data.user.id);
+        await roleRef.current();
       }
     } catch (error) {
       console.error('Sign up error:', error);
@@ -154,19 +144,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const signIn = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
       setUser(data.user);
       setSession(data.session);
-      await refreshProfile();
-      await refreshRole();
+      await profileRef.current(data.user.id);
+      await roleRef.current();
     } catch (error) {
       console.error('Sign in error:', error);
       throw error;
@@ -179,11 +164,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setLoading(true);
     try {
       const { error } = await supabase.auth.signOut();
-      
-      if (error) {
-        throw error;
-      }
-
+      if (error) throw error;
       setUser(null);
       setProfile(null);
       setSession(null);
