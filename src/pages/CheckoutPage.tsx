@@ -7,7 +7,7 @@ import { supabase } from '../lib/supabaseClient';
 import { validatePromoCode } from '../data/promoCodes';
 import { getCartSubtotal, getCartSavings, getUnitPrice, getSubscriptionRate, formatPrice, STANDARD_SHIPPING_FEE } from '../data/pricing';
 import { getAllProvinces, getWardsByProvince, Province, Ward } from '../utils/locationData';
-import { getEnabledCarriers, getShippingFee, isFreeShipping } from '../data/deliveryServices';
+import { getEnabledCarriers, getShippingFee, isFreeShipping, getCarrierById } from '../data/deliveryServices';
 import SearchableSelect from '../components/SearchableSelect';
 import CameraCapture from '../components/CameraCapture';
 import ProductImage from '../components/ProductImage';
