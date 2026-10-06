@@ -13,7 +13,7 @@ import CameraCapture from '../components/CameraCapture';
 import ProductImage from '../components/ProductImage';
 import AuthModal from '../components/AuthModal';
 
-const ThankYouScreen: React.FC = () => {
+const ThankYouScreen: React.FC<{ carrierName?: string; estimatedDays?: string }> = ({ carrierName, estimatedDays }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
@@ -31,7 +31,12 @@ const ThankYouScreen: React.FC = () => {
         
         <div className="bg-gray-50 rounded-lg p-4 mb-6">
           <p className="text-sm text-gray-600 mb-2">
-            <strong>Thời gian giao hàng:</strong> 3-5 ngày làm việc
+            <strong>Nhà vận chuyển:</strong>{' '}
+            {carrierName || 'Giao hàng tiêu chuẩn'}
+          </p>
+          <p className="text-sm text-gray-600">
+            <strong>Thời gian dự kiến:</strong>{' '}
+            {estimatedDays || '3-5 ngày làm việc'}
           </p>
         </div>
         
@@ -312,8 +317,9 @@ export default function CheckoutPage() {
   }
 
   // Show Thank You screen if order is completed
+  const selectedCarrierInfo = getCarrierById(selectedCarrier);
   if (showThankYou) {
-    return <ThankYouScreen />;
+    return <ThankYouScreen carrierName={selectedCarrierInfo?.name} estimatedDays={selectedCarrierInfo?.estimatedDays} />;
   }
 
   return (

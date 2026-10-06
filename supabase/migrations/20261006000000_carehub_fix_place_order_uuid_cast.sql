@@ -1,15 +1,6 @@
 -- ============================================================
--- CareHub place_order RPC — atomic order creation
--- 2026-10-02
--- ============================================================
--- The client sends product ids, quantities, subscription flags,
--- delivery frequencies, shipping address, and an optional promo
--- code.  It does NOT send prices.  This function loads prices
--- from products, recomputes totals, validates the promo
--- (percent math, min-order on pre-discount subtotal, brand list,
--- usage limits), and writes orders / order_items /
--- promo_code_usages / subscriptions in one transaction.
--- Either everything commits or nothing does.
+-- Fix place_order RPC: products.id is TEXT, not UUID
+-- 2026-10-06
 -- ============================================================
 
 DROP FUNCTION IF EXISTS public.place_order(
@@ -82,7 +73,7 @@ BEGIN
     -- Store computed prices in a temp table for later use
     CREATE TEMP TABLE IF NOT EXISTS _order_items_calc (
         idx INTEGER PRIMARY KEY,
-        product_id TEXT,
+        product_id TEXT,         -- FIXED: was UUID, products.id is TEXT
         quantity INTEGER,
         is_subscription BOOLEAN,
         delivery_frequency TEXT,
@@ -96,6 +87,7 @@ BEGIN
         v_idx := v_idx + 1;
 
         -- Load product from database (never trust client prices)
+        -- FIXED: removed ::UUID cast, products.id is TEXT
         SELECT * INTO v_product
         FROM products
         WHERE id = v_item->>'product_id'
@@ -153,7 +145,7 @@ BEGIN
         v_line_total := v_unit_price * (v_item->>'quantity')::INTEGER;
         v_subtotal := v_subtotal + v_line_total;
 
-        -- Store computed values
+        -- Store computed values — FIXED: no longer casting to UUID
         INSERT INTO _order_items_calc (idx, product_id, quantity, is_subscription,
                                         delivery_frequency, bundle_tier, unit_price, line_total)
         VALUES (v_idx, v_item->>'product_id',
@@ -307,7 +299,7 @@ BEGIN
                 END IF;
             END IF;
 
-            -- Insert subscription item
+            -- Insert subscription item — FIXED: no longer casting to UUID
             INSERT INTO subscription_items (subscription_id, product_id, quantity,
                                              is_subscription, delivery_frequency, bundle_tier)
             VALUES (COALESCE(v_sub_id, v_first_sub_id),
