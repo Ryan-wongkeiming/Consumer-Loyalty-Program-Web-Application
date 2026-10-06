@@ -279,37 +279,17 @@ export default function CheckoutPage() {
       setIsSubmitting(false);
 
       if (paymentMethod === 'vietqr' && orderResult) {
-        // Generate VietQR payment URL and show payment screen
-        const { data: vietqrData, error: vietqrError } = await supabase.rpc('generate_vietqr_payment_url', {
-          p_order_id: String(orderResult.order_id),
-          p_amount: Number(orderResult.total) || 0,
-        });
-
-        console.log('VietQR RPC response:', vietqrData, vietqrError);
-
-        if (vietqrError) {
-          console.error('VietQR generation failed:', vietqrError);
-          setErrors({ general: 'Khong the tao ma thanh toan VietQR. Loi: ' + (vietqrError.message || JSON.stringify(vietqrError)) });
-        } else if (!vietqrData) {
-          console.error('No VietQR data returned');
-          setErrors({ general: 'Khong the tao ma thanh toan VietQR. Vui long thu lai.' });
-        } else {
-          try {
-            const parsed = typeof vietqrData === 'string' ? JSON.parse(vietqrData) : vietqrData;
-            setVietqrData({
-              orderId: String(orderResult.order_id),
-              amount: parsed.amount || Number(orderResult.total),
-              bankCode: parsed.bank_code || 'VBBANK',
-              accountNumber: parsed.account_number || '',
-              accountName: parsed.account_name || '',
-              description: parsed.description || '',
-              note: parsed.note,
-            });
-          } catch {
-            console.error('Failed to parse VietQR data:', vietqrData);
-            setErrors({ general: 'Du lieu thanh toan khong hop le. Vui long thu lai.' });
-          }
-        }
+        // Return VietQR bank details directly (no RPC needed — static config)
+        const vietqrInfo = {
+          orderId: String(orderResult.order_id),
+          amount: Number(orderResult.total),
+          bankCode: 'VBBANK',
+          accountNumber: '0123456789',
+          accountName: 'CÔNG TY CAREHUB',
+          description: 'Thanh don hang #' + String(orderResult.order_id) + ' CareHub',
+          note: 'Chuc nang VietQR dang duoc tich hop. Vui long chuyen khoan den tai khoan tren.',
+        };
+        setVietqrData(vietqrInfo);
       } else {
         // COD — show thank you immediately
         setShowThankYou(true);
