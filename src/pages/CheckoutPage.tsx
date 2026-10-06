@@ -285,7 +285,13 @@ export default function CheckoutPage() {
           p_amount: orderResult.total,
         });
 
-        if (!vietqrError && vietqrData) {
+        if (vietqrError) {
+          console.error('VietQR generation failed:', vietqrError);
+          setErrors({ general: 'Không thể tạo mã thanh toán VietQR. Vui lòng thử lại hoặc chọn phương thức khác.' });
+        } else if (!vietqrData) {
+          console.error('No VietQR data returned');
+          setErrors({ general: 'Không thể tạo mã thanh toán VietQR. Vui lòng thử lại.' });
+        } else {
           try {
             const parsed = typeof vietqrData === 'string' ? JSON.parse(vietqrData) : vietqrData;
             setVietqrData({
@@ -299,6 +305,7 @@ export default function CheckoutPage() {
             });
           } catch {
             console.error('Failed to parse VietQR data');
+            setErrors({ general: 'Dữ liệu thanh toán không hợp lệ. Vui lòng thử lại.' });
           }
         }
       } else {
