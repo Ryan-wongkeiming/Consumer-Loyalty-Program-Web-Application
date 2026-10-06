@@ -279,9 +279,7 @@ export default function CheckoutPage() {
       setIsSubmitting(false);
 
       if (paymentMethod === 'vietqr' && orderResult) {
-        console.log('Order result for VietQR:', orderResult);
-        console.log('Total value:', orderResult.total, typeof orderResult.total);
-        
+        // Generate VietQR payment URL and show payment screen
         const { data: vietqrData, error: vietqrError } = await supabase.rpc('generate_vietqr_payment_url', {
           p_order_id: String(orderResult.order_id),
           p_amount: Number(orderResult.total) || 0,
