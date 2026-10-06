@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, User, CreditCard, Truck, CheckCircle, Tag, AlertCircle, Check, Camera } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -15,6 +15,18 @@ import AuthModal from '../components/AuthModal';
 import VietQRPaymentScreen from '../components/VietQRPaymentScreen';
 
 const ThankYouScreen: React.FC<{ carrierName?: string; estimatedDays?: string }> = ({ carrierName, estimatedDays }) => {
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    // Auto-clear cart and redirect after 4 seconds
+    const timer = setTimeout(() => {
+      dispatch({ type: 'CLEAR_CART' });
+      navigate('/');
+    }, 4000);
+    
+    return () => clearTimeout(timer);
+  }, [dispatch, navigate]);
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
