@@ -38,6 +38,7 @@ const AddressesPage = lazy(() => import('./pages/AddressesPage'));
 const LoyaltyPage = lazy(() => import('./pages/LoyaltyPage'));
 const RedeemConfirmationPage = lazy(() => import('./pages/RedeemConfirmationPage'));
 const StaffDashboardPage = lazy(() => import('./pages/StaffDashboardPage'));
+const FulfillmentPage = lazy(() => import('./pages/FulfillmentPage'));
 import RouteErrorBoundary from './components/RouteErrorBoundary';
 
 // Component to handle scroll to top on route changes.
@@ -105,6 +106,7 @@ function App() {
                   <Route path="/loyalty" element={<RouteErrorBoundary><LoyaltyPage /></RouteErrorBoundary>} />
                   <Route path="/loyalty/redeem/:giftId" element={<RouteErrorBoundary><RedeemConfirmationPage /></RouteErrorBoundary>} />
                   <Route path="/staff" element={<RouteErrorBoundary><StaffDashboardPage /></RouteErrorBoundary>} />
+                  <Route path="/fulfillment" element={<RouteErrorBoundary><FulfillmentPage /></RouteErrorBoundary>} />
                 </Routes>
               </Suspense>
             </main>

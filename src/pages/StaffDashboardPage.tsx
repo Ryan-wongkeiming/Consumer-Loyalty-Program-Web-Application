@@ -143,7 +143,16 @@ const StaffDashboardPage: React.FC = () => {
             <ArrowLeft className="w-5 h-5 mr-2" />
             Quay lại trang chủ
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">Bảng điều khiển nhân viên</h1>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <h1 className="text-2xl font-bold text-gray-900">Bảng điều khiển nhân viên</h1>
+            <Link
+              to="/fulfillment"
+              className="inline-flex items-center px-4 py-2 bg-white border-2 border-carehub-teal text-carehub-teal rounded-lg font-semibold text-sm hover:bg-carehub-teal hover:text-white transition-all"
+            >
+              <Package className="w-4 h-4 mr-2" />
+              Xử lý đơn hàng
+            </Link>
+          </div>
           <p className="text-gray-600 mt-1">Theo dõi đơn hàng, yêu cầu mẫu, đổi quà và lịch giao hàng.</p>
         </div>
       </div>
