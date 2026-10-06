@@ -24,7 +24,7 @@ export interface OrderItem {
   price_at_purchase: number;
   is_subscription: boolean;
   delivery_frequency?: string;
-  bundle_tier?: any;
+  bundle_tier?: Record<string, unknown>;
 }
 
 export interface OrderDetail {

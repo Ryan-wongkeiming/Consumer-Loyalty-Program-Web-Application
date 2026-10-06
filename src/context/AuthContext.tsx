@@ -30,7 +30,7 @@ interface AuthProviderProps {
 }
 
 // Fetch current user role from database
-async function fetchUserRole(userId: string): Promise<'customer' | 'staff' | 'admin'> {
+async function fetchUserRole(): Promise<'customer' | 'staff' | 'admin'> {
   try {
     const { data, error } = await supabase.rpc('get_current_user_role', {});
     if (!error && data) return data as 'customer' | 'staff' | 'admin';
@@ -61,7 +61,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Refresh role when user changes
   const refreshRole = useCallback(async () => {
     if (user) {
-      const newRole = await fetchUserRole(user.id);
+      const newRole = await fetchUserRole();
       setRole(newRole);
     } else {
       setRole('customer');

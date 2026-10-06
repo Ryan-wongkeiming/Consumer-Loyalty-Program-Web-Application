@@ -5,13 +5,11 @@ import { useAuth } from '../context/AuthContext';
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requiredRole?: 'staff' | 'admin' | 'any';
-  fallbackPath?: string;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requiredRole = 'any',
-  fallbackPath = '/',
 }) => {
   const { user, role, loading } = useAuth();
   const location = useLocation();

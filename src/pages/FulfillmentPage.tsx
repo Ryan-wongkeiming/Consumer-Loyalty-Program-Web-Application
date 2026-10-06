@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowLeft, Package, Search, Filter, Download, X, CheckCircle,
+  ArrowLeft, Package, Search, Download, X, CheckCircle,
   Clock, Truck, ChevronLeft, ChevronRight, Eye, Edit3, Tag,
-  AlertCircle, CreditCard, User, MapPin, Phone, Mail, Shield
+  AlertCircle, User, MapPin, Phone, Mail, Shield
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
 import { getOrders, getOrderDetails, updateOrderStatus, addTrackingNumber, exportOrdersToCSV } from '../lib/orders';
 import type { Order, OrderDetail } from '../lib/orders';
 
@@ -26,13 +25,6 @@ const STATUS_TEXT: Record<string, string> = {
   shipped: 'Đã giao hàng',
   delivered: 'Đã giao thành công',
 };
-
-// Generate tracking number
-function generateTrackingNumber(carrierId: string, orderId: string): string {
-  const prefix = carrierId === 'lalamove' ? 'LM' : carrierId === 'viettel' ? 'VT' : 'VN';
-  const shortId = orderId.slice(-6).toUpperCase();
-  return `${prefix}-${shortId}`;
-}
 
 // Format price
 function formatPrice(amount: number): string {
@@ -59,7 +51,6 @@ function getStatusIcon(status: string) {
 const PAGE_SIZE = 20;
 
 const FulfillmentPage: React.FC = () => {
-  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<TabKey>('all');
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
@@ -79,7 +70,6 @@ const FulfillmentPage: React.FC = () => {
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
 
   const loadOrders = useCallback(async () => {
     setLoading(true);
@@ -105,11 +95,11 @@ const FulfillmentPage: React.FC = () => {
       }
       
       setOrders(filtered);
-      setTotalCount(data.length);
       setTotalPages(Math.ceil(data.length / PAGE_SIZE));
-    } catch (err: any) {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Không thể tải danh sách đơn hàng';
       console.error('Error loading orders:', err);
-      setError(err.message || 'Không thể tải danh sách đơn hàng');
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -131,9 +121,10 @@ const FulfillmentPage: React.FC = () => {
       setStatusNotes('');
       setTrackingNumber(detail.order.tracking_number || '');
       setCarrierName(detail.order.carrier_name || '');
-    } catch (err: any) {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Không thể tải chi tiết đơn hàng';
       console.error('Error loading order details:', err);
-      setError(err.message || 'Không thể tải chi tiết đơn hàng');
+      setError(message);
     }
   };
 
@@ -149,9 +140,10 @@ const FulfillmentPage: React.FC = () => {
       }
       setStatusNotes('');
       loadOrders();
-    } catch (err: any) {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Không thể cập nhật trạng thái';
       console.error('Error updating status:', err);
-      setError(err.message || 'Không thể cập nhật trạng thái');
+      setError(message);
     } finally {
       setUpdating(false);
     }
@@ -171,9 +163,10 @@ const FulfillmentPage: React.FC = () => {
       setCarrierName(updated.carrier_name || '');
       setNewStatus('shipped');
       loadOrders();
-    } catch (err: any) {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Không thể thêm mã vận đơn';
       console.error('Error adding tracking:', err);
-      setError(err.message || 'Không thể thêm mã vận đơn');
+      setError(message);
     } finally {
       setUpdating(false);
     }
