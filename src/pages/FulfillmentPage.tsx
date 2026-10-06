@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   ArrowLeft, Package, Search, Filter, Download, X, CheckCircle,
   Clock, Truck, ChevronLeft, ChevronRight, Eye, Edit3, Tag,
-  AlertCircle, CreditCard, User, MapPin, Phone, Mail
+  AlertCircle, CreditCard, User, MapPin, Phone, Mail, Shield
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getOrders, getOrderDetails, updateOrderStatus, addTrackingNumber, exportOrdersToCSV } from '../lib/orders';
@@ -218,7 +218,13 @@ const FulfillmentPage: React.FC = () => {
             <ArrowLeft className="w-5 h-5 mr-2" />
             Quay lại bảng điều khiển
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">Xử lý đơn hàng</h1>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <h1 className="text-2xl font-bold text-gray-900">Xử lý đơn hàng</h1>
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-carehub-teal/10 text-carehub-teal">
+              <Shield className="w-3 h-3 mr-1" />
+              Khu vực nhân viên
+            </span>
+          </div>
           <p className="text-gray-600 mt-1">Theo dõi, cập nhật trạng thái và xuất đơn hàng cho đội ngũ giao nhận.</p>
         </div>
       </div>

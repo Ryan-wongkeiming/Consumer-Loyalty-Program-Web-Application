@@ -39,6 +39,7 @@ const LoyaltyPage = lazy(() => import('./pages/LoyaltyPage'));
 const RedeemConfirmationPage = lazy(() => import('./pages/RedeemConfirmationPage'));
 const StaffDashboardPage = lazy(() => import('./pages/StaffDashboardPage'));
 const FulfillmentPage = lazy(() => import('./pages/FulfillmentPage'));
+import ProtectedRoute from './components/ProtectedRoute';
 import RouteErrorBoundary from './components/RouteErrorBoundary';
 
 // Component to handle scroll to top on route changes.
@@ -105,8 +106,8 @@ function App() {
                   <Route path="/addresses" element={<RouteErrorBoundary><AddressesPage /></RouteErrorBoundary>} />
                   <Route path="/loyalty" element={<RouteErrorBoundary><LoyaltyPage /></RouteErrorBoundary>} />
                   <Route path="/loyalty/redeem/:giftId" element={<RouteErrorBoundary><RedeemConfirmationPage /></RouteErrorBoundary>} />
-                  <Route path="/staff" element={<RouteErrorBoundary><StaffDashboardPage /></RouteErrorBoundary>} />
-                  <Route path="/fulfillment" element={<RouteErrorBoundary><FulfillmentPage /></RouteErrorBoundary>} />
+                  <Route path="/staff" element={<ProtectedRoute requiredRole="staff"><RouteErrorBoundary><StaffDashboardPage /></RouteErrorBoundary></ProtectedRoute>} />
+                  <Route path="/fulfillment" element={<ProtectedRoute requiredRole="staff"><RouteErrorBoundary><FulfillmentPage /></RouteErrorBoundary></ProtectedRoute>} />
                 </Routes>
               </Suspense>
             </main>

@@ -7,6 +7,7 @@ interface AuthContextType {
   user: User | null;
   profile: UserProfile | null;
   session: Session | null;
+  role: 'customer' | 'staff' | 'admin';
   loading: boolean;
   signUp: (email: string, password: string, fullName?: string) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
@@ -28,10 +29,20 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+// Fetch current user role from database
+async function fetchUserRole(userId: string): Promise<'customer' | 'staff' | 'admin'> {
+  try {
+    const { data, error } = await supabase.rpc('get_current_user_role', {});
+    if (!error && data) return data as 'customer' | 'staff' | 'admin';
+  } catch { /* fallback below */ }
+  return 'customer'; // default
+}
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [role, setRole] = useState<'customer' | 'staff' | 'admin'>('customer');
   const [loading, setLoading] = useState(true);
 
   const refreshProfile = useCallback(async () => {
@@ -44,6 +55,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     } else {
       setProfile(null);
+    }
+  }, [user]);
+
+  // Refresh role when user changes
+  const refreshRole = useCallback(async () => {
+    if (user) {
+      const newRole = await fetchUserRole(user.id);
+      setRole(newRole);
+    } else {
+      setRole('customer');
     }
   }, [user]);
 
@@ -61,6 +82,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           
           if (session?.user) {
             await refreshProfile();
+            await refreshRole();
           }
         }
       } catch (error) {
@@ -80,8 +102,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         
         if (session?.user) {
           await refreshProfile();
+          await refreshRole();
         } else {
           setProfile(null);
+          setRole('customer');
         }
         
         setLoading(false);
@@ -91,17 +115,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return () => {
       subscription.unsubscribe();
     };
-    // Mount-only: establish the session and the auth-state subscription once.
-    // refreshProfile is intentionally omitted so the subscription is never
-    // re-established when the user changes; profile refreshes happen through
-    // the dedicated effect below.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Refresh profile when user changes
-  useEffect(() => {
-    refreshProfile();
-  }, [refreshProfile]);
+  }, [refreshProfile, refreshRole]);
 
   const signUp = async (email: string, password: string, fullName?: string) => {
     setLoading(true);
@@ -122,13 +136,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       // Handle both confirmed and unconfirmed email scenarios
       if (data.user && data.session) {
-        // Email confirmation is disabled - user is automatically signed in
         setUser(data.user);
         setSession(data.session);
         await refreshProfile();
+        await refreshRole();
       } else if (data.user && !data.session) {
         // Email confirmation is enabled - user needs to confirm email
-        // Don't set user/session, just let the signup complete
       }
     } catch (error) {
       console.error('Sign up error:', error);
@@ -153,6 +166,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(data.user);
       setSession(data.session);
       await refreshProfile();
+      await refreshRole();
     } catch (error) {
       console.error('Sign in error:', error);
       throw error;
@@ -173,6 +187,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(null);
       setProfile(null);
       setSession(null);
+      setRole('customer');
     } catch (error) {
       console.error('Sign out error:', error);
       throw error;
@@ -185,6 +200,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     profile,
     session,
+    role,
     loading,
     signUp,
     signIn,
