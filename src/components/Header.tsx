@@ -16,7 +16,7 @@ const Header: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { state, dispatch } = useCart();
-  const { user, profile, signOut, loading } = useAuth();
+  const { user, profile, role, signOut, loading } = useAuth();
   
   // Check for auth parameter in URL to auto-open auth modal
   React.useEffect(() => {
@@ -270,6 +270,27 @@ const Header: React.FC = () => {
                     >
                       Địa chỉ giao hàng
                     </Link>
+                    
+                    {role === 'staff' || role === 'admin' ? (
+                      <>
+                        <div className="border-t border-gray-100 my-1"></div>
+                        <p className="px-4 py-1 text-xs text-carehub-teal font-semibold">Nhân viên</p>
+                        <Link
+                          to="/staff"
+                          onClick={() => setIsUserDropdownOpen(false)}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-carehub-teal transition-colors"
+                        >
+                          Bảng điều khiển nhân viên
+                        </Link>
+                        <Link
+                          to="/fulfillment"
+                          onClick={() => setIsUserDropdownOpen(false)}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-carehub-teal transition-colors"
+                        >
+                          Xử lý đơn hàng
+                        </Link>
+                      </>
+                    ) : null}
                   </div>
                   
                   <div className="border-t border-gray-100 py-1">
@@ -474,6 +495,27 @@ const Header: React.FC = () => {
                   >
                     Địa chỉ giao hàng
                   </Link>
+                  
+                  {role === 'staff' || role === 'admin' ? (
+                    <>
+                      <div className="border-t border-gray-100 my-2"></div>
+                      <p className="px-3 py-1 text-xs text-carehub-teal font-semibold">Nhân viên</p>
+                      <Link
+                        to="/staff"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="block w-full text-left px-3 py-3 text-gray-600 hover:text-carehub-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
+                      >
+                        Bảng điều khiển nhân viên
+                      </Link>
+                      <Link
+                        to="/fulfillment"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="block w-full text-left px-3 py-3 text-gray-600 hover:text-carehub-teal hover:bg-gray-50 rounded-md text-sm sm:text-base min-h-[44px] flex items-center"
+                      >
+                        Xử lý đơn hàng
+                      </Link>
+                    </>
+                  ) : null}
                   <button
                     onClick={handleSignOut}
                     className="flex items-center w-full text-left px-3 py-3 text-red-600 hover:bg-red-50 rounded-md text-sm sm:text-base min-h-[44px]"
