@@ -6,7 +6,7 @@ import {
   AlertCircle, User, MapPin, Phone, Mail, Shield
 } from 'lucide-react';
 import { getOrders, getOrderDetails, updateOrderStatus, addTrackingNumber, exportOrdersToCSV } from '../lib/orders';
-import { sendZnsNotification } from '../lib/zalo';
+import { sendZnsNotification, ZALO_ENABLED, ZALO_DRY_RUN } from '../lib/zalo';
 import type { Order, OrderDetail } from '../lib/orders';
 
 type TabKey = 'all' | 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'vietqr';
@@ -248,6 +248,20 @@ const FulfillmentPage: React.FC = () => {
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Zalo test-mode banner */}
+        {ZALO_ENABLED && ZALO_DRY_RUN && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start space-x-2">
+            <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-amber-800 text-sm font-semibold">Chế độ kiểm tra Zalo (dry-run)</p>
+              <p className="text-amber-700 text-xs mt-1">
+                Khi bạn cập nhật trạng thái đơn hàng, hệ thống sẽ ghi lại thông báo vào bảng <code>zns_log</code> nhưng
+                <strong> không gửi thật</strong> đến khách hàng. Tắt <code>VITE_ZALO_DRY_RUN</code> để gửi thật.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Error banner */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 flex items-start space-x-2">

@@ -13,6 +13,11 @@ const corsHeaders = {
 const ZALO_ACCESS_TOKEN = Deno.env.get('ZALO_ZNS_ACCESS_TOKEN') ?? '';
 const ZALO_PHONE_ID = Deno.env.get('ZALO_PHONE_ID') ?? ''; // OA id for the sender
 
+// Test mode: when 'true', the function logs the notification attempt to
+// zns_log as 'dry_run' and returns success WITHOUT calling the Zalo API.
+// Use this to verify the Fulfillment->ZNS wiring before templates are approved.
+const ZALO_DRY_RUN = Deno.env.get('ZALO_DRY_RUN') === 'true';
+
 // Map template types to template ids configured in Zalo Cloud Account.
 // Replace these with the actual template ids you get after approval.
 const TEMPLATE_IDS: Record<string, string> = {
@@ -26,6 +31,7 @@ interface SendZnsRequest {
   orderId: string;
   templateType: keyof typeof TEMPLATE_IDS;
   phone?: string;
+  dryRun?: boolean;
   [key: string]: string | undefined;
 }
 
@@ -80,20 +86,10 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    if (!ZALO_ACCESS_TOKEN || !ZALO_PHONE_ID) {
-      return new Response(
-        JSON.stringify({ error: 'Zalo ZNS not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+    // Determine if this is a dry-run (test mode): explicit flag OR env config
+    const dryRun = body.dryRun === true || ZALO_DRY_RUN;
 
     const templateId = TEMPLATE_IDS[templateType];
-    if (!templateId) {
-      return new Response(
-        JSON.stringify({ error: `No template configured for ${templateType}` }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
 
     // Determine target phone: from request or from the order.
     let targetPhone = phone;
@@ -116,15 +112,51 @@ Deno.serve(async (req: Request) => {
     // Normalize phone to E.164 (Zalo requires +84 for VN numbers).
     const normalizedPhone = normalizeVnPhone(targetPhone);
 
+    // ---- TEST MODE (dry run) ----
+    // Skip the Zalo API call entirely; just log the attempt so the wiring
+    // can be verified before templates/credentials are approved.
+    if (dryRun) {
+      await supabaseAdmin
+        .from('zns_log')
+        .insert({
+          order_id: orderId,
+          user_id: user.id,
+          template_type: templateType,
+          phone: normalizedPhone,
+          status: 'dry_run',
+          zalo_msg_id: null,
+          error_message: 'Dry-run: no Zalo API call made',
+        });
+      return new Response(
+        JSON.stringify({ ok: true, dry_run: true, msg_id: null }),
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // ---- REAL SEND ----
+    // Require Zalo credentials + template id for a real send.
+    if (!ZALO_ACCESS_TOKEN || !ZALO_PHONE_ID) {
+      return new Response(
+        JSON.stringify({ error: 'Zalo ZNS not configured' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!templateId) {
+      return new Response(
+        JSON.stringify({ error: `No template configured for ${templateType}` }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Build ZNS template data (fields the template expects).
-    // The template uses {{name}}, {{order_code}}, etc. Adjust to your approved template.
     const templateData: Record<string, string> = {
       phone: normalizedPhone,
       template_id: templateId,
       template_type: templateType,
       // Populate common params from the request body (order code, amount, etc.)
       ...Object.fromEntries(
-        Object.entries(body).filter(([k]) => !['orderId', 'templateType', 'phone'].includes(k))
+        Object.entries(body).filter(([k]) => !['orderId', 'templateType', 'phone', 'dryRun'].includes(k))
       ),
     };
 

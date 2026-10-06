@@ -10,6 +10,10 @@ import { supabase } from './supabaseClient';
 // Whether Zalo is enabled for this build
 export const ZALO_ENABLED = import.meta.env.VITE_ENABLE_ZALO === 'true';
 
+// Whether ZNS notifications are in dry-run (test) mode.
+// When true, notifications are logged to zns_log but NOT sent to Zalo.
+export const ZALO_DRY_RUN = import.meta.env.VITE_ZALO_DRY_RUN === 'true';
+
 // Zalo OAuth App credentials (from developers.zalo.me)
 // These are public client-side values (not secrets). The client secret
 // is only ever used server-side in the edge function.
@@ -85,13 +89,17 @@ export async function linkZaloProfile(zaloId: string, phone?: string, avatar?: s
 /**
  * Send a ZNS notification for a given order/template via the edge function.
  * Safe to call when Zalo is disabled — it becomes a no-op.
+ *
+ * When in dry-run (test) mode, the edge function logs the attempt and
+ * returns `dryRun: true` instead of sending a real message.
  */
 export async function sendZnsNotification(params: {
   orderId: string;
   templateType: 'order_confirmed' | 'order_shipped' | 'order_delivered' | 'payment_received';
   phone?: string;
+  dryRun?: boolean;
   [key: string]: string | undefined;
-}): Promise<{ ok: boolean; error?: string }> {
+}): Promise<{ ok: boolean; dryRun?: boolean; error?: string }> {
   if (!ZALO_ENABLED) return { ok: true }; // no-op when disabled
 
   const session = await supabase.auth.getSession();
@@ -110,7 +118,7 @@ export async function sendZnsNotification(params: {
     if (!response.ok) {
       return { ok: false, error: result.error };
     }
-    return { ok: true };
+    return { ok: true, dryRun: result.dry_run === true };
   } catch (e) {
     console.error('sendZnsNotification error:', e);
     return { ok: false, error: e instanceof Error ? e.message : 'Unknown error' };
